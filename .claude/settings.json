@@ -1,0 +1,33 @@
+{
+  "env": {
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUTF8": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(python tools/codex_exec.py --pong)",
+      "Bash(python -m pytest:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR}/handoffs\" 2>/dev/null && ls -t handoff-*.md 2>/dev/null | head -3 | sed 's|^|Recent handoff: |'",
+            "timeout": 10,
+            "statusMessage": "Listing the newest handoffs"
+          }
+        ]
+      }
+    ]
+  }
+}

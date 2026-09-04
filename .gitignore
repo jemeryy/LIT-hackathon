@@ -1,0 +1,7 @@
+.env
+.tmp/
+__pycache__/
+node_modules/
+.venv/
+.playwright-mcp/
+*.pyc
