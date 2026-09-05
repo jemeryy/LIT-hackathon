@@ -59,9 +59,9 @@
   "questions": [
    {
     "id": "b1",
-    "q": "Could the seller have a signed delivery note or an inspection record?",
-    "hint": "Check what you signed on delivery.",
-    "they": "A delivery note or inspection record you signed",
+    "q": "Could the seller have a signed delivery note, order form or inspection record?",
+    "hint": "Check what you signed when you ordered or when goods arrived.",
+    "they": "A delivery note, order form or inspection record you signed",
     "strength": "strong",
     "when": "yes"
    },
@@ -75,9 +75,9 @@
    },
    {
     "id": "b3",
-    "q": "Did you tell the seller about the fault within a reasonable time, in writing?",
+    "q": "Did you tell the seller about the problem soon after it showed, in writing?",
     "hint": "Find the first message where you raised it and its date.",
-    "they": "No written complaint from you soon after the fault showed",
+    "they": "No written complaint from you soon after the problem showed",
     "strength": "medium",
     "when": "no"
    },
@@ -91,18 +91,26 @@
    },
    {
     "id": "b5",
-    "q": "Did anyone else see the goods when they arrived or when the fault showed?",
+    "q": "Did anyone else see the goods, the fault, or the seller's refusal?",
     "hint": "Write down their name. You can name them as a witness later.",
-    "they": "A witness to the delivery or the fault",
+    "they": "A witness to the delivery, the fault or the refusal",
     "strength": "weak",
     "when": "yes"
    },
    {
     "id": "b6",
-    "q": "Did you accept a partial refund, repair or replacement, even in passing?",
+    "q": "Did you accept a partial refund, repair, replacement or a changed order, even in passing?",
     "hint": "If yes, say what and when. It changes the amount you claim.",
-    "they": "Your own words accepting a refund, repair or replacement",
+    "they": "Your own words accepting a refund, repair, replacement or a changed order",
     "strength": "strong",
+    "when": "yes"
+   },
+   {
+    "id": "b7",
+    "q": "Did the seller offer a swap, a smaller delivery or a later date, and you said no?",
+    "hint": "The seller may say you were the one who cancelled. Keep the messages where you said no and why.",
+    "they": "Their offer of a swap, a smaller delivery or a later date, and your refusal",
+    "strength": "medium",
     "when": "yes"
    }
   ]

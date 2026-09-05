@@ -43,7 +43,9 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
 SKIPPABLE = ("claimant", "respondent", "agreed", "amount", "when")   # the story, the kind of claim and files cannot be given up
-NO_DETAIL = re.compile(r"(no|nope|none|i )?\s*(dont|don't|do not|not)?\s*(have|know|sure)?( it| that| any| one| idea)?\.?")
+NO_DETAIL = re.compile(r"(sorry,? )?(no|nope|none|i )?\s*(dont|don't|do not|not)?\s*(have|know|sure)?( it| that| any| one| idea)?( (his|her|their|the|my)( \w+){1,2})?\.?")
+NO_DETAIL_ITEM = [("when", r"date|when|day"), ("amount", r"amount|how much"), ("claimant", r"my (full )?address"),
+                  ("respondent", r"(his|her|their|the) (full )?(address|name)")]   # which item a "dont have his address" gives up
 INTAKE_COMPLETE = "I have everything I can get from you. Press Next to check if the tribunal can hear it."
 NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
     "story": "Tell me what happened, in your own words.",
@@ -304,7 +306,7 @@ def describe_changes(before, case):
     a, b = before["intake"], case["intake"]
     out = []
     for k, w in CHANGE_WORDS.items():
-        if a.get(k) not in (None, "") and b.get(k) != a.get(k):
+        if a.get(k) not in (None, "", False) and b.get(k) != a.get(k):   # False is the default, not a fact the person gave
             v = b.get(k)
             out.append(f"{w} is now {rules.money(v) if k == 'amount' else rules.fmt(dt.date.fromisoformat(v)) if k.endswith('_date') else v}")
     for who in ("claimant", "respondent"):
@@ -348,7 +350,9 @@ def chat_turn(case, message):
     corrected = []
     if NO_DETAIL.fullmatch(message.strip().lower()):
         # "dont have": the person cannot give the next missing item. Give it up so we stop asking and move on.
-        skip = next((c["id"] for c in checklist_state(case) if not c["done"] and c["id"] in SKIPPABLE), None)
+        open_items = [c["id"] for c in checklist_state(case) if not c["done"] and c["id"] in SKIPPABLE]
+        named = next((k for k, pat in NO_DETAIL_ITEM if re.search(pat, message.lower())), None)
+        skip = named if named in open_items else next(iter(open_items), None)
         if skip:
             it.setdefault("skipped", []).append(skip)
             for side in ("claimant", "respondent"):
@@ -378,6 +382,13 @@ def chat_turn(case, message):
         # The model asked nothing usable. Having read the person correctly, saying we could not is both
         # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
         reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
+    elif reply == UNCLEAR_REPLY and case["claim_type"] != "unknown":
+        # A vague detail ("last Tuesday") in a case we already understand: ask for the exact detail, do not ask what the case is about
+        qs = [q for q in (_plain_sentence(q, max_words=22) for q in turn.get("questions") or []) if q and q.endswith("?")]
+        reply = "I am not sure I got that right. " + (" ".join(qs[:2]) if qs else NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
+    elif reply == SCOPE_REFUSAL and snap["intake"]["account"]:
+        # An off-topic question after the story is told: say what we cannot do, then carry on with the next gap
+        reply = "I can only collect facts. I cannot say who is right, or what you will get. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
     if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
         reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
     elif not missing:
@@ -391,7 +402,7 @@ def chat_turn(case, message):
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
         reply = f"I have enough details about your claim against {other}. Press Next to check if the tribunal can hear it, then add {needed} in step 3."
-    reply = f"{changed} {reply}".strip() or "Noted. Nothing else is missing."
+    reply = f"{changed} {reply}".strip() or "Noted. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
     it["chat"].append({"who": "bot", "text": reply})
     case = recompute(case)
     if not blocked and not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
@@ -615,7 +626,8 @@ def _viewer_payload(case, asset, page_index, boxes, quote=None, label=None):
         caption = f"{asset['filename']}. Nothing to highlight here: the file itself is the evidence."
     return {"image_url": f"/api/render?asset_id={asset['id']}&page_index={page_index}", "boxes": boxes or [],
             "coord_space": "normalized", "caption": caption, "title": asset["filename"], "subtitle": sub,
-            "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"]}
+            "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"],
+            "eyebrow": "The other side's file" if ex.get("side") == "theirs" else "Your file"}
 
 
 @app.get("/api/viewer")

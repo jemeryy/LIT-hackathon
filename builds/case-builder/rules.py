@@ -31,7 +31,8 @@ AUTHOR = {"both": "Signed by both of you", "third_party": "Third-party record",
           "respondent": "The other side's own words", "claimant": "Made by you"}
 TIMELINE_LABEL = {"deposit_paid": "deposit paid", "handover_acceptance": 'Move out, "all good"',
                   "damage_allegation": "{role} refuses", "payment_made": "paid", "delivery": "delivered",
-                  "complaint_sent": "you complained", "seller_response": "{role} replies"}
+                  "complaint_sent": "you complained", "seller_response": "{role} replies", "sale_terms": "agreed",
+                  "agreement_terms": "agreed", "other_side_words": "{role} says", "dispute": "{role} refuses"}
 FUTURE_STEPS = [("written_request", "Send your letter", "next"), ("prefiling", "File your claim online", ""),
                 ("serve", "Give the other side a copy", ""), ("consultation", "First court meeting", ""), ("hearing", "Hearing", "")]
 
@@ -100,6 +101,9 @@ def evidence(case):
                                     "date": f.get("date"), "strength": "weak", "needs_check": False,
                                     "notes": [], "sources": [], "_authors": set(), "_dated": False, "_amount": False})
         s = strength(meta, f)
+        if f.get("fits") is False:   # the reader says the names, dates or amounts do not match this claim
+            s = "weak"
+            row["_misfit"] = True
         if STRENGTH_ORDER[s] < STRENGTH_ORDER[row["strength"]]:
             row["strength"] = s
         if f.get("quote") and meta.get("from_picture"):
@@ -121,6 +125,9 @@ def evidence(case):
             a = next(iter(row["_authors"]), "claimant")
             reason = AUTHOR.get(a, "Made by you") + (", has amount" if row["_amount"] else "") + \
                      (" and dates" if row["_amount"] and row["_dated"] else ", dated" if row["_dated"] else ", no date")
+        if row.pop("_misfit", False):
+            row["strength"], row["misfit"] = "weak", True
+            reason = "The names, dates or amounts do not match your account. " + (row["notes"][0] if row["notes"] else "Check it is the right file")
         if row["needs_check"]:
             reason += ". Read from a screenshot, check it"
         row["reason"] = reason
@@ -153,9 +160,9 @@ def gate(case, today):
     elif ct in CATEGORY_TEXT:
         cat_known, cat_ok, cat_text = True, True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
-        cat_ok, cat_text = False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
-                                   "home leases up to 2 years, and damage to property not from a motor vehicle or a neighbour. "
-                                   "It does not hear work disputes.")
+        cat_known, cat_ok, cat_text = True, False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
+                                   "home leases up to 2 years, and damage to property. It does not hear work disputes, loans, "
+                                   "or a neighbour dispute about noise, smell or the like.")
     else:
         cat_known, cat_ok = False, False
         cat_text = "Tell us what happened so we can check if the tribunal hears this kind of claim."
@@ -168,7 +175,8 @@ def gate(case, today):
         {"id": "category", "pass": cat_ok, "section_id": "scta_schedule", "text": cat_text},
         {"id": "amount", "pass": amt_ok, "section_id": "scta_s2",
          "text": (f"You are claiming {money(amt)}. The limit is $20,000, or $30,000 if both sides agree."
-                  + (" You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
+                  + ((" If both sides sign the court's consent form for the $30,000 limit, tell us." if amt <= 30000 else "")
+                     + " You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
                   else "Tell us how much you are claiming. The limit is $20,000, or $30,000 if both sides agree.")},
         {"id": "time", "pass": time_ok, "section_id": "scta_s5_time",
          "text": (f"The problem started on {fmt(cause)}, the day the {role} refused or the loss happened. You have 2 years from that day, so until {fmt(bar)}."
@@ -199,6 +207,8 @@ def gaps(case):
     to_key = g["category_to_key"]
     have = {}
     for ex in case["exhibits"]:
+        if ex.get("side") == "theirs":
+            continue
         for f in ex.get("facts", []):   # name the fact, not just the file: one chat export can hold messages and a receipt
             k = to_key.get(f["category"])
             if k and len(have.setdefault(k, [])) < 4:
@@ -254,7 +264,7 @@ def timeline(case, today):
                                        f"/api/viewer?asset_id={asset['id']}&page_index={(f.get('locator') or {}).get('page_index', 0)}")}
         if f.get("evidence_key") == "deposit_terms":
             deposit_src = src
-        if not f.get("date"):
+        if not f.get("date") or f.get("fits") is False:   # a file about other people or another deal is not an event in this case
             continue
         ev = by_date.setdefault(f["date"], {"labels": [], "exhibits": [], "details": [], "sources": []})
         lab = f.get("timeline_label") or TIMELINE_LABEL.get(f.get("evidence_key"))
@@ -281,9 +291,9 @@ def timeline(case, today):
                        "marker": False, "computed": True,
                        "detail": f"{days} days after move-out on {fmt(moveout)}, under {lab}.",
                        "sources": [deposit_src] if deposit_src else []})
-    events.sort(key=lambda e: e["date"])
     events.append({"id": "today", "label": "Today", "date": today.isoformat(), "future": False, "marker": True,
                    "computed": True, "detail": "Where you are now.", "sources": []})
+    events.sort(key=lambda e: e["date"])   # today sorts in by date, so an event dated after today shows after it
     for i, (eid, lab, when) in enumerate(FUTURE_STEPS):
         events.append({"id": eid, "label": lab, "date": None, "date_text": when, "future": True, "marker": False,
                        "computed": True, "detail": "A step still ahead. See Next steps.", "sources": []})

@@ -245,7 +245,8 @@ async function send() {
 async function clearChat() { if (!confirm("Clear the chat and start again? Your files stay.")) return; const c = await api("/api/chat/clear", {method: "POST"}); if (c) C = c; render(); }
 function statusText(e) {
   const n = e.assets.length, pages = e.assets[0].pages;
-  if (e.status === "ready") return "Read" + (pages ? `, ${pages} pages` : n > 1 ? `, ${n} files` : "");
+  if (e.status === "ready" && e.side !== "theirs" && e.facts && !e.facts.length) return "Read, nothing found for this claim";
+  if (e.status === "ready") return "Read" + (pages ? `, ${pages} page${pages > 1 ? "s" : ""}` : n > 1 ? `, ${n} files` : "");
   return {reading: "Reading", waiting: "Waiting", error: "Could not read"}[e.status] || e.status;
 }
 async function upload(input, exhibitId, spot = "") {
@@ -331,7 +332,7 @@ function spotCard(x) {
       <div style="font-weight: 600;">${esc(x.q)}</div>
       <div class="muted">${esc(x.hint)}</div>
       <div class="row" style="justify-content: space-between;"><div class="row">${[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]].map(([k, l]) => `<button class="btn ${x.answer === k ? "on" : ""}" onclick="answer('${x.id}', '${k}')">${l}</button>`).join("")}</div>
-      ${x.answer === "yes" ? addFile("btn primary", x.id) : ""}</div>
+      ${x.answer === (x.when || "yes") ? addFile("btn primary", x.id) : ""}</div>
       ${files.length ? `<div class="row">${files.map(exh).join("")}</div>` : ""}</div>`;
 }
 async function answer(id, a) { const r = await api("/api/blindspot", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id, answer: a})}); if (r) C.blindspots = r; render(); }
@@ -380,7 +381,7 @@ function copyText() { navigator.clipboard.writeText($("wr-text").value).then(() 
 /* viewer: one <img> + percentage boxes, every format */
 async function openViewer(url) {
   const v = await api(url); if (!v) return;
-  $("pv-eyebrow").textContent = "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
+  $("pv-eyebrow").textContent = v.eyebrow || "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
   const boxes = v.boxes.map(([l, t, r, b]) => `<div class="hlbox" style="left:${l * 100}%; top:${t * 100}%; width:${(r - l) * 100}%; height:${(b - t) * 100}%;"></div>`).join("");
   const pager = v.pages > 1 ? `<div class="row" style="justify-content: space-between; margin-bottom: 8px;"><button class="btn" ${v.page_index === 0 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index - 1}')">Previous page</button><span class="muted">Page ${v.page_index + 1} of ${v.pages}</span><button class="btn" ${v.page_index >= v.pages - 1 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index + 1}')">Next page</button></div>` : "";
   $("pv-body").innerHTML = `${pager}<div class="imgwrap"><img src="${v.image_url}" alt="${esc(v.title)}">${boxes}</div><div class="muted" style="margin-top: 8px;">${esc(v.caption)}</div>`;
