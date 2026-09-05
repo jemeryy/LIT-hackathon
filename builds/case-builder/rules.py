@@ -207,7 +207,23 @@ def blindspots(case, answers):
     b = content("blindspots")[ctype(case)]
     qs = [{**q, "answer": answers.get(q["id"])} for q in b["questions"]]
     return {"intro": b["intro"], "note": b["note"], "total": len(qs),
-            "answered": sum(1 for q in qs if q["answer"] in ("yes", "no", "unsure")), "questions": qs}
+            "answered": sum(1 for q in qs if q["answer"] in ("yes", "no", "unsure")), "questions": qs,
+            "theirs": their_evidence(qs)}
+
+
+def their_evidence(qs):
+    """What the other side may bring, strongest first, from the blind-spot answers. A 'not sure' counts one step weaker."""
+    weaker = {"strong": "medium", "medium": "weak", "weak": "weak"}
+    rows = []
+    for q in qs:
+        if q["answer"] == q.get("when", "yes"):
+            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q["hint"]})
+        elif q["answer"] == "unsure":
+            rows.append({"id": q["id"], "what": q["they"], "strength": weaker[q["strength"]], "sure": False, "answer": q["hint"]})
+    rows.sort(key=lambda r: STRENGTH_ORDER[r["strength"]])
+    for i, r in enumerate(rows, 1):
+        r["rank"] = i
+    return rows
 
 
 def timeline(case, today):

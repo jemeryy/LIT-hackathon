@@ -6,32 +6,50 @@
    {
     "id": "b1",
     "q": "Could the landlord have their own photos of the flat or furniture, taken after you left?",
-    "hint": "Your own dated move-out photos or video are the answer. Keep them."
+    "hint": "Your own dated move-out photos or video are the answer. Keep them.",
+    "they": "Photos of the flat or furniture taken after you left",
+    "strength": "medium",
+    "when": "yes"
    },
    {
     "id": "b2",
     "q": "Has the landlord sent, or could he get, a repair or cleaning invoice?",
-    "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed."
+    "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed.",
+    "they": "A repair or cleaning invoice",
+    "strength": "strong",
+    "when": "yes"
    },
    {
     "id": "b3",
     "q": "Did you sign an inventory or handover form?",
-    "hint": "Check your agreement for an inventory clause. Get your copy. If it lists the item, it matters either way."
+    "hint": "Check your agreement for an inventory clause. Get your copy. If it lists the item, it matters either way.",
+    "they": "The inventory or handover form you signed",
+    "strength": "strong",
+    "when": "yes"
    },
    {
     "id": "b4",
     "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
-    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back."
+    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back.",
+    "they": "Messages or words showing other conditions you agreed to",
+    "strength": "medium",
+    "when": "yes"
    },
    {
     "id": "b5",
     "q": "Did anyone else see the handover? A friend, mover or agent.",
-    "hint": "Write down their name. You can name them as a witness later."
+    "hint": "Write down their name. You can name them as a witness later.",
+    "they": "A witness to the handover",
+    "strength": "weak",
+    "when": "yes"
    },
    {
     "id": "b6",
     "q": "Did you accept any deduction, even in passing?",
-    "hint": "If yes, say how much and when. It changes the amount you claim."
+    "hint": "If yes, say how much and when. It changes the amount you claim.",
+    "they": "Your own words accepting a deduction",
+    "strength": "strong",
+    "when": "yes"
    }
   ]
  },
@@ -42,32 +60,50 @@
    {
     "id": "b1",
     "q": "Could the seller have a signed delivery note or an inspection record?",
-    "hint": "Check what you signed on delivery."
+    "hint": "Check what you signed on delivery.",
+    "they": "A delivery note or inspection record you signed",
+    "strength": "strong",
+    "when": "yes"
    },
    {
     "id": "b2",
     "q": "Did the listing or terms say the goods were sold as seen, used, or without warranty?",
-    "hint": "Re-read the listing and any terms page."
+    "hint": "Re-read the listing and any terms page.",
+    "they": "Terms saying sold as seen, used, or no warranty",
+    "strength": "strong",
+    "when": "yes"
    },
    {
     "id": "b3",
     "q": "Did you tell the seller about the fault within a reasonable time, in writing?",
-    "hint": "Find the first message where you raised it and its date."
+    "hint": "Find the first message where you raised it and its date.",
+    "they": "No written complaint from you soon after the fault showed",
+    "strength": "medium",
+    "when": "no"
    },
    {
     "id": "b4",
     "q": "Did anyone else use, repair or open the goods before you complained?",
-    "hint": "The seller may say the fault came later."
+    "hint": "The seller may say the fault came later.",
+    "they": "Signs that someone else used, repaired or opened the goods",
+    "strength": "medium",
+    "when": "yes"
    },
    {
     "id": "b5",
     "q": "Did anyone else see the goods when they arrived or when the fault showed?",
-    "hint": "Write down their name. You can name them as a witness later."
+    "hint": "Write down their name. You can name them as a witness later.",
+    "they": "A witness to the delivery or the fault",
+    "strength": "weak",
+    "when": "yes"
    },
    {
     "id": "b6",
     "q": "Did you accept a partial refund, repair or replacement, even in passing?",
-    "hint": "If yes, say what and when. It changes the amount you claim."
+    "hint": "If yes, say what and when. It changes the amount you claim.",
+    "they": "Your own words accepting a refund, repair or replacement",
+    "strength": "strong",
+    "when": "yes"
    }
   ]
  },
@@ -78,32 +114,50 @@
    {
     "id": "b1",
     "q": "Could the other side have their own photos, records or receipts about this?",
-    "hint": "Think about what they would show a judge. Keep anything of yours that answers it."
+    "hint": "Think about what they would show a judge. Keep anything of yours that answers it.",
+    "they": "Their own photos, records or receipts",
+    "strength": "medium",
+    "when": "yes"
    },
    {
     "id": "b2",
     "q": "Did anything you signed or agreed to limit what you can claim?",
-    "hint": "Re-read the contract, quote or terms for words like as is, no refund, or a cap."
+    "hint": "Re-read the contract, quote or terms for words like as is, no refund, or a cap.",
+    "they": "A signed term that limits what you can claim",
+    "strength": "strong",
+    "when": "yes"
    },
    {
     "id": "b3",
     "q": "Did you tell the other side about the problem in writing, soon after it happened?",
-    "hint": "Find the first message where you raised it and its date."
+    "hint": "Find the first message where you raised it and its date.",
+    "they": "No written complaint from you soon after it happened",
+    "strength": "medium",
+    "when": "no"
    },
    {
     "id": "b4",
     "q": "Were there other agreed conditions, spoken or in messages on any channel?",
-    "hint": "Check SMS, email and other apps you used with them. Anything agreed can change the claim."
+    "hint": "Check SMS, email and other apps you used with them. Anything agreed can change the claim.",
+    "they": "Messages or words showing other conditions you agreed to",
+    "strength": "medium",
+    "when": "yes"
    },
    {
     "id": "b5",
     "q": "Did anyone else see what happened?",
-    "hint": "Write down their name. You can name them as a witness later."
+    "hint": "Write down their name. You can name them as a witness later.",
+    "they": "A witness to what happened",
+    "strength": "weak",
+    "when": "yes"
    },
    {
     "id": "b6",
     "q": "Did you accept any part payment, repair or discount, even in passing?",
-    "hint": "If yes, say what and when. It changes the amount you claim."
+    "hint": "If yes, say what and when. It changes the amount you claim.",
+    "they": "Your own words accepting a part payment, repair or discount",
+    "strength": "strong",
+    "when": "yes"
    }
   ]
  }

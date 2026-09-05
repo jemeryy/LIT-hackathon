@@ -42,6 +42,17 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
+INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
+NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
+    "story": "Tell me what happened, in your own words.",
+    "claimant": "What is your name, and your full address with unit number and postal code?",
+    "respondent": "Who are you claiming against? What is their full address, and are they in Singapore?",
+    "category": "Was this about goods, services, a home lease, or damage to property?",
+    "agreed": "What did the two sides agree?",
+    "amount": "How much are you claiming in total?",
+    "when": "On what date did they refuse, or the problem start?",
+    "files": "Add your files in step 3.",
+}
 
 app = FastAPI(title=APP_NAME)
 CASES = {}                      # one case per visitor, keyed by the visitor cookie
@@ -323,7 +334,8 @@ def chat_turn(case, message):
         return recompute(case)
     turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
-    trusted_turn = turn.get("scope", "claim_intake") == "claim_intake" and turn.get("confidence", "high") != "low"
+    in_scope = turn.get("scope", "claim_intake") == "claim_intake"
+    trusted_turn = in_scope and turn.get("confidence", "high") != "low"
     if stated_amount is not None and turn.get("scope", "claim_intake") not in ("off_topic", "prompt_attack"):
         # A stated total is a fact we can read ourselves. Keep it even when the model found the message unclear.
         if not trusted_turn:
@@ -343,6 +355,7 @@ def chat_turn(case, message):
                     process_asset(case, ex, a)
     missing = [c["id"] for c in checklist_state(case) if not c["done"]]
     it["done"] = not missing
+    blocked = [c for c in rules.gate(case, dt.date.fromisoformat(case["today"]))["checks"] if c["blocked"]]
     changed = describe_changes(snap, case)
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
@@ -361,11 +374,11 @@ def chat_turn(case, message):
             "services": "the quote, payment records, messages, and photos",
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
-        reply = f"I have enough details about your claim against {other}. Now add {needed} on the right."
+        reply = f"I have enough details about your claim against {other}. Now go to step 3 and add {needed}."
     reply = f"{changed} {reply}".strip() or "Noted. Nothing else is missing."
     it["chat"].append({"who": "bot", "text": reply})
     case = recompute(case)
-    if not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
+    if not blocked and not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
         it["chat"][-1]["text"] += " " + case["gate"]["stop"]   # eligibility problem: say it here, not only in step 2
     return case
 
@@ -562,7 +575,7 @@ def blindspot(body: dict):
     for q in case["blindspots"]["questions"]:
         if q["id"] == body.get("id"):
             q["answer"] = body["answer"]
-    case["blindspots"]["answered"] = sum(1 for q in case["blindspots"]["questions"] if q.get("answer"))
+    case["blindspots"] = rules.blindspots(case, {q["id"]: q.get("answer") for q in case["blindspots"]["questions"]})
     save(case)
     return case["blindspots"]
 
