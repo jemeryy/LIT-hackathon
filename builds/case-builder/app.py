@@ -24,7 +24,7 @@ SAMPLE = [("E1", "pdf", "Tenancy agreement", ["Tenancy_Agreement_2025.pdf"]),
           ("E5", "video", "Move-out video", ["moveout_walkthrough.mp4"]),
           ("E6", "image_set", "Move-in photos", [f"movein_{i:02d}.jpg" for i in range(1, 6)])]
 EMPTY_INTAKE = {
-    "chat": [], "account": "", "done": False,
+    "chat": [], "account": "", "done": False, "skipped": [],
     "parties": {"claimant": {"name": "", "address": "", "id_type": "NRIC"},
                 "respondent": {"name": "", "role": None, "address": "", "in_singapore": None, "is_company": None}},
     "amount": None, "consent_30k": False, "cause_of_action_date": None, "moveout_date": None, "what_agreed": "",
@@ -42,8 +42,9 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
+SKIPPABLE = ("claimant", "respondent", "agreed", "amount", "when")   # the story, the kind of claim and files cannot be given up
 NO_DETAIL = re.compile(r"(no|nope|none|i )?\s*(dont|don't|do not|not)?\s*(have|know|sure)?( it| that| any| one| idea)?\.?")
-INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
+INTAKE_COMPLETE = "I have everything I can get from you. Press Next to check if the tribunal can hear it."
 NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
     "story": "Tell me what happened, in your own words.",
     "claimant": "What is your name, and your full address with unit number and postal code?",
@@ -52,7 +53,7 @@ NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns not
     "agreed": "What did the two sides agree?",
     "amount": "How much are you claiming in total?",
     "when": "On what date did they refuse, or the problem start?",
-    "files": "Add your files in step 3.",
+    "files": "Press Next to check if the tribunal can hear it, then add your files in step 3.",
 }
 
 app = FastAPI(title=APP_NAME)
@@ -345,11 +346,16 @@ def chat_turn(case, message):
         turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
     corrected = []
-    if NO_DETAIL.fullmatch(message.strip().lower()) and it["parties"]["respondent"]["name"] and not it["parties"]["respondent"]["address"]:
-        # "dont have" to an address question: record it so we stop asking. The model alone kept asking.
-        turn.update(scope="claim_intake", confidence="high", reflection=None)
-        turn.setdefault("fields", {})["respondent_address"] = "not known"
-        trusted_turn = True
+    if NO_DETAIL.fullmatch(message.strip().lower()):
+        # "dont have": the person cannot give the next missing item. Give it up so we stop asking and move on.
+        skip = next((c["id"] for c in checklist_state(case) if not c["done"] and c["id"] in SKIPPABLE), None)
+        if skip:
+            it.setdefault("skipped", []).append(skip)
+            for side in ("claimant", "respondent"):
+                if skip == side and not it["parties"][side]["address"]:
+                    it["parties"][side]["address"] = "not known"
+            turn.update(scope="claim_intake", confidence="high", reflection=None, questions=[])
+            trusted_turn = True
     if trusted_turn:
         apply_fields(case, turn.get("fields", {}))
     elif in_scope:
@@ -374,6 +380,8 @@ def chat_turn(case, message):
         reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
     if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
         reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
+    elif not missing:
+        reply = INTAKE_COMPLETE
     elif missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
         needed = {
@@ -382,7 +390,7 @@ def chat_turn(case, message):
             "services": "the quote, payment records, messages, and photos",
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
-        reply = f"I have enough details about your claim against {other}. Now go to step 3 and add {needed}."
+        reply = f"I have enough details about your claim against {other}. Press Next to check if the tribunal can hear it, then add {needed} in step 3."
     reply = f"{changed} {reply}".strip() or "Noted. Nothing else is missing."
     it["chat"].append({"who": "bot", "text": reply})
     case = recompute(case)
@@ -399,7 +407,8 @@ def checklist_state(case):
            "category": case["claim_type"] not in ("unknown", "other"), "agreed": bool(it.get("what_agreed")),
            "amount": it.get("amount") is not None, "when": bool(it.get("cause_of_action_date")),
            "files": any(e["status"] == "ready" for e in case["exhibits"])}
-    return [{**c, "done": got.get(c["id"], False)} for c in case["checklist"]]
+    skipped = it.get("skipped", [])
+    return [{**c, "done": got.get(c["id"], False) or c["id"] in skipped} for c in case["checklist"]]
 
 
 def recompute(case):
