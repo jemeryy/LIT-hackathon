@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try the Case Helper example</title>
+<style>
+  :root { --ink: #222; --paper: #fbfaf7; --pale: #fef9c3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; color: var(--ink); background: var(--paper); font: 20px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { width: min(760px, 100%); padding: clamp(24px, 6vw, 52px); border: 2px solid var(--ink); border-radius: 8px; background: #fff; box-shadow: 7px 7px 0 var(--ink); }
+  .eyebrow { margin: 0 0 8px; font-size: 18px; color: #444; }
+  h1 { margin: 0 0 18px; font-size: clamp(34px, 7vw, 56px); line-height: 1.05; font-weight: 650; }
+  p { margin: 0 0 18px; }
+  .note { padding: 14px 16px; border: 2px solid var(--ink); border-radius: 6px; background: var(--pale); }
+  .actions { display: flex; align-items: stretch; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+  button { min-height: 56px; padding: 11px 24px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; color: var(--ink); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; font: inherit; font-size: 20px; }
+  button.primary { background: var(--ink); color: #fff; font-size: 22px; }
+  button:hover { background: var(--pale); color: var(--ink); }
+  button:disabled { color: #777; border-color: #aaa; background: #e9e6df; box-shadow: none; cursor: wait; }
+  #status { min-height: 29px; margin-top: 18px; color: #444; }
+  #status.error { padding: 10px 14px; border: 2px solid #b91c1c; border-radius: 6px; background: #fecaca; color: var(--ink); }
+  @media (max-width: 560px) { body { padding: 14px; } main { padding: 24px 20px; } .actions, button { width: 100%; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Case Helper for the Small Claims Tribunals</p>
+  <h1>See how it works.</h1>
+  <p>Try a worked example about a tenant asking for her deposit back.</p>
+  <p class="note">The example uses made-up names and sample files. It may take about a minute to read all six files.</p>
+  <div class="actions">
+    <button class="primary" onclick="begin('/api/case/reset', 'Loading the example. Reading six sample files…')">Try the example</button>
+    <button onclick="begin('/api/case/new', 'Starting a new case…')">Start your own case</button>
+  </div>
+  <div id="status" role="status" aria-live="polite"></div>
+</main>
+<script>
+async function begin(path, message) {
+  const status = document.getElementById("status");
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach(button => button.disabled = true);
+  status.className = "";
+  status.textContent = message;
+  try {
+    const response = await fetch(path, {method: "POST"});
+    const body = await response.json();
+    if (!response.ok || body.error) throw new Error(body.error || "Could not start the case.");
+    location.href = path === "/api/case/reset" ? "/?example=1" : "/";
+  } catch (error) {
+    status.className = "error";
+    status.textContent = error.message || "Something went wrong. Please try again.";
+    buttons.forEach(button => button.disabled = false);
+  }
+}
+
+// Browsers can restore this page from history with its old disabled controls.
+// Always make it ready again when the user returns with the Back button.
+window.addEventListener("pageshow", () => {
+  document.querySelectorAll("button").forEach(button => button.disabled = false);
+  const status = document.getElementById("status");
+  status.className = "";
+  status.textContent = "";
+});
+</script>
+</body>
+</html>

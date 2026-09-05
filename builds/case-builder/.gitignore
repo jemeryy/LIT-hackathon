@@ -1,0 +1,7 @@
+data/cache/
+data/uploads/
+data/*.log
+data/*.xlsx
+data/*.zip
+sample/pack/_frames/
+__pycache__/

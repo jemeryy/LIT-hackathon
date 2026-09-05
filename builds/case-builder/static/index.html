@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Helper</title>
+<style>
+  :root { --ink: #222; --paper: #fbfaf7; --grey: #e9e6df; --blue: #1d4ed8; --yellow: #fde047; --pale: #fef9c3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); font-size: 20px; line-height: 1.4; }
+  a { color: var(--blue); }
+  .box { border: 2px solid var(--ink); border-radius: 6px; background: #fff; }
+  .dash { border: 2px dashed #777; border-radius: 6px; background: #fff; }
+  .grey { background: var(--grey); border: 2px solid var(--ink); border-radius: 6px; }
+  .btn { border: 2px solid var(--ink); border-radius: 6px; padding: 10px 20px; background: #fff; color: var(--ink); font: inherit; font-size: 20px; min-height: 52px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
+  .btn:hover { background: var(--pale); }
+  .btn.primary { background: var(--ink); color: #fff; font-size: 22px; padding: 10px 30px; }
+  .btn.primary:hover { background: #333; }
+  .btn.on { background: var(--ink); color: #fff; }
+  .btn:disabled, .btn.disabled { color: #777; border-color: #aaa; background: var(--grey); box-shadow: none; cursor: default; }
+  .source-link { border-bottom: 2px solid var(--blue); padding: 8px 4px; display: inline-block; line-height: 1.3; color: var(--blue); cursor: pointer; text-decoration: none; }
+  .source-link:hover { background: #dbeafe; }
+  .status-label { border-radius: 4px; padding: 4px 10px; font-size: 18px; font-weight: bold; white-space: nowrap; display: inline-block; }
+  .status-label.have, .status-label.strong, .status-label.ready { background: #bbf7d0; }
+  .status-label.missing, .status-label.weak, .status-label.error { background: #fecaca; }
+  .status-label.medium, .status-label.reading { background: #fef08a; }
+  .status-label.optional, .status-label.waiting { background: var(--grey); }
+  .muted { color: #444; font-size: 18px; }
+  .eyebrow { color: #444; font-size: 18px; }
+  h1 { font-size: 34px; line-height: 1.15; margin: 4px 0 0; font-weight: 600; }
+  .section-title { font-size: 24px; line-height: 1.2; font-weight: 600; }
+  .step { display: grid; grid-template-columns: 34px 1fr; align-items: center; column-gap: 10px; padding: 8px 10px; border-radius: 6px; min-height: 56px; color: #444; cursor: pointer; font-size: 19px; }
+  .step.done { color: var(--ink); }
+  .step.current { background: var(--ink); color: #fff; }
+  .step.locked { color: #777; cursor: default; }
+  .num { grid-row: 1 / span 2; width: 32px; height: 32px; border: 2px solid currentColor; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  .step.done .num { background: #bbf7d0; color: var(--ink); }
+  .step-state { font-size: 17px; opacity: .85; }
+  .rank { width: 40px; height: 40px; border: 2px solid var(--ink); border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; background: #fff; }
+  .rank.top { background: var(--yellow); }
+  .evidence-row { cursor: pointer; }
+  .evidence-row:hover td { background: #dbeafe; }
+  .evidence-row.top { background: var(--pale); }
+  .strength { display: flex; align-items: center; gap: 8px; font-weight: bold; }
+  .strength-dot { width: 16px; height: 16px; border: 2px solid var(--ink); border-radius: 999px; flex-shrink: 0; }
+  .strength.strong .strength-dot { background: #22c55e; }
+  .strength.medium .strength-dot { background: var(--yellow); }
+  .strength.weak .strength-dot { background: #fca5a5; }
+  table { border-collapse: collapse; width: 100%; font-size: 19px; }
+  th, td { border: 2px solid var(--ink); padding: 8px 10px; text-align: left; vertical-align: middle; }
+  th { background: var(--grey); font-weight: normal; }
+  .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .side { display: flex; gap: 20px; align-items: flex-start; }
+  .side > .main { flex-grow: 1; min-width: 0; }
+  .side > .panel { width: 360px; flex-shrink: 0; }
+  .nav-footer { border-top: 2px solid var(--ink); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  textarea, input[type=text] { width: 100%; font: inherit; padding: 12px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; }
+  #shell { min-height: 100vh; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 2px solid var(--ink); background: #fff; }
+  #layout { display: flex; flex-grow: 1; }
+  #rail { width: 260px; border-right: 2px solid var(--ink); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; background: #fff; flex-shrink: 0; }
+  main { flex-grow: 1; padding: 18px 28px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  #body { flex-grow: 1; }
+  .foot { padding: 12px 24px; border-top: 2px solid var(--ink); background: var(--grey); font-size: 18px; }
+  #preview { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; max-width: 100vw; background: #fff; border-left: 2px solid var(--ink); display: flex; flex-direction: column; z-index: 20; }
+  .preview-head { padding: 12px 14px; border-bottom: 2px solid var(--ink); background: var(--grey); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .preview-name { font-size: 22px; line-height: 1.15; overflow-wrap: anywhere; font-weight: 600; }
+  .preview-body { flex-grow: 1; overflow: auto; padding: 12px; }
+  .imgwrap { position: relative; display: block; }
+  .imgwrap img { display: block; width: 100%; height: auto; border: 1px solid #ccc; }
+  .hlbox { position: absolute; border: 3px solid #d97706; background: rgba(253, 224, 71, .35); box-shadow: 0 0 0 3px rgba(253, 224, 71, .6); border-radius: 3px; pointer-events: none; }
+  .statute { white-space: pre-wrap; font-size: 18px; padding: 12px; }
+  #modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 30; padding: 8px; }
+  #modal .box { width: 760px; max-width: 100%; max-height: 95vh; display: flex; flex-direction: column; padding: 16px; gap: 10px; }
+  #modal textarea { flex-grow: 1; min-height: 300px; }
+  .chat { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding: 16px; min-height: 300px; max-height: 55vh; }
+  .bubble { max-width: 85%; padding: 12px 16px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; white-space: pre-wrap; }
+  .bubble.user { align-self: flex-end; background: var(--pale); }
+  .bubble.bot { align-self: flex-start; }
+  .bubble.wait { color: #444; font-style: italic; }
+  .banner { padding: 10px 14px; background: #fecaca; border: 2px solid #b91c1c; border-radius: 6px; }
+  .tl { display: flex; justify-content: space-between; position: relative; }
+  .tl-line { position: absolute; left: 60px; right: 60px; top: 9px; height: 2px; background: var(--ink); }
+  .dot { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 120px; text-align: center; cursor: pointer; position: relative; }
+  .dot .pt { width: 20px; height: 20px; border-radius: 999px; background: var(--ink); border: 2px solid var(--ink); }
+  .dot.future .pt { border: 2px dashed #777; background: #fff; }
+  .dot.marker .pt { background: var(--yellow); border: 2px solid var(--ink); }
+  .dot.sel .pt { box-shadow: 0 0 0 5px #bfdbfe; }
+  .dot .date { font-size: 18px; min-height: 22px; font-weight: bold; }
+  .dot .lab { font-size: 17px; color: #444; }
+  ul { margin: 4px 0 0; padding-left: 22px; }
+  li { margin-bottom: 4px; }
+  .hidden { display: none !important; }
+  body.pv #shell { margin-right: 560px; }
+  body.pv #rail { display: none; }
+  body.pv .side { flex-direction: column; }
+  body.pv .side > .panel { width: 100%; }
+  @media (max-width: 1100px) { body.pv #shell { margin-right: 0; } }
+  @media (max-width: 900px) {
+    #rail { display: none; }
+    main { padding: 14px 14px 12px; }
+    header, .foot { padding: 10px 14px; }
+    .side { flex-direction: column; }
+    .side > .panel { width: 100%; }
+    .two { grid-template-columns: 1fr; }
+    .chat { max-height: 45vh; }
+    .bubble { max-width: 95%; }
+    table, tr, td { display: block; width: 100%; }
+    thead, th { display: none; }
+    tr { border: 2px solid var(--ink); margin-bottom: 10px; }
+    td { border: none; padding: 6px 10px; }
+    td:before { content: attr(data-h); color: #444; font-size: 17px; display: block; }
+    td:first-child { padding-top: 10px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div id="shell">
+  <header>
+    <div style="font-size: 22px;"><b>Case Helper</b> <span class="muted">for the Small Claims Tribunals</span></div>
+    <div class="row"><span id="who" style="font-weight: 600;"></span><button class="btn" onclick="newCase()">New case</button></div>
+  </header>
+  <div id="layout">
+    <nav id="rail"></nav>
+    <main>
+      <div><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1></div>
+      <div id="banner" class="banner hidden"></div>
+      <div id="body"></div>
+      <div class="nav-footer">
+        <button class="btn" id="back" disabled onclick="go(step - 1)">Back</button>
+        <div class="muted" id="centre" style="text-align: center;"></div>
+        <button class="btn primary" id="next" disabled onclick="go(step + 1)">Next</button>
+      </div>
+    </main>
+  </div>
+  <div class="foot">This tool does not give legal advice. You are responsible for what you file. Check every rule yourself on Singapore Statutes Online.</div>
+</div>
+
+<aside id="preview" class="hidden">
+  <div class="preview-head">
+    <div><div class="eyebrow" id="pv-eyebrow">Your file</div><div class="preview-name" id="pv-name"></div><div class="muted" id="pv-sub"></div></div>
+    <button class="btn" onclick="closePreview()">Close</button>
+  </div>
+  <div class="preview-body" id="pv-body"></div>
+</aside>
+
+<div id="modal" class="hidden">
+  <div class="box">
+    <div class="row" style="justify-content: space-between;"><div class="section-title">Your letter asking for the money</div><button class="btn" onclick="hide('modal')">Close</button></div>
+    <div class="muted">Read it. Fill in the date. Send it by email or WhatsApp. Keep a copy.</div>
+    <textarea id="wr-text"></textarea>
+    <div class="row"><button class="btn" onclick="copyText()">Copy the letter</button><span class="muted" id="copied"></span></div>
+  </div>
+</div>
+
+<script>
+const STEPS = ["Tell us what happened", "Can the tribunal hear it?", "Your evidence, best first", "What else to gather", "What the other side may say", "Your timeline", "What to do next"];
+const TITLES = ["Tell us what happened", "Can the Small Claims Tribunals hear this?", "Your evidence, strongest first", "What else to gather", "What the other side may say", "Your timeline", "What to do next"];
+let C = null, step = 0, selEvent = null, waiting = false;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const show = id => { $(id).classList.remove("hidden"); if (id === "preview") document.body.classList.add("pv"); };
+const hide = id => { $(id).classList.add("hidden"); if (id === "preview") document.body.classList.remove("pv"); };
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function fmt(iso) { if (!iso) return ""; const [y, m, d] = iso.split("-"); return `${+d} ${MON[+m - 1]} ${y}`; }
+const money = x => "$" + Number(x).toLocaleString("en-SG", {maximumFractionDigits: 0});
+
+async function api(path, opts) {
+  let j;
+  try { j = await (await fetch(path, opts)).json(); }
+  catch (e) { banner("Something went wrong. Please try again."); return null; }
+  if (j && j.error) { banner(j.error); if (j.case) C = j.case; return null; }
+  hide("banner");
+  return j;
+}
+function banner(msg) { $("banner").textContent = msg; show("banner"); }
+
+async function load() {
+  const example = new URLSearchParams(location.search).get("example") === "1";
+  let c = example
+    ? await api("/api/case")
+    : await api("/api/case/new", {method: "POST"});
+  if (!c) return;
+  C = c; render();
+}
+async function newCase() { if (!C) return; if (C.intake.chat.length > 1 || C.exhibits.length) { if (!confirm("Start a new case? The case on screen will be cleared.")) return; } C = await api("/api/case/new", {method: "POST"}); step = 0; render(); }
+
+/* the furthest step you may open: gate must pass to go past 2, all blind spots answered to go past 5 */
+function maxStep() {
+  if (C.gate && !C.gate.pass) return 1;
+  if (C.blindspots.answered < C.blindspots.total) return 4;
+  return 6;
+}
+function go(n) {
+  if (n < 0 || n > maxStep()) return;
+  step = n; selEvent = null; render();
+}
+
+function render() {
+  const max = maxStep();
+  $("who").textContent = C.intake.parties.claimant.name || "";
+  $("rail").innerHTML = STEPS.map((s, i) => {
+    const st = i > max ? "locked" : i < step ? "done" : i === step ? "current" : "todo";
+    const word = i > max ? "Locked" : i < step ? "Done" : i === step ? "You are here" : "";
+    return `<div class="step ${st}" onclick="go(${i})"><div class="num">${i + 1}</div><div>${s}</div><div class="step-state">${word}</div></div>`;
+  }).join("");
+  $("eyebrow").textContent = `Step ${step + 1} of 7`;
+  $("title").textContent = TITLES[step];
+  $("centre").textContent = `Step ${step + 1} of 7`;
+  $("back").disabled = step === 0;
+  if (step === 4 && C.blindspots.answered < C.blindspots.total) $("centre").textContent = `Answer all ${C.blindspots.total} questions to go on.`;
+  if (step === 1 && !C.gate.pass) $("centre").textContent = "Go back to step 1 and tell us what is missing.";
+  $("next").disabled = step + 1 > max;
+  $("body").innerHTML = [intake, gate, evidence, gaps, blindspots, timeline, nextsteps][step]();
+  if (step === 0) scrollChat();
+  document.querySelectorAll(".source-link, .step:not(.locked), .dot, .evidence-row").forEach(el => el.tabIndex = 0);
+}
+
+/* 1. intake: a chat, files on the side */
+function intake() {
+  const exh = e => `<div><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span><br><span class="status-label ${e.status}">${statusText(e)}</span></div>`;
+  const msgs = C.intake.chat.map(m => `<div class="bubble ${m.who}">${esc(m.text)}</div>`).join("") + (waiting ? '<div class="bubble bot wait">One moment...</div>' : "");
+  return `<div class="side">
+  <div class="main col">
+    <div class="box chat" id="chat">${msgs}</div>
+    <div class="row" style="align-items: stretch;">
+      <textarea id="say" rows="2" style="flex: 1 1 240px;" placeholder="Type here" onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }"></textarea>
+      <button class="btn primary" onclick="send()" ${waiting ? "disabled" : ""}>Send</button>
+    </div>
+    <div class="row" style="justify-content: space-between;"><div class="muted">Add your files on the right. They become your evidence.</div><button class="btn" onclick="clearChat()">Start over</button></div>
+  </div>
+  <div class="panel box col" style="padding: 16px;">
+    <div class="section-title">Your files</div>
+    ${C.exhibits.map(exh).join("") || '<div class="muted">No files yet.</div>'}
+    <label class="btn primary" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label>
+    <div class="muted">Agreement, chat screenshots, bank transfer, photos or video.</div>
+  </div></div>`;
+}
+function scrollChat() { const el = $("chat"); if (el) el.scrollTop = el.scrollHeight; }
+async function send() {
+  const box = $("say"), text = box.value.trim(); if (!text || waiting) return;
+  C.intake.chat.push({who: "user", text}); waiting = true; render(); scrollChat();
+  const c = await api("/api/chat", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({message: text})});
+  waiting = false; if (c) C = c; else C.intake.chat.pop(); render(); scrollChat(); $("say").focus();
+}
+async function clearChat() { if (!confirm("Clear the chat and start again? Your files stay.")) return; const c = await api("/api/chat/clear", {method: "POST"}); if (c) C = c; render(); }
+function statusText(e) {
+  const n = e.assets.length, pages = e.assets[0].pages;
+  if (e.status === "ready") return "Read" + (pages ? `, ${pages} pages` : n > 1 ? `, ${n} files` : "");
+  return {reading: "Reading", waiting: "Waiting", error: "Could not read"}[e.status] || e.status;
+}
+async function upload(input, exhibitId) {
+  const f = input.files[0]; if (!f) return;
+  const fd = new FormData(); fd.append("exhibit_id", exhibitId); fd.append("file", f);
+  const ex = C.exhibits.find(e => e.id === exhibitId); if (ex) ex.status = "reading"; render();
+  const c = await api("/api/upload", {method: "POST", body: fd}); if (c) C = c; render();
+}
+
+/* 2. gate */
+function gate() {
+  const g = C.gate;
+  const check = c => `<div class="box row" style="padding: 14px 16px; gap: 16px;">
+      <div class="status-label ${c.pass ? "have" : "missing"}" style="min-width: 70px; text-align: center;">${c.pass ? "Pass" : "Problem"}</div>
+      <div style="flex: 1 1 300px;">${esc(c.text)}</div>
+      <span class="source-link" onclick="openStatute('${c.section_id}')">Read the rule</span></div>`;
+  return `<div class="muted" style="margin-bottom: 10px;">Four checks from the law, using what you told us.</div>
+  <div class="col" style="max-width: 900px;">${g.checks.map(check).join("")}</div>
+  <div class="box" style="max-width: 900px; padding: 16px; margin-top: 12px; background: ${g.pass ? "#bbf7d0" : "#fecaca"}; border-width: 3px;"><div style="font-size: 24px; font-weight: 600;">${esc(g.result)}</div>${g.stop ? `<div style="margin-top: 6px;">${esc(g.stop)}</div>` : ""}</div>`;
+}
+
+/* 3. evidence */
+function evidence() {
+  if (!C.evidence.length) return `<div class="box" style="padding: 18px; max-width: 700px;"><b>No files read yet.</b><br>Go back to step 1 and add your files.</div>`;
+  const uniq = ss => [...new Map(ss.map(s => [s.label, s])).values()];
+  const row = r => `<tr class="evidence-row ${r.rank <= 2 ? "top" : ""}" onclick="openViewer('${r.sources[0].viewer_url}')">
+    <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What it shows">${esc(r.what)}</td>
+    <td data-h="Where">${uniq(r.sources).map(s => `<span class="source-link" onclick="event.stopPropagation(); openViewer('${s.viewer_url}')">${esc(s.label)}</span>`).join(", ")}</td>
+    <td data-h="How strong"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.reason)}</td></tr>`;
+  return `<div class="col">
+    <div class="box" style="padding: 12px 14px;"><div class="section-title">Your story</div><div>${esc(C.story)}</div></div>
+    <div class="box" style="padding: 12px;">
+      <div class="row" style="justify-content: space-between; margin-bottom: 8px;"><div class="muted">Press a row to see the file.</div><a class="btn" href="/api/export/xlsx">Download the list</a></div>
+      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows</th><th>Where</th><th style="width: 130px;">How strong</th><th>Why</th></tr></thead><tbody>${C.evidence.map(row).join("")}</tbody></table>
+    </div></div>`;
+}
+
+/* 4. gaps */
+function gaps() {
+  const li = items => items.map(x => `<li>${esc(x)}</li>`).join("");
+  const g = c => `<div class="box col" style="padding: 12px 14px; gap: 6px;">
+      <div class="row" style="justify-content: space-between;"><div class="section-title">${esc(c.category)}</div><label class="btn" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label></div>
+      <div class="muted">${esc(c.why)}</div>
+      <div class="two"><div><b style="color: #15803d;">You have</b><ul>${li(c.have)}</ul></div><div><b style="color: #b91c1c;">Still missing</b><ul>${li(c.missing)}</ul></div></div></div>`;
+  return `<div class="muted" style="margin-bottom: 10px;">Based on your kind of claim and the files you added.</div><div class="two">${C.gaps.map(g).join("")}</div>`;
+}
+
+/* 5. blind spots */
+function blindspots() {
+  const b = C.blindspots;
+  const p = x => `<div class="box col" style="padding: 12px 14px; gap: 8px; ${x.answer ? "" : "border-color: #b91c1c;"}">
+      <div style="font-weight: 600;">${esc(x.q)}</div>
+      <div class="muted">${esc(x.hint)}</div>
+      <div class="row">${[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]].map(([k, l]) => `<button class="btn ${x.answer === k ? "on" : ""}" onclick="answer('${x.id}', '${k}')">${l}</button>`).join("")}</div></div>`;
+  return `<div class="muted" style="margin-bottom: 10px;">${esc(b.intro)}</div>
+  <div class="two">${b.questions.map(p).join("")}</div>
+  <div class="box" style="margin-top: 12px; padding: 12px 14px; background: var(--pale);"><b>${b.answered} of ${b.total} answered.</b> ${b.answered < b.total ? `Answer all ${b.total} to go on.` : "You can go on."}</div>
+  <div class="dash" style="margin-top: 12px; padding: 12px 14px;">${esc(b.note)}</div>`;
+}
+async function answer(id, a) { const r = await api("/api/blindspot", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id, answer: a})}); if (r) C.blindspots = r; render(); }
+
+/* 6. timeline */
+function timeline() {
+  const T = C.timeline;
+  const sel = T.find(e => e.id === selEvent) || T.find(e => e.id.startsWith("d_") && e.sources.length) || T[0];
+  const dot = e => `<div class="dot ${e.future ? "future" : ""} ${e.marker ? "marker" : ""} ${e.id === sel.id ? "sel" : ""}" onclick="selEvent='${e.id}'; render()"><div class="pt"></div><div class="date">${e.date ? fmt(e.date) : esc(e.date_text || "")}</div><div class="lab">${esc(e.label)}</div></div>`;
+  const bar = T.find(e => e.id === "time_bar");
+  return `<div class="muted" style="margin-bottom: 10px;">Black dots come from your files. Dotted circles are steps still to come. Press a dot to read more.</div>
+  <div class="box" style="padding: 24px 12px; overflow-x: auto;"><div class="tl" style="min-width: ${T.length * 120}px;"><div class="tl-line"></div>${T.map(dot).join("")}</div></div>
+  <div class="side" style="margin-top: 12px;">
+    <div class="main box" style="padding: 14px;"><div class="section-title">${sel.date ? fmt(sel.date) + ": " : ""}${esc(sel.label)}</div><div>${esc(sel.detail)} ${sel.sources.map(s => `<span class="source-link" onclick="openViewer('${s.viewer_url}')">Open ${esc(s.label)}</span>`).join(" or ")}</div></div>
+    ${bar ? `<div class="panel box" style="padding: 14px; background: var(--pale);"><div class="muted">Last day to file</div><div style="font-size: 28px; font-weight: 600;">${fmt(bar.date)}</div><div class="muted">${esc(bar.detail)}</div></div>` : ""}
+  </div>`;
+}
+
+/* 7. next steps */
+function nextsteps() {
+  const act = s => s.action === "written_request" ? `<button class="btn" onclick="openRequest()">Open the letter</button>`
+    : s.action === "gaps" ? `<button class="btn" onclick="go(3)">See the list</button>`
+    : s.source_url ? `<a class="btn" href="${s.source_url}" target="_blank" rel="noopener">${esc(s.source_label)}</a>` : "";
+  const li = (s, i) => `<div class="row" style="justify-content: space-between; padding: 10px; ${i === 0 ? "background: var(--pale);" : ""}"><div style="flex: 1 1 300px;"><b>${s.n}. ${esc(s.title)}</b><br><span class="muted">${esc(s.note)}${s.n === 4 ? ` The fee is $${C.fee.amount}.` : ""}</span></div>${act(s)}</div>`;
+  return `<div class="side">
+  <div class="main box col" style="padding: 12px 14px; gap: 6px;">
+    <div class="muted">Start with number 1.</div>
+    ${C.next_steps.map(li).join("")}
+  </div>
+  <div class="panel col">
+    <div class="box col" style="padding: 16px; gap: 10px;">
+      <div class="section-title">Your evidence list</div>
+      <div class="muted">A list of every file, in order. Opens in Excel. Add rows as you gather more.</div>
+      <a class="btn" href="/api/export/xlsx">Download the list</a>
+    </div>
+    <div class="box col" style="padding: 16px; gap: 10px;">
+      <div class="section-title">Your claim pack</div>
+      <div class="muted">Everything the online claim form asks for, ready to copy and upload. You still file it yourself.</div>
+      <a class="btn primary" href="/api/export/claimpack">Download the pack</a>
+    </div>
+  </div></div>`;
+}
+async function openRequest() { $("wr-text").value = "Writing..."; show("modal"); const r = await api("/api/written-request"); if (r) $("wr-text").value = r.text; }
+function copyText() { navigator.clipboard.writeText($("wr-text").value).then(() => $("copied").textContent = "Copied."); }
+
+/* viewer: one <img> + percentage boxes, every format */
+async function openViewer(url) {
+  const v = await api(url); if (!v) return;
+  $("pv-eyebrow").textContent = "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
+  const boxes = v.boxes.map(([l, t, r, b]) => `<div class="hlbox" style="left:${l * 100}%; top:${t * 100}%; width:${(r - l) * 100}%; height:${(b - t) * 100}%;"></div>`).join("");
+  const pager = v.pages > 1 ? `<div class="row" style="justify-content: space-between; margin-bottom: 8px;"><button class="btn" ${v.page_index === 0 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index - 1}')">Previous page</button><span class="muted">Page ${v.page_index + 1} of ${v.pages}</span><button class="btn" ${v.page_index >= v.pages - 1 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index + 1}')">Next page</button></div>` : "";
+  $("pv-body").innerHTML = `${pager}<div class="imgwrap"><img src="${v.image_url}" alt="${esc(v.title)}">${boxes}</div><div class="muted" style="margin-top: 8px;">${esc(v.caption)}</div>`;
+  show("preview");
+}
+async function openStatute(id) {
+  const s = await api("/api/statute?section_id=" + id); if (!s) return;
+  $("pv-eyebrow").textContent = "The rule"; $("pv-name").textContent = s.title; $("pv-sub").textContent = `From Singapore Statutes Online, read ${fmt(s.retrieved_date)}`;
+  $("pv-body").innerHTML = `<div class="grey statute">${esc(s.quote)}</div><div class="muted" style="margin-top: 8px;">The law, word for word. Check it yourself at <a href="${s.source_url}" target="_blank" rel="noopener">${s.source_url}</a>.</div>` + (s.guide ? `<div class="grey statute" style="margin-top: 10px;">${esc(s.guide)}</div><div class="muted" style="margin-top: 6px;">From the court's own guide, in plain words.</div>` : "");
+  show("preview");
+}
+function closePreview() { hide("preview"); }
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closePreview(); hide("modal"); } if (e.key === "Enter" && e.target.tabIndex === 0 && !e.target.matches("textarea, input, button, a")) e.target.click(); });
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+real run took 102s
+gate True
+1 deposit_terms strong True ['E1 p.2', 'E2 shot 5'] | Deposit of $2,600 to be refunded within 14 days after move-out, less damage costs | Signed by both of you, has amount and dates. Read from a screenshot, check it
+2 deposit_paid strong True ['E1 p.2', 'E2 shot 1', 'E2 shot 1', 'E2 shot 6', 'E4'] | Tenant agreed to pay security deposit of $2,600 on signing the agreement | Proves deposit payment amount and date. Read from a screenshot, check it
+3 handover_acceptance medium True ['E2 shot 2', 'E2 shot 4'] | Landlord instructed her to leave keys in the mailbox, acknowledging move-out plan | Signed by both of you, dated. Read from a screenshot, check it
+4 damage_allegation medium True ['E2 shot 5', 'E2 shot 6', 'E3'] | Landlord claims sofa scratch and refuses to return deposit | The other side's own words, has amount and dates. Read from a screenshot, check it
+5 moveout_condition medium True ['E2 shot 2', 'E2 shot 3', 'E2 shot 4', 'E5 video, 17:05'] | Claimant told landlord she would move out and clean the flat before leaving | Signed by both of you, dated. Read from a screenshot, check it
+6 movein_condition weak False ['E6 photo 1', 'E6 photo 2', 'E6 photo 3', 'E6 photo 4'] | Photo shows living room condition at move-in | Shows bedroom condition at move-in
+ex E1 ['both'] [('deposit_terms', 'The Landlord shall refund the deposit wi'), ('deposit_paid', 'The Tenant shall pay the Landlord a secu')]
+ex E2 ['both', 'both', 'claimant', 'both', 'both', 'claimant'] [('deposit_paid', 'I will transfer the deposit tomorrow mor'), ('deposit_paid', 'Ok. Send me the screenshot after transfe'), ('moveout_condition', 'I will move out on 31 Jul. I will clean '), ('handover_acceptance', 'Noted. Leave the keys in the mailbox.'), ('moveout_condition', 'Hi Mr Tan, keys in the mailbox. Flat cle'), ('moveout_condition', 'Hi Mr Tan, keys in the mailbox. Flat cle'), ('handover_acceptance', 'ok, all good. will transfer deposit afte'), ('damage_allegation', 'sofa got scratch, deposit cannot return'), ('deposit_terms', 'the 14 days passed yesterday. Can you tr'), ('damage_allegation', 'still waiting for the photo of the scrat'), ('deposit_paid', 'If there is no damage please return the ')]
+ex E3 ['respondent'] [('damage_allegation', 'The sofa has a scratch on the left arm. ')]
+ex E4 ['third_party'] [('deposit_paid', 'Transfer of SGD 2,600.00 to TAN AH KOW')]
+ex E5 ['claimant'] [('moveout_condition', '')]
+ex E6 ['claimant', 'claimant', 'claimant', 'claimant', 'claimant'] [('movein_condition', ''), ('movein_condition', ''), ('movein_condition', ''), ('movein_condition', '')]
+story: 
+summary: 500 On 3 Aug 2025, I signed a tenancy agreement with Mr Tan Ah Kow for an HDB flat and paid him a security deposit of $2,600 by bank transfer. The agreement said he must refund the deposit within 14 days after I move out, minus any damage cost.
+
+On 31 Jul 2026, I moved out. I cleaned the flat and left the keys in the mailbox as he told me to. He replied "ok, all good" and said he would transfer the deposit after checking.
+
+The 14 days ended on 14 Aug 2026. On 15 Aug 2026, he said the sofa had a scra
+  2025-08-02 Deposit paid (E2)
+  2025-08-03 Deposit paid, Deposit paid (E1, E4)
+  2026-07-15 Move out, "all good" (E2)
+  2026-07-31 Move out, "all good", move-out (E2, E5)
+  2026-08-14 Refund due (E2 shot 5)
+  2026-08-15 Landlord refuses (E2, E3)
+  2026-08-20 Landlord refuses, deposit paid (E2)
+  2026-09-05 Today
+  None Written request
+  None Pre-filing check, then file on CJTS
+  None Serve within 7 working days
+  None Consultation
+  None Hearing
+  2028-08-15 Time bar

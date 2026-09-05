@@ -1,0 +1,164 @@
+{
+ "tenancy": [
+  {
+   "key": "communication",
+   "category": "Messages and calls",
+   "why": "The other side's own words, dated, are the strongest thing you can bring.",
+   "missing": [
+    "The full chat export, in order",
+    "Any voice note or call log",
+    "Anything agreed face to face: date, words, who was there"
+   ]
+  },
+  {
+   "key": "agreement",
+   "category": "The agreement",
+   "why": "The agreement sets what each side must do.",
+   "missing": [
+    "Inventory list signed at handover, if your agreement has one",
+    "Stamp duty certificate (the court asks for it)",
+    "Property listing, if it described the furniture"
+   ]
+  },
+  {
+   "key": "payment",
+   "category": "Payments",
+   "why": "Shows what you paid and what you still owe, if anything.",
+   "missing": [
+    "Last month's rent transfer",
+    "Final utility bill and receipt",
+    "Any repair invoice he sent you"
+   ]
+  },
+  {
+   "key": "condition",
+   "category": "Photos and video",
+   "why": "Dated pictures of the flat before and after are the answer to a damage claim.",
+   "missing": [
+    "Dated move-in photos or video of the rooms and furniture",
+    "Handover form",
+    "Cleaner or mover receipt, 31 Jul"
+   ]
+  },
+  {
+   "key": "request",
+   "category": "Your letter asking for the money",
+   "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
+   "missing": [
+    "A written request to the landlord for the deposit with a reply date. You can make one on the last step."
+   ]
+  }
+ ],
+ "goods": [
+  {
+   "key": "communication",
+   "category": "Messages and calls",
+   "why": "The seller's own words, dated, are the strongest thing you can bring.",
+   "missing": [
+    "Your messages to the seller, in order",
+    "Any call log or voice note",
+    "Anything agreed face to face"
+   ]
+  },
+  {
+   "key": "agreement",
+   "category": "The order and receipt",
+   "why": "The order and listing set what was promised.",
+   "missing": [
+    "Receipt or invoice",
+    "Order page or listing with the description and photos",
+    "Warranty or terms of sale"
+   ]
+  },
+  {
+   "key": "payment",
+   "category": "Payments",
+   "why": "Shows what you paid.",
+   "missing": [
+    "Bank or card record of the payment",
+    "Delivery record",
+    "Repair quote or invoice"
+   ]
+  },
+  {
+   "key": "condition",
+   "category": "Photos and video",
+   "why": "Dated pictures of the fault are the answer to a dispute about the goods.",
+   "missing": [
+    "Dated photos or video of the fault",
+    "A report from a repairer, if you have one"
+   ]
+  },
+  {
+   "key": "request",
+   "category": "Your letter asking for the money",
+   "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
+   "missing": [
+    "A written request to the seller with a reply date. You can make one on the last step."
+   ]
+  }
+ ],
+ "category_to_key": {
+  "agreement": "agreement",
+  "payment": "payment",
+  "other_side_words": "communication",
+  "dispute": "communication",
+  "condition": "condition",
+  "request": "request"
+ },
+ "goods_note": [
+  "Receipt or invoice, order page, delivery record",
+  "Product listing and photos",
+  "Photos or video of the fault, repair quotes, warranty",
+  "Your messages to the seller"
+ ],
+ "general": [
+  {
+   "key": "communication",
+   "category": "Messages and calls",
+   "why": "The other side's own words, dated, are the strongest thing you can bring.",
+   "missing": [
+    "Your messages with the other side, in order",
+    "Any call log or voice note",
+    "Anything agreed face to face: date, words, who was there"
+   ]
+  },
+  {
+   "key": "agreement",
+   "category": "Agreement (contract, quote, invoice, terms)",
+   "why": "The agreement sets what each side had to do.",
+   "missing": [
+    "The signed contract, quote or order",
+    "Any terms page or brochure",
+    "Later changes agreed in writing"
+   ]
+  },
+  {
+   "key": "payment",
+   "category": "Payments",
+   "why": "Shows what you paid and when.",
+   "missing": [
+    "Bank or card record of every payment",
+    "Receipts or invoices",
+    "A quote for putting things right, if you are claiming a cost"
+   ]
+  },
+  {
+   "key": "condition",
+   "category": "Photos and video",
+   "why": "Dated pictures show what happened.",
+   "missing": [
+    "Dated photos or video of the work, the damage or the item",
+    "A report from a repairer or expert, if you have one"
+   ]
+  },
+  {
+   "key": "request",
+   "category": "Your letter asking for the money",
+   "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
+   "missing": [
+    "A written request to the other side with a reply date. You can make one on the last step."
+   ]
+  }
+ ]
+}

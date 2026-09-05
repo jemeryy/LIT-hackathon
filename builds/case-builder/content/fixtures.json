@@ -1,0 +1,305 @@
+{
+ "files": {
+  "Tenancy_Agreement_2025.pdf": {
+   "meta": {
+    "author": "both",
+    "signed": true,
+    "dated": true,
+    "has_amount": true,
+    "from_picture": false
+   },
+   "facts": [
+    {
+     "evidence_key": "deposit_terms",
+     "category": "agreement",
+     "fact": "Deposit $2,600, refund within 14 days of moving out, less damage",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": 2600,
+     "where": "cl. 4",
+     "quote": "The Landlord shall refund the deposit within 14 days after the Tenant moves out"
+    },
+    {
+     "evidence_key": null,
+     "category": "agreement",
+     "fact": "Lease of 12 months from 3 Aug 2025, signed by both",
+     "timeline_label": "Lease starts",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "cl. 1",
+     "quote": "for a term of 12 months starting on 3 August 2025"
+    },
+    {
+     "evidence_key": null,
+     "category": "agreement",
+     "fact": "Clause 6 says an inventory list is signed at handover",
+     "timeline_label": null,
+     "date": null,
+     "party": "both",
+     "amount": null,
+     "where": "cl. 6",
+     "quote": "An inventory list signed by both parties at handover"
+    }
+   ]
+  },
+  "WhatsApp_01.png": {
+   "meta": {
+    "author": "both",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "WhatsApp_02.png": {
+   "meta": {
+    "author": "both",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "WhatsApp_03.png": {
+   "meta": {
+    "author": "both",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "WhatsApp_04.png": {
+   "meta": {
+    "author": "respondent",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "handover_acceptance",
+     "category": "other_side_words",
+     "fact": "Landlord wrote \"ok, all good\" at handover, 31 Jul",
+     "date": "2026-07-31",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": "His own words, dated, in your chat screenshot",
+     "quote": "ok, all good. will transfer deposit after i check"
+    }
+   ]
+  },
+  "WhatsApp_05.png": {
+   "meta": {
+    "author": "respondent",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Landlord says sofa damaged, 15 Aug",
+     "date": "2026-08-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": "His claim in chat and email, no photo sent",
+     "quote": "sofa got scratch, deposit cannot return"
+    }
+   ]
+  },
+  "WhatsApp_06.png": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "email_landlord.png": {
+   "meta": {
+    "author": "respondent",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Landlord says sofa damaged, 15 Aug",
+     "date": "2026-08-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "quote": "I will not be returning the deposit until this is settled"
+    }
+   ]
+  },
+  "deposit_transfer.jpg": {
+   "meta": {
+    "author": "third_party",
+    "signed": false,
+    "dated": true,
+    "has_amount": true,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "deposit_paid",
+     "category": "payment",
+     "fact": "Deposit $2,600 paid 3 Aug 2025",
+     "date": "2025-08-03",
+     "party": "claimant",
+     "amount": 2600,
+     "where": null,
+     "note": "Bank record, third party",
+     "quote": "Transfer of SGD 2,600.00 to TAN AH KOW"
+    }
+   ]
+  },
+  "moveout_walkthrough.mp4": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": true,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "moveout_condition",
+     "category": "condition",
+     "fact": "Flat condition when you left",
+     "date": "2026-07-31",
+     "party": "claimant",
+     "amount": null,
+     "where": "1:12",
+     "note": "Filmed by you on 31 Jul, sofa shown at 1:12",
+     "quote": null
+    }
+   ]
+  },
+  "movein_01.jpg": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": false,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": [
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Flat condition when you moved in",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "No date stamp, sofa not in any photo",
+     "quote": null
+    }
+   ]
+  },
+  "movein_02.jpg": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": false,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "movein_03.jpg": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": false,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "movein_04.jpg": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": false,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  },
+  "movein_05.jpg": {
+   "meta": {
+    "author": "claimant",
+    "signed": false,
+    "dated": false,
+    "has_amount": false,
+    "from_picture": true
+   },
+   "facts": []
+  }
+ },
+ "texts": {
+  "story": "You rented Mr Tan's flat for 12 months and paid a $2,600 deposit on 3 Aug 2025. You moved out on 31 Jul 2026 and he wrote \"ok, all good\". On 15 Aug he refused to return the deposit, saying the sofa was damaged.",
+  "summary": "I rented the Respondent's flat at Blk 123 Bedok North Street 1 #05-67 from 3 Aug 2025 for 12 months and paid a $2,600 deposit on 3 Aug 2025. Clause 4 of the tenancy agreement says the deposit is refunded within 14 days of moving out, less damage. I moved out on 31 Jul 2026. The Respondent wrote \"ok, all good\" the same day. On 15 Aug 2026 he refused to return the deposit, saying the sofa was scratched, and sent no photo or invoice. I claim the $2,600 deposit.",
+  "written_request": "Dear Mr Tan,\n\nI am writing about the deposit of $2,600 that I paid on 3 August 2025 for the flat at Blk 123 Bedok North Street 1 #05-67.\n\nClause 4 of our tenancy agreement says the deposit is refunded within 14 days after I move out, less the cost of repairing any damage beyond fair wear and tear. I moved out on 31 July 2026 and you wrote \"ok, all good\" the same day. The refund was due on 14 August 2026.\n\nOn 15 August you said the sofa has a scratch and that the deposit cannot be returned. I have asked twice for a photo. None has been sent.\n\nPlease return the $2,600 to my bank account within 7 days of this letter, by [date]. If you say any part should be held back, please send me a photo of the damage, a repair invoice or quote, and the amount you are holding back, so I can consider it.\n\nIf I do not hear from you by then, I will file a claim at the Small Claims Tribunals.\n\nYours sincerely,\nMei Ling"
+ },
+ "chat": [
+  {
+   "reply": "You say your landlord kept your $2,600 deposit. What is your full name and address? What is the landlord's full name and Singapore address?",
+   "fields": {
+    "claim_type": "tenancy",
+    "respondent_role": "landlord",
+    "respondent_name": "Mr Tan",
+    "amount": 2600,
+    "cause_of_action_date": "2026-08-15",
+    "moveout_date": "2026-07-31",
+    "what_agreed": "One month deposit, $2,600, to be returned after moving out."
+   },
+   "done": false
+  },
+  {
+   "reply": "You say both addresses are in Singapore. Was the flat your home, and how long was the lease? When was the deposit due under the agreement?",
+   "fields": {
+    "claimant_name": "Mei Ling",
+    "claimant_address": "Blk 123 Bedok North Street 1 #05-67, Singapore 460123",
+    "respondent_name": "Tan Ah Kow",
+    "respondent_address": "45 Bedok Reservoir Road #12-34, Singapore 470045",
+    "respondent_in_singapore": true,
+    "respondent_is_company": false
+   },
+   "done": false
+  },
+  {
+   "reply": "You say the flat was your home under a 12-month lease. Add the agreement, messages, payment record, photos, and video on the right.",
+   "fields": {
+    "residential": true,
+    "lease_months": 12,
+    "refund_days": 14,
+    "what_agreed": "One month deposit, $2,600. Returned within 14 days after moving out, minus any damage."
+   },
+   "done": true
+  }
+ ],
+ "chat_user": [
+  "My landlord Mr Tan will not return my $2,600 deposit. I rented his flat for 12 months and moved out on 31 Jul 2026. He said ok, all good. Then on 15 Aug 2026 he said the sofa was scratched and refused to pay it back.",
+  "I am Mei Ling, Blk 123 Bedok North Street 1 #05-67, Singapore 460123. He is Tan Ah Kow, 45 Bedok Reservoir Road #12-34, Singapore 470045. Yes, he lives in Singapore.",
+  "Yes, an HDB flat I lived in. 12 months, 3 Aug 2025 to 2 Aug 2026. One month deposit, returned within 14 days after I move out, minus any damage."
+ ]
+}
