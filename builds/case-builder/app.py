@@ -42,6 +42,16 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
+ADDRESS_JUNK = re.compile(r"[?()\[\]]|\b(unclear|unknown|not given|missing|assumed|approx\w*)\b", re.IGNORECASE)
+INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
+NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
+    "story": "Tell me what happened, in your own words.",
+    "category": "Was this about goods, services, a home lease, or damage to property?",
+    "agreed": "What did the two sides agree?",
+    "amount": "How much are you claiming in total?",
+    "when": "On what date did they refuse, or the problem start?",
+    "files": "Add your files on the right.",
+}
 
 app = FastAPI(title=APP_NAME)
 CASES = {}                      # one case per visitor, keyed by the visitor cookie
@@ -163,6 +173,10 @@ def apply_fields(case, fields):
             except ValueError:
                 pass
         elif k in FIELD_PATH:
+            if k.endswith("_address"):
+                v = re.sub(r",\s*#\s*(?=,|$)", "", str(v)).strip().strip(",")   # empty unit slot the model leaves behind
+                if ADDRESS_JUNK.search(v):
+                    continue   # the model hedged or invented part of it; an address goes on a court form, so drop it
             *path, leaf = FIELD_PATH[k]
             node = it
             for step in path:
@@ -257,7 +271,19 @@ def _plain_sentence(value, prefix=None, max_words=None):
     return value
 
 
-def safe_intake_reply(turn):
+ADDRESS_WORDS = ("address", "postal code", "postcode", "unit number", "block number")
+
+
+def asks_for_recorded_address(question, case):
+    """The model sometimes chases an address it already holds, postal code included. Drop that question."""
+    q = question.lower()
+    if not any(w in q for w in ADDRESS_WORDS):
+        return False
+    p = case["intake"]["parties"]
+    return bool(p["claimant"]["address"] if "your" in q else p["respondent"]["address"])
+
+
+def safe_intake_reply(turn, case):
     """Only fact reflections and fact questions may cross the model boundary."""
     scope = turn.get("scope", "claim_intake")  # saved example fixtures predate scope metadata
     confidence = turn.get("confidence", "high")
@@ -269,7 +295,7 @@ def safe_intake_reply(turn):
     questions = []
     for q in turn.get("questions") or []:
         q = _plain_sentence(q, max_words=22)
-        if q and q.endswith("?"):
+        if q and q.endswith("?") and not asks_for_recorded_address(q, case):
             questions.append(q)
     if not questions[:2]:
         # Compatibility for the deterministic worked example only.
@@ -284,6 +310,8 @@ def safe_intake_reply(turn):
 CHANGE_WORDS = {"amount": "the amount you claim", "cause_of_action_date": "the date the other side refused",
                 "moveout_date": "the move-out date", "what_agreed": "what was agreed", "consent_30k": "the $30,000 agreement"}
 PARTY_WORDS = {"name": "name", "address": "address", "in_singapore": "in Singapore", "is_company": "a company", "role": "role"}
+BLOCKED_COVERS = {"service": "in Singapore", "amount": "the amount you claim",   # a failed check already states these
+                  "time": "the date the other side refused", "category": "the kind of claim"}
 
 
 def describe_changes(before, case):
@@ -309,7 +337,21 @@ def describe_changes(before, case):
             out.append(f"the lease is {'' if new else 'not '}{w}" if k == "residential" else f"the lease is {new} {w}")
     if before["claim_type"] not in ("unknown", "other") and case["claim_type"] != before["claim_type"]:
         out.append("the kind of claim has changed")
-    return ("Noted: " + "; ".join(out) + ".") if out else ""
+    return out
+
+
+def next_question(case, item):
+    """Ask in our own words for the one thing still missing, naming only the part we do not already hold."""
+    p = case["intake"]["parties"]
+    if item == "claimant":
+        return ("What is your full address, with unit number and postal code?" if p["claimant"]["name"]
+                else "What is your name, and your full address with unit number and postal code?")
+    if item == "respondent":
+        r = p["respondent"]
+        if not r.get("name") or not r.get("address"):
+            return "Who are you claiming against? What is their full address, with postal code?"
+        return f"Is {r['name']} in Singapore?"
+    return NEXT_QUESTION[item]
 
 
 def chat_turn(case, message):
@@ -323,36 +365,46 @@ def chat_turn(case, message):
         return recompute(case)
     turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
-    trusted_turn = turn.get("scope", "claim_intake") == "claim_intake" and turn.get("confidence", "high") != "low"
-    if stated_amount is not None and turn.get("scope", "claim_intake") not in ("off_topic", "prompt_attack"):
-        # A stated total is a fact we can read ourselves. Keep it even when the model found the message unclear.
-        if not trusted_turn:
-            turn.update(scope="claim_intake", confidence="high", questions=[], reflection=None, fields={})
-            trusted_turn = True
-        turn.setdefault("fields", {})["amount"] = stated_amount
+    scope = turn.get("scope", "claim_intake")
+    trusted_turn = scope == "claim_intake" and turn.get("confidence", "high") != "low"
     before = case["claim_type"]
     corrected = []
     if trusted_turn:
+        if stated_amount is not None:
+            turn.setdefault("fields", {})["amount"] = stated_amount
         apply_fields(case, turn.get("fields", {}))
-    elif in_scope:
-        corrected = apply_corrections(case, turn)
+    elif scope not in ("off_topic", "prompt_attack"):
+        if scope == "claim_intake":
+            corrected = apply_corrections(case, turn)
+        if stated_amount is not None:
+            # A stated total is a fact we read ourselves, so it does not need the model's confidence.
+            apply_fields(case, {"amount": stated_amount})
+            corrected.append("amount")
     if case["claim_type"] != before and rules.ctype(case) != rules.ctype({"claim_type": before}):
         for ex in case["exhibits"]:   # files read before the kind of claim was known: read them again under its keys
             for a in ex["assets"]:
                 if ex["status"] == "ready":
                     process_asset(case, ex, a)
-    missing = [c["id"] for c in checklist_state(case) if not c["done"]]
-    it["done"] = not missing
-    changed = describe_changes(snap, case)
+    case = recompute(case)   # the gate must reflect this turn before we choose what to say
+    blocked = [c for c in case["gate"]["checks"] if c["blocked"]]
+    missing = [c["id"] for c in case["checklist"] if not c["done"]]
+    notes = [n for n in describe_changes(snap, case)
+             if not any(BLOCKED_COVERS[c["id"]] in n for c in blocked)]   # a failed check below already says it
+    changed = ("Noted: " + "; ".join(notes) + ".") if notes else ""
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
-    reply = safe_intake_reply(turn)
-    if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
+    reply = safe_intake_reply(turn, case)
+    if reply in ("", UNSAFE_OUTPUT_REPLY) or (reply == UNCLEAR_REPLY and corrected):
         # The model asked nothing usable. Having read the person correctly, saying we could not is both
         # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
-        reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
+        reply = next_question(case, missing[0]) if missing else INTAKE_COMPLETE
+    other_side = it["parties"]["respondent"]
     if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
-        reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
+        reply = " ".join(c["text"] for c in blocked)
+    elif other_side["name"] and other_side["address"] and other_side["in_singapore"] is None:
+        # The model will not read this off an address, and it may not be inferred from one. Nothing else
+        # asks it, so step 2 would sit unanswered for ever while the chat moved on to files.
+        reply = f"Is {other_side['name']} in Singapore?"
     elif missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
         needed = {
@@ -362,11 +414,10 @@ def chat_turn(case, message):
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
         reply = f"I have enough details about your claim against {other}. Now add {needed} on the right."
-    reply = f"{changed} {reply}".strip() or "Noted. Nothing else is missing."
-    it["chat"].append({"who": "bot", "text": reply})
-    case = recompute(case)
-    if not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
-        it["chat"][-1]["text"] += " " + case["gate"]["stop"]   # eligibility problem: say it here, not only in step 2
+    elif not missing:
+        reply = INTAKE_COMPLETE
+    it["chat"].append({"who": "bot", "text": f"{changed} {reply}".strip()})
+    save(case)
     return case
 
 

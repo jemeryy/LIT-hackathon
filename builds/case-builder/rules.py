@@ -148,9 +148,10 @@ def gate(case, today):
     elif ct in CATEGORY_TEXT:
         cat_known, cat_ok, cat_text = True, True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
-        cat_ok, cat_text = False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
-                                   "home leases up to 2 years, and damage to property not from a motor vehicle or a neighbour. "
-                                   "It does not hear work disputes.")
+        cat_known, cat_ok = True, False
+        cat_text = ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
+                    "home leases up to 2 years, and damage to property not from a motor vehicle or a neighbour. "
+                    "It does not hear work disputes.")
     else:
         cat_known, cat_ok = False, False
         cat_text = "Tell us what happened so we can check if the tribunal hears this kind of claim."
