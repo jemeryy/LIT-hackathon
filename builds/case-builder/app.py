@@ -42,6 +42,7 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
+NO_DETAIL = re.compile(r"(no|nope|none|i )?\s*(dont|don't|do not|not)?\s*(have|know|sure)?( it| that| any| one| idea)?\.?")
 INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
 NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
     "story": "Tell me what happened, in your own words.",
@@ -344,6 +345,11 @@ def chat_turn(case, message):
         turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
     corrected = []
+    if NO_DETAIL.fullmatch(message.strip().lower()) and it["parties"]["respondent"]["name"] and not it["parties"]["respondent"]["address"]:
+        # "dont have" to an address question: record it so we stop asking. The model alone kept asking.
+        turn.update(scope="claim_intake", confidence="high", reflection=None)
+        turn.setdefault("fields", {})["respondent_address"] = "not known"
+        trusted_turn = True
     if trusted_turn:
         apply_fields(case, turn.get("fields", {}))
     elif in_scope:
@@ -359,6 +365,8 @@ def chat_turn(case, message):
     changed = describe_changes(snap, case)
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
+    if turn.get("reflection") and any(m["who"] == "bot" and turn["reflection"] in m["text"] for m in it["chat"][:-1]):
+        turn["reflection"] = None   # already said in an earlier turn; saying it again reads as not listening
     reply = safe_intake_reply(turn)
     if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
         # The model asked nothing usable. Having read the person correctly, saying we could not is both
