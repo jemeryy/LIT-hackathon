@@ -173,6 +173,36 @@ def apply_fields(case, fields):
     it["account"] = " ".join(m["text"] for m in it["chat"] if m["who"] == "user")
 
 
+def known_value(case, key):
+    """The value already recorded for one intake field, or None when it is not set yet."""
+    it = case["intake"]
+    if key == "claim_type":
+        return None if case["claim_type"] == "unknown" else case["claim_type"]
+    if key in FIELD_PATH:
+        *path, leaf = FIELD_PATH[key]
+        node = it
+        for step in path:
+            node = node[step]
+        value = node[leaf]
+    else:
+        value = it.get(key)
+    return None if value is None or value == "" else value
+
+
+def apply_corrections(case, turn):
+    """A low-confidence turn is not trusted to add new facts, but the person may still be fixing one.
+    Only a field the model names as changed, that is already recorded and now differs, is written."""
+    fields = turn.get("fields", {})
+    changed = {}
+    for k in turn.get("corrections", []):
+        old = known_value(case, k)
+        if k in fields and old is not None and fields[k] != old:
+            changed[k] = fields[k]
+    if changed:
+        apply_fields(case, changed)
+    return list(changed)
+
+
 def explicit_claim_amount(message):
     """Return a total the user explicitly calls their claim; never infer one."""
     money = r"(?:S\s*\$|SGD\s*)?\$?\s*([0-9][0-9,]*(?:\.\d{1,2})?)"
@@ -301,8 +331,11 @@ def chat_turn(case, message):
             trusted_turn = True
         turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
+    corrected = []
     if trusted_turn:
         apply_fields(case, turn.get("fields", {}))
+    elif in_scope:
+        corrected = apply_corrections(case, turn)
     if case["claim_type"] != before and rules.ctype(case) != rules.ctype({"claim_type": before}):
         for ex in case["exhibits"]:   # files read before the kind of claim was known: read them again under its keys
             for a in ex["assets"]:
@@ -314,7 +347,13 @@ def chat_turn(case, message):
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
     reply = safe_intake_reply(turn)
-    if missing == ["files"]:
+    if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
+        # The model asked nothing usable. Having read the person correctly, saying we could not is both
+        # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
+        reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
+    if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
+        reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
+    elif missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
         needed = {
             "tenancy": "the agreement, payment records, messages, and photos",
