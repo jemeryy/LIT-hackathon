@@ -187,9 +187,10 @@ def gaps(case):
     to_key = g["category_to_key"]
     have = {}
     for ex in case["exhibits"]:
-        keys = {to_key.get(f["category"]) for f in ex.get("facts", [])} - {None}
-        for k in keys:
-            have.setdefault(k, []).append(f"{ex['title']} ({ex['id']})")
+        for f in ex.get("facts", []):   # name the fact, not just the file: one chat export can hold messages and a receipt
+            k = to_key.get(f["category"])
+            if k and len(have.setdefault(k, [])) < 4:
+                have[k].append(f"{f['fact']} ({ex['id']})")
     return [{"key": c["key"], "category": c["category"], "why": c["why"],
              "have": have.get(c["key"]) or ["Nothing yet"], "missing": c["missing"]}
             for c in g[ctype(case)]]

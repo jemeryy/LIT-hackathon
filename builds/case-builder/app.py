@@ -42,7 +42,6 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
-SAMPLE_BLINDSPOTS = {"b1": "unsure", "b2": "no", "b3": "yes", "b4": "no"}
 
 app = FastAPI(title=APP_NAME)
 CASES = {}                      # one case per visitor, keyed by the visitor cookie
@@ -386,7 +385,6 @@ def build_sample(today=None, include_chat=False):
         for a in ex["assets"]:
             process_asset(case, ex, a, use_saved=True)
         ex["status"] = "ready"
-    case["blindspots"] = rules.blindspots(case, SAMPLE_BLINDSPOTS)
     CASES[case["visitor"]] = recompute(case)
     return CASES[case["visitor"]]
 

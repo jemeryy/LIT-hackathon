@@ -68,7 +68,7 @@ assert case["evidence"][4]["sources"][0]["exhibit_id"] == "E2" and case["evidenc
 refund = next(e for e in case["timeline"] if e["id"] == "refund_due")
 assert refund["date"] == "2026-08-14", refund
 assert next(e for e in case["timeline"] if e["id"] == "time_bar")["date"] == "2028-08-15"
-assert case["blindspots"]["answered"] == 4 and case["blindspots"]["total"] == 6
+assert case["blindspots"]["answered"] == 0 and case["blindspots"]["total"] == 6   # the example starts unanswered, like a new case
 assert case["fee"]["amount"] == 10
 assert 0 < len(case["summary"]) <= 500
 
