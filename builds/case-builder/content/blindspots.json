@@ -13,7 +13,7 @@
    },
    {
     "id": "b2",
-    "q": "Has the landlord sent, or could he get, a repair or cleaning invoice?",
+    "q": "Has the landlord sent, or could they get, a repair or cleaning invoice?",
     "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed.",
     "they": "A repair or cleaning invoice",
     "strength": "strong",
@@ -30,7 +30,7 @@
    {
     "id": "b4",
     "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
-    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back.",
+    "hint": "Check SMS, email and other apps you used with them. Anything agreed can change what they can hold back.",
     "they": "Messages or words showing other conditions you agreed to",
     "strength": "medium",
     "when": "yes"

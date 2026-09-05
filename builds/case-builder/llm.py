@@ -99,7 +99,8 @@ def extract_facts(asset, text, case, image_path=None, use_saved=False):
     if use_saved or use_fixtures():
         return FIX["files"].get(asset["filename"], {"meta": {"author": "claimant", "signed": False, "dated": False,
                                                               "has_amount": False, "from_picture": True}, "facts": []})
-    keys = EVIDENCE_KEYS.get(case["claim_type"], EVIDENCE_KEYS["general"])
+    import rules
+    keys = EVIDENCE_KEYS.get(rules.ctype(case), EVIDENCE_KEYS["general"])   # same set the rankings use: a landlord or a seller gets general
     tool = {"name": "record_facts", "description": "Record the facts this file shows.",
             "input_schema": {"type": "object", "properties": {
                 "author": {"type": "string", "enum": PARTIES, "description": "who made the file: both = a document signed by both sides; third_party = bank, courier, agent, government; respondent = the other side wrote it; claimant = the person claiming wrote or took it"},

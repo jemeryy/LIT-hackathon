@@ -19,8 +19,11 @@ CATEGORY_TEXT = {"goods": "a contract for the sale of goods", "services": "a con
 def ctype(case):
     """Content set for this claim: tenancy and goods have their own, everything else shares the general one."""
     ct = case["claim_type"]
-    if ct == "tenancy" and (case.get("intake", {}).get("parties", {}).get("respondent", {}).get("role") or "").lower().startswith("tenant"):
+    role = (case.get("intake", {}).get("parties", {}).get("respondent", {}).get("role") or "").lower()
+    if ct == "tenancy" and role.startswith("tenant"):
         return "general"   # the tenancy set is written for a tenant claiming a deposit; a landlord gets the general set
+    if ct == "goods" and (role.startswith("buyer") or role.startswith("customer")):
+        return "general"   # the goods set is written for a buyer; a seller chasing a buyer gets the general set
     return ct if ct in ("tenancy", "goods") else "general"
 CAT_WEIGHT = {"agreement": 0, "payment": 1, "other_side_words": 2, "condition": 3, "dispute": 4}
 STRENGTH_ORDER = {"strong": 0, "medium": 1, "weak": 2}
@@ -142,7 +145,7 @@ def gate(case, today):
     if ct == "tenancy":
         cat_known = prem.get("residential") is not None and prem.get("lease_months") is not None
         cat_ok = bool(prem.get("residential")) and (prem.get("lease_months") or 0) <= 24
-        cat_text = "The tribunal hears this kind of claim: a home lease of 2 years or less, and a deposit refund."
+        cat_text = "The tribunal hears this kind of claim: a dispute under a home lease of 2 years or less."
         if not cat_known:
             cat_ok, cat_text = False, "Tell us if the place was your home, and how long the lease was."
         elif not cat_ok:
@@ -168,7 +171,7 @@ def gate(case, today):
                   + (" You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
                   else "Tell us how much you are claiming. The limit is $20,000, or $30,000 if both sides agree.")},
         {"id": "time", "pass": time_ok, "section_id": "scta_s5_time",
-         "text": (f"The {role} refused on {fmt(cause)}. You have 2 years from that day, so until {fmt(bar)}."
+         "text": (f"The problem started on {fmt(cause)}, the day the {role} refused or the loss happened. You have 2 years from that day, so until {fmt(bar)}."
                   if cause else "Tell us the date the other side refused, or the problem started.")},
         {"id": "service", "pass": served_ok, "section_id": "scta_s5_service",
          "text": f"The {role} is in Singapore, so the claim can be served." if served_ok
@@ -288,7 +291,7 @@ def timeline(case, today):
     if cause:
         bar = plus_years(cause, 2)
         events.append({"id": "time_bar", "label": "Time bar", "date": bar.isoformat(), "future": True, "marker": True,
-                       "computed": True, "detail": f"2 years after {fmt(cause)}, the date the {role} refused. You must file by then.",
+                       "computed": True, "detail": f"2 years after {fmt(cause)}, the day the {role} refused or the loss happened. You must file by then.",
                        "sources": []})
     return events
 
