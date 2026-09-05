@@ -551,7 +551,8 @@ def chat_clear():
 
 
 @app.post("/api/upload")
-async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: UploadFile = File(...)):
+async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: UploadFile = File(...),
+                 side: str = Form(None), spot: str = Form(None)):
     case = current()
     data = await file.read()
     if len(data) > MAX_UPLOAD:
@@ -565,6 +566,8 @@ async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: 
         if not ex:
             ex = {"id": exhibit_id, "kind": "image_set" if kind == "image" else kind, "status": "waiting",
                   "title": file.filename, "facts": [], "assets": []}
+            if side == "theirs":   # added under "what the other side may have": their evidence, kept out of your ranking
+                ex.update(side="theirs", spot=spot or "")
             case["exhibits"].append(ex)
         asset_id = asset_id or (exhibit_id if not ex["assets"] else f"{exhibit_id}-{len(ex['assets']) + 1}")
         UPLOADS.mkdir(parents=True, exist_ok=True)

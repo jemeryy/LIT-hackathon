@@ -55,6 +55,8 @@ def plus_years(date, n):
 def _facts(case):
     """Yield (exhibit, asset, fact) for every fact kept after locating."""
     for ex in case["exhibits"]:
+        if ex.get("side") == "theirs":   # a file added under "what the other side may have" is their evidence, not yours
+            continue
         assets = {a["id"]: a for a in ex["assets"]}
         for f in ex.get("facts", []):
             yield ex, assets[f["asset_id"]], f
@@ -208,18 +210,29 @@ def blindspots(case, answers):
     qs = [{**q, "answer": answers.get(q["id"])} for q in b["questions"]]
     return {"intro": b["intro"], "note": b["note"], "total": len(qs),
             "answered": sum(1 for q in qs if q["answer"] in ("yes", "no", "unsure")), "questions": qs,
-            "theirs": their_evidence(qs)}
+            "theirs": their_evidence(qs, case.get("exhibits", []))}
 
 
-def their_evidence(qs):
-    """What the other side may bring, strongest first, from the blind-spot answers. A 'not sure' counts one step weaker."""
+THEIR_WHY = {"strong": "A signed paper or your own words. Hard to argue with.",
+             "medium": "Real, but your own dated files can answer it.",
+             "weak": "One person's word. Easy to question."}
+
+
+def their_evidence(qs, exhibits=()):
+    """What the other side may bring, strongest first, from the blind-spot answers. A 'not sure' counts one step weaker.
+    A file added under a question is its source; otherwise the source is the person's own answer."""
     weaker = {"strong": "medium", "medium": "weak", "weak": "weak"}
     rows = []
     for q in qs:
+        files = [{"label": e["id"], "title": e["title"], "viewer_url": e["assets"][0].get("viewer_url", "")}
+                 for e in exhibits if e.get("spot") == q["id"] and e.get("assets")]
         if q["answer"] == q.get("when", "yes"):
-            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q["hint"]})
+            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q["hint"],
+                         "sources": files, "why": THEIR_WHY[q["strength"]]})
         elif q["answer"] == "unsure":
-            rows.append({"id": q["id"], "what": q["they"], "strength": weaker[q["strength"]], "sure": False, "answer": q["hint"]})
+            s = weaker[q["strength"]]
+            rows.append({"id": q["id"], "what": q["they"], "strength": s, "sure": False, "answer": q["hint"],
+                         "sources": files, "why": THEIR_WHY[s] + " You are not sure they have it, so one step weaker."})
     rows.sort(key=lambda r: STRENGTH_ORDER[r["strength"]])
     for i, r in enumerate(rows, 1):
         r["rank"] = i
@@ -310,4 +323,9 @@ if __name__ == "__main__":   # rank self-check: the frozen table must sort to ra
     assert [r["strength"] for r in rows] == ["strong", "strong", "medium", "medium", "medium", "weak"]
     assert [r["needs_check"] for r in rows] == [False, True, True, False, True, False]
     assert fee(2600)["amount"] == 10 and fee(12000)["amount"] == 120
+    case["exhibits"].append({"id": "E9", "side": "theirs", "spot": "b2", "title": "their_invoice.pdf", "assets": [{"id": "A9", "viewer_url": "/v"}],
+                             "facts": [{"asset_id": "A9", "fact": "x", "category": "payment", "evidence_key": "deposit_paid"}]})
+    assert [r["evidence_key"] for r in evidence(case)] == got, "their file must not enter your evidence"
+    theirs = their_evidence([{"id": "b2", "they": "Invoice", "strength": "strong", "when": "yes", "hint": "h", "answer": "unsure"}], case["exhibits"])
+    assert theirs[0]["strength"] == "medium" and theirs[0]["sources"][0]["label"] == "E9" and "not sure" in theirs[0]["why"]
     print("rules ok:", got)
