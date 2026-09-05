@@ -5,3 +5,4 @@ data/*.xlsx
 data/*.zip
 sample/pack/_frames/
 __pycache__/
+data/cases/
