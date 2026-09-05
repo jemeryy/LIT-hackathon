@@ -1,0 +1,110 @@
+{
+ "tenancy": {
+  "intro": "Things that could exist and are not in your files yet: what the landlord may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue his case.",
+  "note": "He can file a counterclaim for damage on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "questions": [
+   {
+    "id": "b1",
+    "q": "Could he have his own photos of the sofa, taken after you left?",
+    "hint": "Your move-out video (E5) shows the sofa at 1:12. Keep it."
+   },
+   {
+    "id": "b2",
+    "q": "Has he sent, or could he get, a repair or cleaning invoice?",
+    "hint": "Ask for it in your written request. On CJTS a Defects Schedule form lists each defect and its cost."
+   },
+   {
+    "id": "b3",
+    "q": "Did you sign an inventory or handover form?",
+    "hint": "Your agreement, cl. 6, says there is one. Get your copy. If it notes the sofa, it matters either way."
+   },
+   {
+    "id": "b4",
+    "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
+    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back."
+   },
+   {
+    "id": "b5",
+    "q": "Did anyone else see the handover? A friend, mover or agent.",
+    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+   },
+   {
+    "id": "b6",
+    "q": "Did you accept any deduction, even in passing?",
+    "hint": "If yes, say how much and when. It changes the amount you claim."
+   }
+  ]
+ },
+ "goods": {
+  "intro": "Things that could exist and are not in your files yet: what the seller may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue their case.",
+  "note": "The seller can file a counterclaim on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "questions": [
+   {
+    "id": "b1",
+    "q": "Could the seller have a signed delivery note or an inspection record?",
+    "hint": "Check what you signed on delivery."
+   },
+   {
+    "id": "b2",
+    "q": "Did the listing or terms say the goods were sold as seen, used, or without warranty?",
+    "hint": "Re-read the listing and any terms page."
+   },
+   {
+    "id": "b3",
+    "q": "Did you tell the seller about the fault within a reasonable time, in writing?",
+    "hint": "Find the first message where you raised it and its date."
+   },
+   {
+    "id": "b4",
+    "q": "Did anyone else use, repair or open the goods before you complained?",
+    "hint": "The seller may say the fault came later."
+   },
+   {
+    "id": "b5",
+    "q": "Did anyone else see the goods when they arrived or when the fault showed?",
+    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+   },
+   {
+    "id": "b6",
+    "q": "Did you accept a partial refund, repair or replacement, even in passing?",
+    "hint": "If yes, say what and when. It changes the amount you claim."
+   }
+  ]
+ },
+ "general": {
+  "intro": "Things that could exist and are not in your files yet: what the other side may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue their case.",
+  "note": "The other side can file a counterclaim on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "questions": [
+   {
+    "id": "b1",
+    "q": "Could the other side have their own photos, records or receipts about this?",
+    "hint": "Think about what they would show a judge. Keep anything of yours that answers it."
+   },
+   {
+    "id": "b2",
+    "q": "Did anything you signed or agreed to limit what you can claim?",
+    "hint": "Re-read the contract, quote or terms for words like as is, no refund, or a cap."
+   },
+   {
+    "id": "b3",
+    "q": "Did you tell the other side about the problem in writing, soon after it happened?",
+    "hint": "Find the first message where you raised it and its date."
+   },
+   {
+    "id": "b4",
+    "q": "Were there other agreed conditions, spoken or in messages on any channel?",
+    "hint": "Check SMS, email and other apps you used with them. Anything agreed can change the claim."
+   },
+   {
+    "id": "b5",
+    "q": "Did anyone else see what happened?",
+    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+   },
+   {
+    "id": "b6",
+    "q": "Did you accept any part payment, repair or discount, even in passing?",
+    "hint": "If yes, say what and when. It changes the amount you claim."
+   }
+  ]
+ }
+}

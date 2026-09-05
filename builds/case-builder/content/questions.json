@@ -1,0 +1,44 @@
+{
+ "checklist": [
+  {
+   "id": "story",
+   "label": "What happened",
+   "why": "Your own account, in date order."
+  },
+  {
+   "id": "claimant",
+   "label": "Your name and address",
+   "why": "Goes on the claim form as the person claiming."
+  },
+  {
+   "id": "respondent",
+   "label": "Who you are claiming against, and where they are",
+   "why": "The tribunal needs a Singapore address so the claim can be served."
+  },
+  {
+   "id": "category",
+   "label": "What kind of claim it is",
+   "why": "The tribunal only hears some kinds: goods, services, home leases up to 2 years, damage to property."
+  },
+  {
+   "id": "agreed",
+   "label": "What was agreed",
+   "why": "The agreement, order or quote sets the terms."
+  },
+  {
+   "id": "amount",
+   "label": "How much you are claiming",
+   "why": "The limit is $20,000, or $30,000 if both sides agree."
+  },
+  {
+   "id": "when",
+   "label": "When they refused, or the problem started",
+   "why": "You have 2 years from that date to file."
+  },
+  {
+   "id": "files",
+   "label": "Your files",
+   "why": "Only files count as evidence. Add them on the right."
+  }
+ ]
+}

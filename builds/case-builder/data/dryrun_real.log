@@ -1,0 +1,31 @@
+real run took 106s
+gate True
+1 moveout_condition medium True ['E1 Clause 10, p.4', 'E1 Clause 10, p.4', 'E2 shot 2', 'E2 shot 3', 'E2 shot 4', 'E5 video, 17:05'] | Tenant must hand back premises clean and in good condition, fair wear and tear excepted | Made by you, dated. Read from a screenshot, check it
+2 deposit_terms weak True ['E1 Clause 4, p.2', 'E1 Clause 4, p.2', 'E2 shot 6'] | Tenant to pay security deposit of S$2,600 on signing the agreement | Made by you, has amount and dates. Read from a screenshot, check it
+3 movein_condition weak False ['E1 Clause 6, p.3', 'E6 photo 1', 'E6 photo 2', 'E6 photo 3', 'E6 photo 4', 'E6 photo 5'] | Inventory list signed by both parties at handover records condition of furniture and fittings | No actual visible condition detail shown in image
+4 deposit_paid weak True ['E2 shot 1', 'E4'] | Claimant told landlord she will transfer the deposit the next morning | shows intent to pay deposit, not proof of actual transfer. Read from a screenshot, check it
+5 handover_acceptance weak True ['E2 shot 2', 'E2 shot 3', 'E2 shot 4'] | Landlord instructed claimant to leave keys in the mailbox, indicating acceptance of handover method | Made by you, dated. Read from a screenshot, check it
+6 other_side_words weak True ['E2 shot 1'] | Landlord asked claimant to send screenshot after transfer | landlord acknowledges expecting deposit payment. Read from a screenshot, check it
+7 damage_allegation weak True ['E2 shot 5', 'E2 shot 5', 'E2 shot 6', 'E3', 'E3'] | Landlord claims sofa has a scratch and refuses to return deposit | Made by you, dated. Read from a screenshot, check it
+ex E1 ['claimant'] [('deposit_terms', 'The Tenant shall pay the Landlord a secu'), ('deposit_terms', 'The Landlord shall refund the deposit wi'), (None, 'The deposit shall not be used by the Ten'), ('movein_condition', 'An inventory list signed by both parties'), ('moveout_condition', 'hand back the Premises, the Inventory an'), ('moveout_condition', 'The parties shall inspect the Premises t')]
+ex E2 ['claimant', 'claimant', 'claimant', 'claimant', 'claimant', 'claimant'] [('deposit_paid', 'I will transfer the deposit tomorrow mor'), ('other_side_words', 'Ok. Send me the screenshot after transfe'), ('moveout_condition', 'I will move out on 31 Jul. I will clean '), ('handover_acceptance', 'Noted. Leave the keys in the mailbox.'), ('moveout_condition', 'Hi Mr Tan, keys in the mailbox. Flat cle'), ('handover_acceptance', 'Received'), ('moveout_condition', 'Hi Mr Tan, keys in the mailbox. Flat cle'), ('handover_acceptance', 'ok, all good. will transfer deposit afte'), ('damage_allegation', 'sofa got scratch, deposit cannot return'), ('damage_allegation', 'Which scratch? Can you send me a photo p'), (None, 'the 14 days passed yesterday. Can you tr'), ('damage_allegation', 'still waiting for the photo of the scrat'), ('deposit_terms', 'If there is no damage please return the ')]
+ex E3 ['claimant'] [('damage_allegation', 'The sofa has a scratch on the left arm.'), ('damage_allegation', 'I will not be returning the deposit unti')]
+ex E4 ['claimant'] [('deposit_paid', 'Transfer of SGD 2,600.00 to TAN AH KOW')]
+ex E5 ['claimant'] [('moveout_condition', '')]
+ex E6 ['claimant', 'claimant', 'claimant', 'claimant', 'claimant'] [('movein_condition', ''), ('movein_condition', ''), ('movein_condition', ''), ('movein_condition', ''), ('movein_condition', '')]
+story: You rented an HDB flat from Mr Tan Ah Kow under a 12-month tenancy agreement, from 3 Aug 2025 to 2 Aug 2026, and paid him a security deposit of $2,600 on signing (source E1 Clause 4, p.2). At handover on 15 Aug 2026, an inventory list was signed by both parties to record the condition of the furniture and fittings (source E1 Clause 6, p.3), and the agreement required you to hand back the premises clean and in good condition, fair wear and tear excepted (source E1 Clause 10, p.4). When you moved out, Mr Tan said everything was ok and all good, but two weeks later he said the sofa was scratched and refused to return your $2,600 deposit (source E2 shot 5).
+summary: 500 I rented an HDB flat from the Respondent, Mr Tan Ah Kow, under a tenancy agreement for 12 months, from 3 Aug 2025 to 2 Aug 2026. I paid a security deposit of $2,600 on signing. The agreement says he must return the deposit within 14 days after I move out, minus any damage. On 15 Aug 2026 I moved out and handed over the flat. He checked and said everything was fine. Two weeks later he said the sofa was scratched and refused to return my deposit. I have my move-in photos, move-out video, and payme
+  2025-08-02 Deposit transfer promised, Landlord response (E2)
+  2025-08-03 Deposit payment (E1, E4)
+  2026-07-15 Move out, "all good" (E2)
+  2026-07-31 Move-out, Move out, "all good", moveout (E2, E5)
+  2026-08-14 Refund due (E2 shot 6)
+  2026-08-15 Landlord refuses (E2, E3)
+  2026-08-20 Landlord refuses (E2)
+  2026-09-05 Today
+  None Written request
+  None Pre-filing check, then file on CJTS
+  None Serve within 7 working days
+  None Consultation
+  None Hearing
+  2028-08-15 Time bar

@@ -1,0 +1,36 @@
+{
+  "scta_schedule": {
+    "title": "Small Claims Tribunals Act 1984, s 5(1) and the Schedule (specified claims)",
+    "short": "SCTA 1984 s 5 + Schedule",
+    "quote": "5.—(1) Subject to the provisions of this Act, a tribunal has the jurisdiction to hear and determine any claim which —\n(a) is a specified claim; and\n(b) is served in Singapore on the respondent under section 19(1).\n\nTHE SCHEDULE\nSPECIFIED CLAIMS\n1. The following are specified claims for the purposes of section 5(1)(a):\n(a) a claim relating to a contract for the sale of goods or the provision of services;\n(b) a claim in tort relating to damage caused to any property (other than a claim mentioned in section 4 of the Community Disputes Resolution Act 2015);\n(c) a claim relating to a contract for the lease of residential premises that does not exceed 2 years;",
+    "verbatim": true,
+    "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-,Sc-",
+    "retrieved_date": "2026-09-05"
+  },
+  "scta_s2": {
+    "title": "Small Claims Tribunals Act 1984, s 2(1) (prescribed limit) and s 5(3)-(4)",
+    "short": "SCTA 1984 s 2",
+    "quote": "“prescribed limit” means $20,000 or such other sum as the Minister may, after consultation with the Chief Justice, prescribe by order in the Gazette;\n“prescribed extended limit” means $30,000 or such other sum as the Minister may, after consultation with the Chief Justice, prescribe by order in the Gazette;\n\n5.—(3) Except where this Act expressly provides otherwise, the jurisdiction of a tribunal does not extend to a claim —\n(a) the value of which exceeds the prescribed limit; or\n(b) after the expiry of 2 years after the date on which the cause of action accrued.\n(4) Subject to subsections (1) and (2), a tribunal has jurisdiction to hear and determine any claim the value of which exceeds the prescribed limit but does not exceed the prescribed extended limit, if the parties to the claim so agree by a memorandum signed by them.",
+    "verbatim": true,
+    "source_url": "https://sso.agc.gov.sg/Act/SCTA1984",
+    "retrieved_date": "2026-09-05"
+  },
+  "scta_s5_time": {
+    "title": "Small Claims Tribunals Act 1984, s 5(3)(b) (2-year limit)",
+    "short": "SCTA 1984 s 5(3)",
+    "quote": "5.—(3) Except where this Act expressly provides otherwise, the jurisdiction of a tribunal does not extend to a claim —\n(a) the value of which exceeds the prescribed limit; or\n(b) after the expiry of 2 years after the date on which the cause of action accrued.",
+    "verbatim": true,
+    "guide": "State Courts, A Guide to Small Claims, p.4: \"All claims must be filed within two years after the date the cause of action accrued. A cause of action is the fact or facts which entitles you, in law, to start a court action against the Respondent. You may file a claim in the civil courts, e.g. at the Magistrates' Courts if the cause of action accrued more than 2 years ago.\"",
+    "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-",
+    "retrieved_date": "2026-09-05"
+  },
+  "scta_s5_service": {
+    "title": "Small Claims Tribunals Act 1984, s 5(1)(b) (served in Singapore)",
+    "short": "SCTA 1984 s 5(1)(b)",
+    "quote": "5.—(1) Subject to the provisions of this Act, a tribunal has the jurisdiction to hear and determine any claim which —\n(a) is a specified claim; and\n(b) is served in Singapore on the respondent under section 19(1).",
+    "verbatim": true,
+    "guide": "Judiciary, Cases eligible for a small claim: the tribunals cannot hear a claim where the respondent is outside Singapore, because the claim cannot be served on anyone outside Singapore.",
+    "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-",
+    "retrieved_date": "2026-09-05"
+  }
+}

@@ -1,0 +1,26 @@
+real run took 92s
+gate True
+1 deposit_terms strong True ['E1 p.2', 'E2 shot 4'] | Deposit of $2,600 to be refunded within 14 days after tenant moves out, minus damage | The other side's own words, has amount and dates. Read from a screenshot, check it
+2 deposit_paid strong True ['E1 p.2', 'E2 shot 1', 'E2 shot 1', 'E2 shot 6', 'E4'] | Tenant agreed to pay security deposit of $2,600 on signing the agreement | Third-party record, has amount and dates. Read from a screenshot, check it
+3 handover_acceptance medium True ['E2 shot 2', 'E2 shot 4'] | Landlord instructed claimant to leave keys in the mailbox on move-out | The other side's own words, dated. Read from a screenshot, check it
+4 damage_allegation medium True ['E2 shot 5', 'E2 shot 6', 'E3', 'E3'] | Landlord claims sofa scratch as reason to withhold deposit | The other side's own words, has amount and dates. Read from a screenshot, check it
+5 moveout_condition medium True ['E2 shot 2', 'E2 shot 3', 'E2 shot 4', 'E5 video, 17:05'] | Claimant told landlord she would clean the flat before moving out | The other side's own words, dated. Read from a screenshot, check it
+6 movein_condition weak False ['E6 photo 1', 'E6 photo 2', 'E6 photo 3', 'E6 photo 4'] | Photo shows living room condition at move-in | Depicts flat condition when tenant moved in
+story: You rented the flat from Tan Ah Kow and paid him a $2,600 deposit on 3 August 2025, with the agreement stating he must refund it within 14 days after you move out, minus any damage. You moved out on 31 July 2026, left the keys in the mailbox as he told you to, and cleaned the flat, and he replied "Received" and said "ok, all good. will transfer deposit after i check." The 14 days was up on 14 August 2026, but on 15 August 2026 he said the sofa had a scratch and refused to return the deposit, and even after you asked him on 20 August 2026 to send a photo of the scratch and to return the $2,600 if there was no damage, he still has not paid you back.
+summary: 443 On 3 Aug 2025, I signed a tenancy agreement with my landlord, Mr Tan Ah Kow, for an HDB flat. I paid him a security deposit of $2,600 by bank transfer. The agreement says he must refund the deposit within 14 days after I move out, minus any damage cost.
+
+On 31 Jul 2026, I moved out. I cleaned the flat and left the keys in the mailbox as he told me to. He replied "ok, all good" and said he would transfer the deposit after checking the flat.
+  2025-08-02 Deposit paid (E2)
+  2025-08-03 Deposit paid (E1, E4)
+  2026-07-15 Move out, "all good" (E2)
+  2026-07-31 Move out, "all good", move out (E2, E5)
+  2026-08-14 Refund due (E2 shot 4)
+  2026-08-15 Landlord refuses (E2, E3)
+  2026-08-20 Landlord refuses, deposit paid (E2)
+  2026-09-05 Today
+  None Written request
+  None Pre-filing check, then file on CJTS
+  None Serve within 7 working days
+  None Consultation
+  None Hearing
+  2028-08-15 Time bar

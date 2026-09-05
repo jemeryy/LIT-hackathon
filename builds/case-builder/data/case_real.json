@@ -1,0 +1,2505 @@
+{
+ "case_id": "mei-ling",
+ "claim_type": "tenancy",
+ "app_name": "Case Builder",
+ "today": "2026-09-05",
+ "intake": {
+  "answers": {
+   "q1": "Mei Ling, Blk 123 Bedok North Street 1 #05-67, Singapore 460123",
+   "q2": "Mr Tan Ah Kow, my landlord. 45 Bedok Reservoir Road #12-34, Singapore 470045. He lives in Singapore.",
+   "q3": "One month deposit, $2,600. The agreement says he returns it within 14 days after I move out, minus any damage.",
+   "q4": "2600",
+   "q5": "2026-08-15",
+   "q6": "Yes, an HDB flat I lived in. 12 months, 3 Aug 2025 to 2 Aug 2026.",
+   "q7": "He said ok, all good when I handed over. Two weeks later he said the sofa is scratched and refused the deposit.",
+   "q8": "Bank transfer screenshot, my move-out video, photos from when I moved in."
+  },
+  "parties": {
+   "claimant": {
+    "name": "Mei Ling",
+    "address": "Blk 123 Bedok North Street 1 #05-67, Singapore 460123",
+    "id_type": "NRIC"
+   },
+   "respondent": {
+    "name": "Tan Ah Kow",
+    "role": "landlord",
+    "address": "45 Bedok Reservoir Road #12-34, Singapore 470045",
+    "in_singapore": true,
+    "is_company": false
+   }
+  },
+  "amount": 2600,
+  "consent_30k": false,
+  "cause_of_action_date": "2026-08-15",
+  "moveout_date": "2026-07-31",
+  "premises": {
+   "residential": true,
+   "lease_months": 12,
+   "refund_days": 14
+  }
+ },
+ "questions": [
+  {
+   "id": "q1",
+   "prompt": "What is your full name and address?",
+   "why": "Goes on the claim form as the person claiming.",
+   "field": "claimant"
+  },
+  {
+   "id": "q2",
+   "prompt": "Who are you claiming against? Their name, address, and are they in Singapore?",
+   "why": "The tribunal needs a Singapore address so the claim can be served on them.",
+   "field": "respondent"
+  },
+  {
+   "id": "q3",
+   "prompt": "What did you and the landlord agree about the deposit?",
+   "why": "Your agreement sets the terms. Upload it so the exact clause can be found.",
+   "upload": {
+    "exhibit_id": "E1",
+    "label": "Add the tenancy agreement",
+    "hint": "PDF files work best here."
+   }
+  },
+  {
+   "id": "q4",
+   "prompt": "How much are you claiming?",
+   "why": "The tribunal hears claims up to $20,000, or $30,000 if both sides agree.",
+   "field": "amount"
+  },
+  {
+   "id": "q5",
+   "prompt": "When did the landlord refuse, or when did the problem start?",
+   "why": "You have 2 years from that date to file.",
+   "field": "cause_of_action_date"
+  },
+  {
+   "id": "q6",
+   "prompt": "Is the flat a home, and how long was the lease?",
+   "why": "The tribunal only hears home leases of up to 2 years.",
+   "field": "premises"
+  },
+  {
+   "id": "q7",
+   "prompt": "What did you and the landlord say to each other about it?",
+   "why": "The other side's own words are strong evidence.",
+   "upload": {
+    "exhibit_id": "E2",
+    "label": "Add chat screenshots or an email",
+    "hint": "Screenshots or photos of the chat work here."
+   }
+  },
+  {
+   "id": "q8",
+   "prompt": "What else do you have? Transfers, photos, video.",
+   "why": "Payment records and dated photos or video show what happened.",
+   "upload": {
+    "exhibit_id": "E4",
+    "label": "Add a transfer screenshot, photos or a video",
+    "hint": "Any file type."
+   }
+  }
+ ],
+ "story": "You rented an HDB flat from Mr Tan Ah Kow under a 12-month tenancy agreement, from 3 Aug 2025 to 2 Aug 2026, and paid him a security deposit of $2,600 on signing (source E1 Clause 4, p.2). At handover on 15 Aug 2026, an inventory list was signed by both parties to record the condition of the furniture and fittings (source E1 Clause 6, p.3), and the agreement required you to hand back the premises clean and in good condition, fair wear and tear excepted (source E1 Clause 10, p.4). When you moved out, Mr Tan said everything was ok and all good, but two weeks later he said the sofa was scratched and refused to return your $2,600 deposit (source E2 shot 5).",
+ "summary": "I rented an HDB flat from the Respondent, Mr Tan Ah Kow, under a tenancy agreement for 12 months, from 3 Aug 2025 to 2 Aug 2026. I paid a security deposit of $2,600 on signing. The agreement says he must return the deposit within 14 days after I move out, minus any damage. On 15 Aug 2026 I moved out and handed over the flat. He checked and said everything was fine. Two weeks later he said the sofa was scratched and refused to return my deposit. I have my move-in photos, move-out video, and payme",
+ "exhibits": [
+  {
+   "id": "E1",
+   "kind": "pdf",
+   "status": "ready",
+   "title": "Tenancy agreement",
+   "facts": [
+    {
+     "evidence_key": "deposit_terms",
+     "category": "agreement",
+     "fact": "Tenant to pay security deposit of S$2,600 on signing the agreement",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": 2600,
+     "where": "Clause 4",
+     "note": null,
+     "quote": "The Tenant shall pay the Landlord a security deposit of S$2,600 (two thousand six hundred dollars) on signing this Agreement.",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 1,
+      "boxes": [
+       [
+        0.131,
+        0.359,
+        0.8038,
+        0.3721
+       ],
+       [
+        0.131,
+        0.3769,
+        0.4884,
+        0.3899
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 20,
+      "quote_tokens": 20
+     }
+    },
+    {
+     "evidence_key": "deposit_terms",
+     "category": "agreement",
+     "fact": "Landlord must refund deposit within 14 days after tenant moves out, less damage costs",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "Clause 4",
+     "note": null,
+     "quote": "The Landlord shall refund the deposit within 14 days after the Tenant moves out, less the cost of repairing any damage",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 1,
+      "boxes": [
+       [
+        0.4936,
+        0.3769,
+        0.851,
+        0.3899
+       ],
+       [
+        0.131,
+        0.3947,
+        0.7361,
+        0.4077
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 21,
+      "quote_tokens": 21
+     }
+    },
+    {
+     "evidence_key": null,
+     "category": "agreement",
+     "fact": "Deposit shall not be used by tenant as rent",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "Clause 4",
+     "note": null,
+     "quote": "The deposit shall not be used by the Tenant as rent.",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 1,
+      "boxes": [
+       [
+        0.4844,
+        0.4125,
+        0.8685,
+        0.4256
+       ],
+       [
+        0.131,
+        0.4303,
+        0.168,
+        0.4434
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 11,
+      "quote_tokens": 11
+     }
+    },
+    {
+     "evidence_key": "movein_condition",
+     "category": "agreement",
+     "fact": "Inventory list signed by both parties at handover records condition of furniture and fittings",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "Clause 6",
+     "note": null,
+     "quote": "An inventory list signed by both parties at handover records the furniture, fittings and their condition.",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 2,
+      "boxes": [
+       [
+        0.131,
+        0.1239,
+        0.8613,
+        0.1369
+       ],
+       [
+        0.131,
+        0.1417,
+        0.2101,
+        0.1547
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 16,
+      "quote_tokens": 16
+     }
+    },
+    {
+     "evidence_key": "moveout_condition",
+     "category": "agreement",
+     "fact": "Tenant must hand back premises clean and in good condition, fair wear and tear excepted",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "Clause 10",
+     "note": null,
+     "quote": "hand back the Premises, the Inventory and all keys, clean and in good condition, fair wear and tear excepted",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 3,
+      "boxes": [
+       [
+        0.4505,
+        0.2023,
+        0.8254,
+        0.2153
+       ],
+       [
+        0.131,
+        0.2201,
+        0.6436,
+        0.2331
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 19,
+      "quote_tokens": 19
+     }
+    },
+    {
+     "evidence_key": "moveout_condition",
+     "category": "agreement",
+     "fact": "Parties shall inspect premises together and note any damage in writing on day of handing back",
+     "date": "2025-08-03",
+     "party": "both",
+     "amount": null,
+     "where": "Clause 10",
+     "note": null,
+     "quote": "The parties shall inspect the Premises together and note any damage in writing on the day of handing back.",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 3,
+      "boxes": [
+       [
+        0.6487,
+        0.2201,
+        0.848,
+        0.2331
+       ],
+       [
+        0.131,
+        0.2379,
+        0.8059,
+        0.251
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 19,
+      "quote_tokens": 19
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E1",
+     "filename": "Tenancy_Agreement_2025.pdf",
+     "kind": "pdf",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\Tenancy_Agreement_2025.pdf",
+     "size_bytes": 6683,
+     "viewer_url": "/api/viewer?asset_id=E1&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": false
+     },
+     "pages": 6
+    }
+   ]
+  },
+  {
+   "id": "E2",
+   "kind": "image_set",
+   "status": "ready",
+   "title": "WhatsApp screenshots",
+   "facts": [
+    {
+     "evidence_key": "deposit_paid",
+     "category": "payment",
+     "fact": "Claimant told landlord she will transfer the deposit the next morning",
+     "date": "2025-08-02",
+     "party": "claimant",
+     "amount": null,
+     "where": "21:10",
+     "note": "shows intent to pay deposit, not proof of actual transfer",
+     "quote": "I will transfer the deposit tomorrow morning.",
+     "timeline_label": "Deposit transfer promised",
+     "asset_id": "E2-1",
+     "locator": {
+      "asset_id": "E2-1",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3736,
+        0.2117,
+        0.9042,
+        0.2305
+       ],
+       [
+        0.375,
+        0.243,
+        0.5111,
+        0.2617
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 7
+     }
+    },
+    {
+     "evidence_key": "other_side_words",
+     "category": "other_side_words",
+     "fact": "Landlord asked claimant to send screenshot after transfer",
+     "date": "2025-08-02",
+     "party": "respondent",
+     "amount": null,
+     "where": "21:15",
+     "note": "landlord acknowledges expecting deposit payment",
+     "quote": "Ok. Send me the screenshot after transfer.",
+     "timeline_label": "Landlord response",
+     "asset_id": "E2-1",
+     "locator": {
+      "asset_id": "E2-1",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0847,
+        0.3227,
+        0.6236,
+        0.3375
+       ],
+       [
+        0.0833,
+        0.3539,
+        0.2111,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 7,
+      "quote_tokens": 7
+     }
+    },
+    {
+     "evidence_key": "moveout_condition",
+     "category": "condition",
+     "fact": "Claimant told landlord she would move out on 31 Jul and clean the flat before leaving",
+     "date": "2026-07-15",
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "I will move out on 31 Jul. I will clean the flat before I go.",
+     "timeline_label": null,
+     "asset_id": "E2-2",
+     "locator": {
+      "asset_id": "E2-2",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.6806,
+        0.1805,
+        0.9056,
+        0.1953
+       ],
+       [
+        0.3347,
+        0.2117,
+        0.4861,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 15
+     }
+    },
+    {
+     "evidence_key": "handover_acceptance",
+     "category": "other_side_words",
+     "fact": "Landlord instructed claimant to leave keys in the mailbox, indicating acceptance of handover method",
+     "date": "2026-07-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "Noted. Leave the keys in the mailbox.",
+     "timeline_label": null,
+     "asset_id": "E2-2",
+     "locator": {
+      "asset_id": "E2-2",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0861,
+        0.3227,
+        0.5389,
+        0.3414
+       ],
+       [
+        0.0861,
+        0.3539,
+        0.2153,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 7,
+      "quote_tokens": 7
+     }
+    },
+    {
+     "evidence_key": "moveout_condition",
+     "category": "condition",
+     "fact": "Claimant told landlord flat was cleaned and keys left in mailbox on move-out",
+     "date": "2026-07-31",
+     "party": "claimant",
+     "amount": null,
+     "where": "17:02",
+     "note": null,
+     "quote": "Hi Mr Tan, keys in the mailbox. Flat cleaned.",
+     "timeline_label": "move-out",
+     "asset_id": "E2-3",
+     "locator": {
+      "asset_id": "E2-3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3583,
+        0.1805,
+        0.9167,
+        0.1992
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.4889,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     }
+    },
+    {
+     "evidence_key": "handover_acceptance",
+     "category": "other_side_words",
+     "fact": "Message shows as 'Received' with timestamp, indicating landlord received the message",
+     "date": "2026-07-31",
+     "party": "respondent",
+     "amount": null,
+     "where": "17:30",
+     "note": null,
+     "quote": "Received",
+     "timeline_label": "move-out",
+     "asset_id": "E2-3",
+     "locator": {
+      "asset_id": "E2-3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0861,
+        0.2914,
+        0.2319,
+        0.3063
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 1,
+      "quote_tokens": 1
+     }
+    },
+    {
+     "evidence_key": "moveout_condition",
+     "category": "condition",
+     "fact": "Claimant informed landlord the flat was cleaned and keys left in mailbox at move-out",
+     "date": "2026-07-31",
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "Hi Mr Tan, keys in the mailbox. Flat cleaned.",
+     "timeline_label": null,
+     "asset_id": "E2-4",
+     "locator": {
+      "asset_id": "E2-4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3583,
+        0.1773,
+        0.9167,
+        0.2023
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.4889,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     }
+    },
+    {
+     "evidence_key": "handover_acceptance",
+     "category": "agreement",
+     "fact": "Landlord acknowledged receipt of keys and said all is good",
+     "date": "2026-07-31",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "ok, all good. will transfer deposit after i check",
+     "timeline_label": null,
+     "asset_id": "E2-4",
+     "locator": {
+      "asset_id": "E2-4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0792,
+        0.368,
+        0.6792,
+        0.393
+       ],
+       [
+        0.0861,
+        0.4023,
+        0.1958,
+        0.4172
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     }
+    },
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Landlord claims sofa has a scratch and refuses to return deposit",
+     "date": "2026-08-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "sofa got scratch, deposit cannot return",
+     "timeline_label": null,
+     "asset_id": "E2-5",
+     "locator": {
+      "asset_id": "E2-5",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0847,
+        0.3227,
+        0.5931,
+        0.3414
+       ],
+       [
+        0.0861,
+        0.3547,
+        0.175,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 6
+     }
+    },
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Claimant asked landlord which scratch and requested photo proof",
+     "date": "2026-08-15",
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "Which scratch? Can you send me a photo please?",
+     "timeline_label": null,
+     "asset_id": "E2-5",
+     "locator": {
+      "asset_id": "E2-5",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3472,
+        0.4336,
+        0.9153,
+        0.4523
+       ],
+       [
+        0.3486,
+        0.4648,
+        0.5722,
+        0.4836
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     }
+    },
+    {
+     "evidence_key": null,
+     "category": "dispute",
+     "fact": "Claimant told landlord the 14 day deadline for deposit return had passed",
+     "date": "2026-08-15",
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "the 14 days passed yesterday. Can you transfer the deposit today?",
+     "timeline_label": null,
+     "asset_id": "E2-5",
+     "locator": {
+      "asset_id": "E2-5",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.5903,
+        0.1805,
+        0.9,
+        0.1992
+       ],
+       [
+        0.4153,
+        0.2117,
+        0.9167,
+        0.2305
+       ],
+       [
+        0.4167,
+        0.243,
+        0.6486,
+        0.2617
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 11,
+      "quote_tokens": 11
+     }
+    },
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Claimant asks landlord to send photo of an alleged scratch",
+     "date": "2026-08-20",
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "still waiting for the photo of the scratch. Please send it.",
+     "timeline_label": null,
+     "asset_id": "E2-6",
+     "locator": {
+      "asset_id": "E2-6",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.5306,
+        0.1805,
+        0.9167,
+        0.1992
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.8264,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 11,
+      "quote_tokens": 11
+     }
+    },
+    {
+     "evidence_key": "deposit_terms",
+     "category": "dispute",
+     "fact": "Claimant asks landlord to return $2,600 deposit if no damage",
+     "date": "2026-08-20",
+     "party": "claimant",
+     "amount": 2600,
+     "where": null,
+     "note": null,
+     "quote": "If there is no damage please return the $2,600 deposit.",
+     "timeline_label": null,
+     "asset_id": "E2-6",
+     "locator": {
+      "asset_id": "E2-6",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3597,
+        0.2914,
+        0.9153,
+        0.3102
+       ],
+       [
+        0.3569,
+        0.3219,
+        0.6611,
+        0.3414
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 10,
+      "quote_tokens": 10
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E2-1",
+     "filename": "WhatsApp_01.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_01.png",
+     "size_bytes": 34001,
+     "viewer_url": "/api/viewer?asset_id=E2-1&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E2-2",
+     "filename": "WhatsApp_02.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_02.png",
+     "size_bytes": 32839,
+     "viewer_url": "/api/viewer?asset_id=E2-2&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E2-3",
+     "filename": "WhatsApp_03.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_03.png",
+     "size_bytes": 24657,
+     "viewer_url": "/api/viewer?asset_id=E2-3&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E2-4",
+     "filename": "WhatsApp_04.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_04.png",
+     "size_bytes": 34681,
+     "viewer_url": "/api/viewer?asset_id=E2-4&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E2-5",
+     "filename": "WhatsApp_05.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_05.png",
+     "size_bytes": 43486,
+     "viewer_url": "/api/viewer?asset_id=E2-5&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E2-6",
+     "filename": "WhatsApp_06.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_06.png",
+     "size_bytes": 34019,
+     "viewer_url": "/api/viewer?asset_id=E2-6&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "E3",
+   "kind": "image_set",
+   "status": "ready",
+   "title": "Email from the landlord",
+   "facts": [
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Landlord alleges sofa has a scratch and refuses to return deposit",
+     "date": "2026-08-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "The sofa has a scratch on the left arm.",
+     "timeline_label": null,
+     "asset_id": "E3",
+     "locator": {
+      "asset_id": "E3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0556,
+        0.3648,
+        0.6681,
+        0.3906
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     }
+    },
+    {
+     "evidence_key": "damage_allegation",
+     "category": "dispute",
+     "fact": "Landlord states he will withhold deposit until damage issue is settled",
+     "date": "2026-08-15",
+     "party": "respondent",
+     "amount": null,
+     "where": null,
+     "note": null,
+     "quote": "I will not be returning the deposit until this is settled.",
+     "timeline_label": null,
+     "asset_id": "E3",
+     "locator": {
+      "asset_id": "E3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.075,
+        0.4086,
+        0.8778,
+        0.4273
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 10,
+      "quote_tokens": 11
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E3",
+     "filename": "email_landlord.png",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\email_landlord.png",
+     "size_bytes": 38569,
+     "viewer_url": "/api/viewer?asset_id=E3&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "E4",
+   "kind": "image_set",
+   "status": "ready",
+   "title": "Deposit transfer screenshot",
+   "facts": [
+    {
+     "evidence_key": "deposit_paid",
+     "category": "payment",
+     "fact": "Mei Ling transferred SGD 2,600.00 to Tan Ah Kow as deposit",
+     "date": "2025-08-03",
+     "party": "claimant",
+     "amount": 2600,
+     "where": null,
+     "note": null,
+     "quote": "Transfer of SGD 2,600.00 to TAN AH KOW",
+     "timeline_label": "Deposit payment",
+     "asset_id": "E4",
+     "locator": {
+      "asset_id": "E4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0569,
+        0.3133,
+        0.7403,
+        0.3312
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 8,
+      "quote_tokens": 8
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E4",
+     "filename": "deposit_transfer.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\deposit_transfer.jpg",
+     "size_bytes": 62097,
+     "viewer_url": "/api/viewer?asset_id=E4&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "E5",
+   "kind": "video",
+   "status": "ready",
+   "title": "Move-out video",
+   "facts": [
+    {
+     "evidence_key": "moveout_condition",
+     "category": "condition",
+     "fact": "Video shows sofa close up at moveout, dated 31 Jul 2026",
+     "date": "2026-07-31",
+     "party": "claimant",
+     "amount": null,
+     "where": "17:05",
+     "note": null,
+     "quote": null,
+     "timeline_label": "moveout",
+     "asset_id": "E5",
+     "locator": {
+      "asset_id": "E5",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E5",
+     "filename": "moveout_walkthrough.mp4",
+     "kind": "video",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\moveout_walkthrough.mp4",
+     "size_bytes": 79949,
+     "viewer_url": "/api/viewer?asset_id=E5&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": true,
+      "has_amount": false,
+      "from_picture": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "E6",
+   "kind": "image_set",
+   "status": "ready",
+   "title": "Move-in photos",
+   "facts": [
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Photo labeled Living room, described as a placeholder photo, synthetic",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "No actual visible condition detail shown in image",
+     "quote": null,
+     "timeline_label": null,
+     "asset_id": "E6-1",
+     "locator": {
+      "asset_id": "E6-1",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    },
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Placeholder image labeled Kitchen with no real photo content",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "Image is a synthetic placeholder, no actual condition evidence",
+     "quote": null,
+     "timeline_label": null,
+     "asset_id": "E6-2",
+     "locator": {
+      "asset_id": "E6-2",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    },
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Photo labeled Bedroom, appears to be a placeholder/synthetic image with no visible room details",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "No actual condition detail visible; image is a placeholder",
+     "quote": null,
+     "timeline_label": null,
+     "asset_id": "E6-3",
+     "locator": {
+      "asset_id": "E6-3",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    },
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Photo labeled Bathroom, placeholder synthetic image, no visible condition details",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "Image lacks usable evidence of move-in condition",
+     "quote": null,
+     "timeline_label": null,
+     "asset_id": "E6-4",
+     "locator": {
+      "asset_id": "E6-4",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    },
+    {
+     "evidence_key": "movein_condition",
+     "category": "condition",
+     "fact": "Placeholder image labeled Hallway, no actual photo content",
+     "date": null,
+     "party": "claimant",
+     "amount": null,
+     "where": null,
+     "note": "No usable visual evidence of move-in condition",
+     "quote": null,
+     "timeline_label": null,
+     "asset_id": "E6-5",
+     "locator": {
+      "asset_id": "E6-5",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     }
+    }
+   ],
+   "assets": [
+    {
+     "id": "E6-1",
+     "filename": "movein_01.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_01.jpg",
+     "size_bytes": 23189,
+     "viewer_url": "/api/viewer?asset_id=E6-1&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E6-2",
+     "filename": "movein_02.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_02.jpg",
+     "size_bytes": 22523,
+     "viewer_url": "/api/viewer?asset_id=E6-2&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E6-3",
+     "filename": "movein_03.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_03.jpg",
+     "size_bytes": 23033,
+     "viewer_url": "/api/viewer?asset_id=E6-3&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E6-4",
+     "filename": "movein_04.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_04.jpg",
+     "size_bytes": 22826,
+     "viewer_url": "/api/viewer?asset_id=E6-4&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    },
+    {
+     "id": "E6-5",
+     "filename": "movein_05.jpg",
+     "kind": "image",
+     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_05.jpg",
+     "size_bytes": 22586,
+     "viewer_url": "/api/viewer?asset_id=E6-5&page_index=0",
+     "meta": {
+      "author": "claimant",
+      "signed": false,
+      "dated": false,
+      "has_amount": false,
+      "from_picture": true
+     }
+    }
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "moveout_condition",
+   "evidence_key": "moveout_condition",
+   "what": "Tenant must hand back premises clean and in good condition, fair wear and tear excepted",
+   "category": "agreement",
+   "date": "2025-08-03",
+   "strength": "medium",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 10, p.4",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 3,
+      "boxes": [
+       [
+        0.4505,
+        0.2023,
+        0.8254,
+        0.2153
+       ],
+       [
+        0.131,
+        0.2201,
+        0.6436,
+        0.2331
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 19,
+      "quote_tokens": 19
+     },
+     "quote": "hand back the Premises, the Inventory and all keys, clean and in good condition, fair wear and tear excepted",
+     "fact": "Tenant must hand back premises clean and in good condition, fair wear and tear excepted",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=0"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 10, p.4",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 3,
+      "boxes": [
+       [
+        0.6487,
+        0.2201,
+        0.848,
+        0.2331
+       ],
+       [
+        0.131,
+        0.2379,
+        0.8059,
+        0.251
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 19,
+      "quote_tokens": 19
+     },
+     "quote": "The parties shall inspect the Premises together and note any damage in writing on the day of handing back.",
+     "fact": "Parties shall inspect premises together and note any damage in writing on day of handing back",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-2",
+     "label": "E2 shot 2",
+     "locator": {
+      "asset_id": "E2-2",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.6806,
+        0.1805,
+        0.9056,
+        0.1953
+       ],
+       [
+        0.3347,
+        0.2117,
+        0.4861,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 15
+     },
+     "quote": "I will move out on 31 Jul. I will clean the flat before I go.",
+     "fact": "Claimant told landlord she would move out on 31 Jul and clean the flat before leaving",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=2"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-3",
+     "label": "E2 shot 3",
+     "locator": {
+      "asset_id": "E2-3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3583,
+        0.1805,
+        0.9167,
+        0.1992
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.4889,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     },
+     "quote": "Hi Mr Tan, keys in the mailbox. Flat cleaned.",
+     "fact": "Claimant told landlord flat was cleaned and keys left in mailbox on move-out",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=3"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-4",
+     "label": "E2 shot 4",
+     "locator": {
+      "asset_id": "E2-4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3583,
+        0.1773,
+        0.9167,
+        0.2023
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.4889,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     },
+     "quote": "Hi Mr Tan, keys in the mailbox. Flat cleaned.",
+     "fact": "Claimant informed landlord the flat was cleaned and keys left in mailbox at move-out",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=4"
+    },
+    {
+     "exhibit_id": "E5",
+     "asset_id": "E5",
+     "label": "E5 video, 17:05",
+     "locator": {
+      "asset_id": "E5",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Video shows sofa close up at moveout, dated 31 Jul 2026",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=5"
+    }
+   ],
+   "reason": "Made by you, dated. Read from a screenshot, check it",
+   "rank": 1
+  },
+  {
+   "id": "deposit_terms",
+   "evidence_key": "deposit_terms",
+   "what": "Tenant to pay security deposit of S$2,600 on signing the agreement",
+   "category": "agreement",
+   "date": "2025-08-03",
+   "strength": "weak",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 4, p.2",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 1,
+      "boxes": [
+       [
+        0.131,
+        0.359,
+        0.8038,
+        0.3721
+       ],
+       [
+        0.131,
+        0.3769,
+        0.4884,
+        0.3899
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 20,
+      "quote_tokens": 20
+     },
+     "quote": "The Tenant shall pay the Landlord a security deposit of S$2,600 (two thousand six hundred dollars) on signing this Agreement.",
+     "fact": "Tenant to pay security deposit of S$2,600 on signing the agreement",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=0"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 4, p.2",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 1,
+      "boxes": [
+       [
+        0.4936,
+        0.3769,
+        0.851,
+        0.3899
+       ],
+       [
+        0.131,
+        0.3947,
+        0.7361,
+        0.4077
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 21,
+      "quote_tokens": 21
+     },
+     "quote": "The Landlord shall refund the deposit within 14 days after the Tenant moves out, less the cost of repairing any damage",
+     "fact": "Landlord must refund deposit within 14 days after tenant moves out, less damage costs",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-6",
+     "label": "E2 shot 6",
+     "locator": {
+      "asset_id": "E2-6",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3597,
+        0.2914,
+        0.9153,
+        0.3102
+       ],
+       [
+        0.3569,
+        0.3219,
+        0.6611,
+        0.3414
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 10,
+      "quote_tokens": 10
+     },
+     "quote": "If there is no damage please return the $2,600 deposit.",
+     "fact": "Claimant asks landlord to return $2,600 deposit if no damage",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=2"
+    }
+   ],
+   "reason": "Made by you, has amount and dates. Read from a screenshot, check it",
+   "rank": 2
+  },
+  {
+   "id": "movein_condition",
+   "evidence_key": "movein_condition",
+   "what": "Inventory list signed by both parties at handover records condition of furniture and fittings",
+   "category": "agreement",
+   "date": "2025-08-03",
+   "strength": "weak",
+   "needs_check": false,
+   "sources": [
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 6, p.3",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 2,
+      "boxes": [
+       [
+        0.131,
+        0.1239,
+        0.8613,
+        0.1369
+       ],
+       [
+        0.131,
+        0.1417,
+        0.2101,
+        0.1547
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 16,
+      "quote_tokens": 16
+     },
+     "quote": "An inventory list signed by both parties at handover records the furniture, fittings and their condition.",
+     "fact": "Inventory list signed by both parties at handover records condition of furniture and fittings",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=0"
+    },
+    {
+     "exhibit_id": "E6",
+     "asset_id": "E6-1",
+     "label": "E6 photo 1",
+     "locator": {
+      "asset_id": "E6-1",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Photo labeled Living room, described as a placeholder photo, synthetic",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=1"
+    },
+    {
+     "exhibit_id": "E6",
+     "asset_id": "E6-2",
+     "label": "E6 photo 2",
+     "locator": {
+      "asset_id": "E6-2",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Placeholder image labeled Kitchen with no real photo content",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=2"
+    },
+    {
+     "exhibit_id": "E6",
+     "asset_id": "E6-3",
+     "label": "E6 photo 3",
+     "locator": {
+      "asset_id": "E6-3",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Photo labeled Bedroom, appears to be a placeholder/synthetic image with no visible room details",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=3"
+    },
+    {
+     "exhibit_id": "E6",
+     "asset_id": "E6-4",
+     "label": "E6 photo 4",
+     "locator": {
+      "asset_id": "E6-4",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Photo labeled Bathroom, placeholder synthetic image, no visible condition details",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=4"
+    },
+    {
+     "exhibit_id": "E6",
+     "asset_id": "E6-5",
+     "label": "E6 photo 5",
+     "locator": {
+      "asset_id": "E6-5",
+      "page_index": 0,
+      "boxes": [],
+      "coord_space": "normalized"
+     },
+     "quote": null,
+     "fact": "Placeholder image labeled Hallway, no actual photo content",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=5"
+    }
+   ],
+   "reason": "No actual visible condition detail shown in image",
+   "rank": 3
+  },
+  {
+   "id": "deposit_paid",
+   "evidence_key": "deposit_paid",
+   "what": "Claimant told landlord she will transfer the deposit the next morning",
+   "category": "payment",
+   "date": "2025-08-02",
+   "strength": "weak",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-1",
+     "label": "E2 shot 1",
+     "locator": {
+      "asset_id": "E2-1",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3736,
+        0.2117,
+        0.9042,
+        0.2305
+       ],
+       [
+        0.375,
+        0.243,
+        0.5111,
+        0.2617
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 7
+     },
+     "quote": "I will transfer the deposit tomorrow morning.",
+     "fact": "Claimant told landlord she will transfer the deposit the next morning",
+     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=0"
+    },
+    {
+     "exhibit_id": "E4",
+     "asset_id": "E4",
+     "label": "E4",
+     "locator": {
+      "asset_id": "E4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0569,
+        0.3133,
+        0.7403,
+        0.3312
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 8,
+      "quote_tokens": 8
+     },
+     "quote": "Transfer of SGD 2,600.00 to TAN AH KOW",
+     "fact": "Mei Ling transferred SGD 2,600.00 to Tan Ah Kow as deposit",
+     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=1"
+    }
+   ],
+   "reason": "shows intent to pay deposit, not proof of actual transfer. Read from a screenshot, check it",
+   "rank": 4
+  },
+  {
+   "id": "handover_acceptance",
+   "evidence_key": "handover_acceptance",
+   "what": "Landlord instructed claimant to leave keys in the mailbox, indicating acceptance of handover method",
+   "category": "other_side_words",
+   "date": "2026-07-15",
+   "strength": "weak",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-2",
+     "label": "E2 shot 2",
+     "locator": {
+      "asset_id": "E2-2",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0861,
+        0.3227,
+        0.5389,
+        0.3414
+       ],
+       [
+        0.0861,
+        0.3539,
+        0.2153,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 7,
+      "quote_tokens": 7
+     },
+     "quote": "Noted. Leave the keys in the mailbox.",
+     "fact": "Landlord instructed claimant to leave keys in the mailbox, indicating acceptance of handover method",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=0"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-3",
+     "label": "E2 shot 3",
+     "locator": {
+      "asset_id": "E2-3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0861,
+        0.2914,
+        0.2319,
+        0.3063
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 1,
+      "quote_tokens": 1
+     },
+     "quote": "Received",
+     "fact": "Message shows as 'Received' with timestamp, indicating landlord received the message",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-4",
+     "label": "E2 shot 4",
+     "locator": {
+      "asset_id": "E2-4",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0792,
+        0.368,
+        0.6792,
+        0.393
+       ],
+       [
+        0.0861,
+        0.4023,
+        0.1958,
+        0.4172
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     },
+     "quote": "ok, all good. will transfer deposit after i check",
+     "fact": "Landlord acknowledged receipt of keys and said all is good",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=2"
+    }
+   ],
+   "reason": "Made by you, dated. Read from a screenshot, check it",
+   "rank": 5
+  },
+  {
+   "id": "other_side_words",
+   "evidence_key": "other_side_words",
+   "what": "Landlord asked claimant to send screenshot after transfer",
+   "category": "other_side_words",
+   "date": "2025-08-02",
+   "strength": "weak",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-1",
+     "label": "E2 shot 1",
+     "locator": {
+      "asset_id": "E2-1",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0847,
+        0.3227,
+        0.6236,
+        0.3375
+       ],
+       [
+        0.0833,
+        0.3539,
+        0.2111,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 7,
+      "quote_tokens": 7
+     },
+     "quote": "Ok. Send me the screenshot after transfer.",
+     "fact": "Landlord asked claimant to send screenshot after transfer",
+     "viewer_url": "/api/viewer?evidence_id=other_side_words&source_index=0"
+    }
+   ],
+   "reason": "landlord acknowledges expecting deposit payment. Read from a screenshot, check it",
+   "rank": 6
+  },
+  {
+   "id": "damage_allegation",
+   "evidence_key": "damage_allegation",
+   "what": "Landlord claims sofa has a scratch and refuses to return deposit",
+   "category": "dispute",
+   "date": "2026-08-15",
+   "strength": "weak",
+   "needs_check": true,
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-5",
+     "label": "E2 shot 5",
+     "locator": {
+      "asset_id": "E2-5",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0847,
+        0.3227,
+        0.5931,
+        0.3414
+       ],
+       [
+        0.0861,
+        0.3547,
+        0.175,
+        0.3688
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 6,
+      "quote_tokens": 6
+     },
+     "quote": "sofa got scratch, deposit cannot return",
+     "fact": "Landlord claims sofa has a scratch and refuses to return deposit",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=0"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-5",
+     "label": "E2 shot 5",
+     "locator": {
+      "asset_id": "E2-5",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.3472,
+        0.4336,
+        0.9153,
+        0.4523
+       ],
+       [
+        0.3486,
+        0.4648,
+        0.5722,
+        0.4836
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     },
+     "quote": "Which scratch? Can you send me a photo please?",
+     "fact": "Claimant asked landlord which scratch and requested photo proof",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-6",
+     "label": "E2 shot 6",
+     "locator": {
+      "asset_id": "E2-6",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.5306,
+        0.1805,
+        0.9167,
+        0.1992
+       ],
+       [
+        0.3569,
+        0.2117,
+        0.8264,
+        0.2266
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 11,
+      "quote_tokens": 11
+     },
+     "quote": "still waiting for the photo of the scratch. Please send it.",
+     "fact": "Claimant asks landlord to send photo of an alleged scratch",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=2"
+    },
+    {
+     "exhibit_id": "E3",
+     "asset_id": "E3",
+     "label": "E3",
+     "locator": {
+      "asset_id": "E3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.0556,
+        0.3648,
+        0.6681,
+        0.3906
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 9,
+      "quote_tokens": 9
+     },
+     "quote": "The sofa has a scratch on the left arm.",
+     "fact": "Landlord alleges sofa has a scratch and refuses to return deposit",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=3"
+    },
+    {
+     "exhibit_id": "E3",
+     "asset_id": "E3",
+     "label": "E3",
+     "locator": {
+      "asset_id": "E3",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.075,
+        0.4086,
+        0.8778,
+        0.4273
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 10,
+      "quote_tokens": 11
+     },
+     "quote": "I will not be returning the deposit until this is settled.",
+     "fact": "Landlord states he will withhold deposit until damage issue is settled",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=4"
+    }
+   ],
+   "reason": "Made by you, dated. Read from a screenshot, check it",
+   "rank": 7
+  }
+ ],
+ "gate": {
+  "pass": true,
+  "checks": [
+   {
+    "id": "category",
+    "pass": true,
+    "section_id": "scta_schedule",
+    "text": "Your claim fits a CJTS category: lease not exceeding 2 years (residential premises), refund of rental deposit."
+   },
+   {
+    "id": "amount",
+    "pass": true,
+    "section_id": "scta_s2",
+    "text": "You are claiming $2,600. The limit is $20,000, or $30,000 if both sides agree."
+   },
+   {
+    "id": "time",
+    "pass": true,
+    "section_id": "scta_s5_time",
+    "text": "Date of cause of action: 15 Aug 2026, when the landlord refused. You have 2 years, so until 15 Aug 2028."
+   },
+   {
+    "id": "service",
+    "pass": true,
+    "section_id": "scta_s5_service",
+    "text": "The landlord is in Singapore, so the claim can be served."
+   }
+  ],
+  "stop": null,
+  "result": "All four checks pass. You can continue."
+ },
+ "statutes": {
+  "scta_schedule": {
+   "title": "Small Claims Tribunals Act 1984, s 5(1) and the Schedule (specified claims)",
+   "short": "SCTA 1984 s 5 + Schedule",
+   "quote": "5.—(1) Subject to the provisions of this Act, a tribunal has the jurisdiction to hear and determine any claim which —\n(a) is a specified claim; and\n(b) is served in Singapore on the respondent under section 19(1).\n\nTHE SCHEDULE\nSPECIFIED CLAIMS\n1. The following are specified claims for the purposes of section 5(1)(a):\n(a) a claim relating to a contract for the sale of goods or the provision of services;\n(b) a claim in tort relating to damage caused to any property (other than a claim mentioned in section 4 of the Community Disputes Resolution Act 2015);\n(c) a claim relating to a contract for the lease of residential premises that does not exceed 2 years;",
+   "verbatim": true,
+   "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-,Sc-",
+   "retrieved_date": "2026-09-05"
+  },
+  "scta_s2": {
+   "title": "Small Claims Tribunals Act 1984, s 2(1) (prescribed limit) and s 5(3)-(4)",
+   "short": "SCTA 1984 s 2",
+   "quote": "“prescribed limit” means $20,000 or such other sum as the Minister may, after consultation with the Chief Justice, prescribe by order in the Gazette;\n“prescribed extended limit” means $30,000 or such other sum as the Minister may, after consultation with the Chief Justice, prescribe by order in the Gazette;\n\n5.—(3) Except where this Act expressly provides otherwise, the jurisdiction of a tribunal does not extend to a claim —\n(a) the value of which exceeds the prescribed limit; or\n(b) after the expiry of 2 years after the date on which the cause of action accrued.\n(4) Subject to subsections (1) and (2), a tribunal has jurisdiction to hear and determine any claim the value of which exceeds the prescribed limit but does not exceed the prescribed extended limit, if the parties to the claim so agree by a memorandum signed by them.",
+   "verbatim": true,
+   "source_url": "https://sso.agc.gov.sg/Act/SCTA1984",
+   "retrieved_date": "2026-09-05"
+  },
+  "scta_s5_time": {
+   "title": "Small Claims Tribunals Act 1984, s 5(3)(b) (2-year limit)",
+   "short": "SCTA 1984 s 5(3)",
+   "quote": "5.—(3) Except where this Act expressly provides otherwise, the jurisdiction of a tribunal does not extend to a claim —\n(a) the value of which exceeds the prescribed limit; or\n(b) after the expiry of 2 years after the date on which the cause of action accrued.",
+   "verbatim": true,
+   "guide": "State Courts, A Guide to Small Claims, p.4: \"All claims must be filed within two years after the date the cause of action accrued. A cause of action is the fact or facts which entitles you, in law, to start a court action against the Respondent. You may file a claim in the civil courts, e.g. at the Magistrates' Courts if the cause of action accrued more than 2 years ago.\"",
+   "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-",
+   "retrieved_date": "2026-09-05"
+  },
+  "scta_s5_service": {
+   "title": "Small Claims Tribunals Act 1984, s 5(1)(b) (served in Singapore)",
+   "short": "SCTA 1984 s 5(1)(b)",
+   "quote": "5.—(1) Subject to the provisions of this Act, a tribunal has the jurisdiction to hear and determine any claim which —\n(a) is a specified claim; and\n(b) is served in Singapore on the respondent under section 19(1).",
+   "verbatim": true,
+   "guide": "Judiciary, Cases eligible for a small claim: the tribunals cannot hear a claim where the respondent is outside Singapore, because the claim cannot be served on anyone outside Singapore.",
+   "source_url": "https://sso.agc.gov.sg/Act/SCTA1984?ProvIds=pr5-",
+   "retrieved_date": "2026-09-05"
+  }
+ },
+ "gaps": [
+  {
+   "key": "communication",
+   "category": "Communication (chat, email, SMS, calls, spoken)",
+   "why": "The other side's own words, dated, are the strongest thing you can bring.",
+   "have": [
+    "WhatsApp screenshots (E2)",
+    "Email from the landlord (E3)"
+   ],
+   "missing": [
+    "The full chat export, in order",
+    "Any voice note or call log",
+    "Anything agreed face to face: date, words, who was there"
+   ]
+  },
+  {
+   "key": "agreement",
+   "category": "Agreement (contract, listing, terms)",
+   "why": "The agreement sets what each side must do.",
+   "have": [
+    "Tenancy agreement (E1)",
+    "WhatsApp screenshots (E2)"
+   ],
+   "missing": [
+    "Inventory list signed at handover (cl. 6)",
+    "Stamp duty certificate (the SCT asks for it)",
+    "Property listing, if it described the furniture"
+   ]
+  },
+  {
+   "key": "payment",
+   "category": "Payment (transfers, receipts, invoices)",
+   "why": "Shows what you paid and what you still owe, if anything.",
+   "have": [
+    "WhatsApp screenshots (E2)",
+    "Deposit transfer screenshot (E4)"
+   ],
+   "missing": [
+    "Last month's rent transfer",
+    "Final utility bill and receipt",
+    "Any repair invoice he sent you"
+   ]
+  },
+  {
+   "key": "condition",
+   "category": "Condition (photos, video, reports)",
+   "why": "Dated pictures of the flat before and after are the answer to a damage claim.",
+   "have": [
+    "WhatsApp screenshots (E2)",
+    "Move-out video (E5)",
+    "Move-in photos (E6)"
+   ],
+   "missing": [
+    "Dated move-in photos or video of the sofa",
+    "Handover form",
+    "Cleaner or mover receipt, 31 Jul"
+   ]
+  },
+  {
+   "key": "request",
+   "category": "Your request for the money",
+   "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
+   "have": [
+    "Nothing yet"
+   ],
+   "missing": [
+    "A written request to the landlord for the deposit with a reply date. Draft on the Next steps page."
+   ]
+  }
+ ],
+ "blindspots": {
+  "intro": "Things that could exist and are not in your files yet: what the landlord may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue his case.",
+  "note": "He can file a counterclaim for damage on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "total": 6,
+  "answered": 4,
+  "questions": [
+   {
+    "id": "b1",
+    "q": "Could he have his own photos of the sofa, taken after you left?",
+    "hint": "Your move-out video (E5) shows the sofa at 1:12. Keep it.",
+    "answer": "unsure"
+   },
+   {
+    "id": "b2",
+    "q": "Has he sent, or could he get, a repair or cleaning invoice?",
+    "hint": "Ask for it in your written request. On CJTS a Defects Schedule form lists each defect and its cost.",
+    "answer": "no"
+   },
+   {
+    "id": "b3",
+    "q": "Did you sign an inventory or handover form?",
+    "hint": "Your agreement, cl. 6, says there is one. Get your copy. If it notes the sofa, it matters either way.",
+    "answer": "yes"
+   },
+   {
+    "id": "b4",
+    "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
+    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back.",
+    "answer": "no"
+   },
+   {
+    "id": "b5",
+    "q": "Did anyone else see the handover? A friend, mover or agent.",
+    "hint": "Witnesses go on the Submission for Hearing form on CJTS.",
+    "answer": null
+   },
+   {
+    "id": "b6",
+    "q": "Did you accept any deduction, even in passing?",
+    "hint": "If yes, say how much and when. It changes the amount you claim.",
+    "answer": null
+   }
+  ]
+ },
+ "timeline": [
+  {
+   "id": "d_2025-08-02",
+   "label": "Deposit transfer promised, Landlord response (E2)",
+   "date": "2025-08-02",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Claimant told landlord she will transfer the deposit the next morning (\"I will transfer the deposit tomorrow morning.\"). Landlord asked claimant to send screenshot after transfer (\"Ok. Send me the screenshot after transfer.\").",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-1",
+     "label": "E2 shot 1",
+     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=0"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-1",
+     "label": "E2 shot 1",
+     "viewer_url": "/api/viewer?evidence_id=other_side_words&source_index=0"
+    }
+   ]
+  },
+  {
+   "id": "d_2025-08-03",
+   "label": "Deposit payment (E1, E4)",
+   "date": "2025-08-03",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Tenant to pay security deposit of S$2,600 on signing the agreement (\"The Tenant shall pay the Landlord a security deposit of S$2,600 (two thousand six hundred dollars) on signing this Agreement.\"). Landlord must refund deposit within 14 days after tenant moves out, less damage costs (\"The Landlord shall refund the deposit within 14 days after the Tenant moves out, less the cost of repairing any damage\"). Deposit shall not be used by tenant as rent (\"The deposit shall not be used by the Tenant as rent.\"). Inventory list signed by both parties at handover records condition of furniture and fittings (\"An inventory list signed by both parties at handover records the furniture, fittings and their condition.\"). Tenant must hand back premises clean and in good condition, fair wear and tear excepted (\"hand back the Premises, the Inventory and all keys, clean and in good condition, fair wear and tear excepted\"). Parties shall inspect premises together and note any damage in writing on day of handing back (\"The parties shall inspect the Premises together and note any damage in writing on the day of handing back.\"). Mei Ling transferred SGD 2,600.00 to Tan Ah Kow as deposit (\"Transfer of SGD 2,600.00 to TAN AH KOW\").",
+   "sources": [
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 4, p.2",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=0"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 4, p.2",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=1"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 4, p.2",
+     "viewer_url": "/api/viewer?asset_id=E1&page_index=1"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 6, p.3",
+     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=0"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 10, p.4",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=0"
+    },
+    {
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 Clause 10, p.4",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=1"
+    },
+    {
+     "exhibit_id": "E4",
+     "asset_id": "E4",
+     "label": "E4",
+     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=1"
+    }
+   ]
+  },
+  {
+   "id": "d_2026-07-15",
+   "label": "Move out, \"all good\" (E2)",
+   "date": "2026-07-15",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Claimant told landlord she would move out on 31 Jul and clean the flat before leaving (\"I will move out on 31 Jul. I will clean the flat before I go.\"). Landlord instructed claimant to leave keys in the mailbox, indicating acceptance of handover method (\"Noted. Leave the keys in the mailbox.\").",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-2",
+     "label": "E2 shot 2",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=2"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-2",
+     "label": "E2 shot 2",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=0"
+    }
+   ]
+  },
+  {
+   "id": "d_2026-07-31",
+   "label": "Move-out, Move out, \"all good\", moveout (E2, E5)",
+   "date": "2026-07-31",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Claimant told landlord flat was cleaned and keys left in mailbox on move-out (\"Hi Mr Tan, keys in the mailbox. Flat cleaned.\"). Message shows as 'Received' with timestamp, indicating landlord received the message (\"Received\"). Claimant informed landlord the flat was cleaned and keys left in mailbox at move-out (\"Hi Mr Tan, keys in the mailbox. Flat cleaned.\"). Landlord acknowledged receipt of keys and said all is good (\"ok, all good. will transfer deposit after i check\"). Video shows sofa close up at moveout, dated 31 Jul 2026.",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-3",
+     "label": "E2 shot 3",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=3"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-3",
+     "label": "E2 shot 3",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-4",
+     "label": "E2 shot 4",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=4"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-4",
+     "label": "E2 shot 4",
+     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=2"
+    },
+    {
+     "exhibit_id": "E5",
+     "asset_id": "E5",
+     "label": "E5 video, 17:05",
+     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=5"
+    }
+   ]
+  },
+  {
+   "id": "refund_due",
+   "label": "Refund due (E2 shot 6)",
+   "date": "2026-08-14",
+   "future": false,
+   "marker": false,
+   "computed": true,
+   "detail": "14 days after move-out on 31 Jul 2026, under E2 shot 6.",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-6",
+     "label": "E2 shot 6",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=2"
+    }
+   ]
+  },
+  {
+   "id": "d_2026-08-15",
+   "label": "Landlord refuses (E2, E3)",
+   "date": "2026-08-15",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Landlord claims sofa has a scratch and refuses to return deposit (\"sofa got scratch, deposit cannot return\"). Claimant asked landlord which scratch and requested photo proof (\"Which scratch? Can you send me a photo please?\"). Claimant told landlord the 14 day deadline for deposit return had passed (\"the 14 days passed yesterday. Can you transfer the deposit today?\"). Landlord alleges sofa has a scratch and refuses to return deposit (\"The sofa has a scratch on the left arm.\"). Landlord states he will withhold deposit until damage issue is settled (\"I will not be returning the deposit until this is settled.\").",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-5",
+     "label": "E2 shot 5",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=0"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-5",
+     "label": "E2 shot 5",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=1"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-5",
+     "label": "E2 shot 5",
+     "viewer_url": "/api/viewer?asset_id=E2-5&page_index=0"
+    },
+    {
+     "exhibit_id": "E3",
+     "asset_id": "E3",
+     "label": "E3",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=3"
+    },
+    {
+     "exhibit_id": "E3",
+     "asset_id": "E3",
+     "label": "E3",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=4"
+    }
+   ]
+  },
+  {
+   "id": "d_2026-08-20",
+   "label": "Landlord refuses (E2)",
+   "date": "2026-08-20",
+   "future": false,
+   "marker": false,
+   "computed": false,
+   "detail": "Claimant asks landlord to send photo of an alleged scratch (\"still waiting for the photo of the scratch. Please send it.\"). Claimant asks landlord to return $2,600 deposit if no damage (\"If there is no damage please return the $2,600 deposit.\").",
+   "sources": [
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-6",
+     "label": "E2 shot 6",
+     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=2"
+    },
+    {
+     "exhibit_id": "E2",
+     "asset_id": "E2-6",
+     "label": "E2 shot 6",
+     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=2"
+    }
+   ]
+  },
+  {
+   "id": "today",
+   "label": "Today",
+   "date": "2026-09-05",
+   "future": false,
+   "marker": true,
+   "computed": true,
+   "detail": "Where you are now.",
+   "sources": []
+  },
+  {
+   "id": "written_request",
+   "label": "Written request",
+   "date": null,
+   "date_text": "next",
+   "future": true,
+   "marker": false,
+   "computed": true,
+   "detail": "A step still ahead. See Next steps.",
+   "sources": []
+  },
+  {
+   "id": "prefiling",
+   "label": "Pre-filing check, then file on CJTS",
+   "date": null,
+   "date_text": "",
+   "future": true,
+   "marker": false,
+   "computed": true,
+   "detail": "A step still ahead. See Next steps.",
+   "sources": []
+  },
+  {
+   "id": "serve",
+   "label": "Serve within 7 working days",
+   "date": null,
+   "date_text": "",
+   "future": true,
+   "marker": false,
+   "computed": true,
+   "detail": "A step still ahead. See Next steps.",
+   "sources": []
+  },
+  {
+   "id": "consultation",
+   "label": "Consultation",
+   "date": null,
+   "date_text": "",
+   "future": true,
+   "marker": false,
+   "computed": true,
+   "detail": "A step still ahead. See Next steps.",
+   "sources": []
+  },
+  {
+   "id": "hearing",
+   "label": "Hearing",
+   "date": null,
+   "date_text": "",
+   "future": true,
+   "marker": false,
+   "computed": true,
+   "detail": "A step still ahead. See Next steps.",
+   "sources": []
+  },
+  {
+   "id": "time_bar",
+   "label": "Time bar",
+   "date": "2028-08-15",
+   "future": true,
+   "marker": true,
+   "computed": true,
+   "detail": "2 years after 15 Aug 2026, the date the landlord refused. Latest filing date.",
+   "sources": []
+  }
+ ],
+ "next_steps": [
+  {
+   "n": 1,
+   "title": "Send a written request for the deposit",
+   "action": "written_request",
+   "note": "Your biggest gap. Give him 7 days to reply. The draft uses only your facts and your agreement.",
+   "source_label": "Guide p.4",
+   "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
+  },
+  {
+   "n": 2,
+   "title": "Gather what is missing",
+   "action": "gaps",
+   "note": "Stamp duty certificate, signed inventory list, final bill, dated move-in photos.",
+   "source_label": "What else to gather",
+   "source_url": null
+  },
+  {
+   "n": 3,
+   "title": "Pre-filing assessment on CJTS",
+   "action": "link",
+   "note": "Pick the category, enter the refusal date and the amount, answer the questions. The ID it gives you lasts 7 days.",
+   "source_label": "Open CJTS",
+   "source_url": "https://cjts.judiciary.gov.sg/"
+  },
+  {
+   "n": 4,
+   "title": "Fill the claim form and pay",
+   "action": "link",
+   "note": "Six parts: you, him, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order. Singpass login. Then pick a Consultation date.",
+   "source_label": "Guide s.12",
+   "source_url": "https://www.judiciary.gov.sg/civil/file-small-claim"
+  },
+  {
+   "n": 5,
+   "title": "Serve him within 7 working days",
+   "action": "link",
+   "note": "Save the Respondent Copy from CJTS, hand it to him or send by registered post, then file the Declaration of Service.",
+   "source_label": "Guide p.11",
+   "source_url": "https://www.judiciary.gov.sg/civil/how-to-file-serve-small-claim"
+  },
+  {
+   "n": 6,
+   "title": "Before the Consultation",
+   "action": "link",
+   "note": "He may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses. Bring E1 to E6 in evidence sheet order.",
+   "source_label": "Guide s.21, s.36",
+   "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
+  }
+ ],
+ "fee": {
+  "amount": 10,
+  "basis": "up to $5,000",
+  "source_label": "Guide p.5",
+  "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
+ }
+}
