@@ -135,19 +135,22 @@ def gate(case, today):
     prem = it.get("premises", {})
     ct = case["claim_type"]
     if ct == "tenancy":
+        cat_known = prem.get("residential") is not None and prem.get("lease_months") is not None
         cat_ok = bool(prem.get("residential")) and (prem.get("lease_months") or 0) <= 24
         cat_text = "The tribunal hears this kind of claim: a home lease of 2 years or less, and a deposit refund."
-        if prem.get("residential") is None or prem.get("lease_months") is None:
+        if not cat_known:
             cat_ok, cat_text = False, "Tell us if the place was your home, and how long the lease was."
         elif not cat_ok:
             cat_text = "The tribunal does not hear a lease over 2 years, or a shop or office lease."
     elif ct in CATEGORY_TEXT:
-        cat_ok, cat_text = True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
+        cat_known, cat_ok, cat_text = True, True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
-        cat_ok, cat_text = False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
-                                   "home leases up to 2 years, and damage to property not from a motor accident.")
+        cat_known, cat_ok = True, False
+        cat_text = ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
+                    "home leases up to 2 years, and damage to property not from a motor accident.")
     else:
-        cat_ok, cat_text = False, "Tell us what happened so we can check if the tribunal hears this kind of claim."
+        cat_known, cat_ok = False, False
+        cat_text = "Tell us what happened so we can check if the tribunal hears this kind of claim."
     amt_ok = amt is not None and (amt <= 20000 or (it.get("consent_30k") and amt <= 30000))
     bar = plus_years(cause, 2) if cause else None
     time_ok = bool(cause) and today <= bar
@@ -171,6 +174,11 @@ def gate(case, today):
              "amount": "A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court.",
              "time": "More than 2 years have passed. The civil courts, for example the Magistrate's Court, may still hear it.",
              "service": "The Magistrate's Court can serve outside Singapore. Ask the court registry."}
+    # "blocked" means a fact we already have rules the claim out, not that we are still waiting to be told.
+    known = {"category": cat_known, "amount": amt is not None, "time": cause is not None, "service": in_sg is not None}
+    for c in checks:
+        c["where"] = where[c["id"]]
+        c["blocked"] = known[c["id"]] and not c["pass"]
     failed = [c for c in checks if not c["pass"]]
     stop = None if ok else "This check did not pass: " + failed[0]["text"] + " " + where[failed[0]["id"]]
     return {"pass": ok, "checks": checks, "stop": stop,

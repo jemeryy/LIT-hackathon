@@ -7,13 +7,13 @@
   },
   {
    "id": "claimant",
-   "label": "Your name and address",
-   "why": "Goes on the claim form as the person claiming."
+   "label": "Your name and full address",
+   "why": "Goes on the claim form, so it needs the block, unit number and postal code."
   },
   {
    "id": "respondent",
-   "label": "Who you are claiming against, and where they are",
-   "why": "The tribunal needs a Singapore address so the claim can be served."
+   "label": "Who you are claiming against, and their full address",
+   "why": "The tribunal needs their full Singapore address, with postal code, so the claim can be served."
   },
   {
    "id": "category",

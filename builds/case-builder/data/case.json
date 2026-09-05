@@ -1,64 +1,88 @@
 {
- "case_id": "mei-ling",
- "claim_type": "tenancy",
- "app_name": "Case Builder",
+ "case_id": "mine",
+ "claim_type": "goods",
+ "app_name": "Case Helper",
  "today": "2026-09-05",
  "intake": {
   "chat": [
    {
     "who": "bot",
-    "text": "Tell me what happened, in your own words. Who is the other side, what did you agree, what went wrong, when, and how much you want back. I will ask for anything missing. I do not give legal advice."
+    "text": "Tell me what happened, in your own words. Who is the other side? What did you agree? What went wrong, and when? How much do you want back? I will ask if anything is missing."
    },
    {
     "who": "user",
-    "text": "My landlord Mr Tan will not return my $2,600 deposit. I rented his flat for 12 months and moved out on 31 Jul 2026. He said ok, all good. Then on 15 Aug 2026 he said the sofa was scratched and refused to pay it back."
+    "text": "Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier."
    },
    {
     "who": "bot",
-    "text": "Thank you. This sounds like a home lease and a deposit refund, which the tribunal can hear. Two things I still need. Your full name and address, which go on the claim form. And Mr Tan's full name and address, and whether he lives in Singapore, because the claim has to be served on him."
+    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. What is your full name and address? What is the supplier's address in Singapore?"
    },
    {
     "who": "user",
-    "text": "I am Mei Ling, Blk 123 Bedok North Street 1 #05-67, Singapore 460123. He is Tan Ah Kow, 45 Bedok Reservoir Road #12-34, Singapore 470045. Yes, he lives in Singapore."
+    "text": "I am mark from tampines st 99\nUncle seng is from pasir ris st 99"
    },
    {
     "who": "bot",
-    "text": "Got it. Was the flat your home, and how long was the lease? The tribunal only hears home leases of up to 2 years. And what did the agreement say about when the deposit comes back?"
+    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. What is your full street address, with unit and postal code? What is the supplier's full address, with postal code?"
    },
    {
     "who": "user",
-    "text": "Yes, an HDB flat I lived in. 12 months, 3 Aug 2025 to 2 Aug 2026. One month deposit, returned within 14 days after I move out, minus any damage."
+    "text": "He is from tampines st 99 72684\nuncle seng is from pasir st 99 827462"
    },
    {
     "who": "bot",
-    "text": "That is everything I need for the checks. Now add your files on the right: the tenancy agreement, the chat, the transfer, and any photos or video. Only files count as evidence. Then press Next."
+    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. Is the supplier's address Pasir Ris St 99, postal code 827462?"
+   },
+   {
+    "who": "user",
+    "text": "yes"
+   },
+   {
+    "who": "bot",
+    "text": "I have enough details about your claim against Uncle Seng Seafood. Now add the order, payment records, messages, and photos on the right."
+   },
+   {
+    "who": "user",
+    "text": "uncle seng is actually from malaysia and claim amount is $31000"
+   },
+   {
+    "who": "bot",
+    "text": "I have updated that. You are claiming $31,000. The limit is $20,000, or $30,000 if both sides agree. The seller is outside Singapore. The tribunal cannot serve a claim outside Singapore. A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court. Tell me if I have that wrong."
+   },
+   {
+    "who": "user",
+    "text": "claim is $4000 and he is from singapore"
+   },
+   {
+    "who": "bot",
+    "text": "I cannot safely restate that yet. What did the other side agree to do? What happened instead?"
    }
   ],
-  "account": "My landlord Mr Tan will not return my $2,600 deposit. I rented his flat for 12 months and moved out on 31 Jul 2026. He said ok, all good. Then on 15 Aug 2026 he said the sofa was scratched and refused to pay it back. I am Mei Ling, Blk 123 Bedok North Street 1 #05-67, Singapore 460123. He is Tan Ah Kow, 45 Bedok Reservoir Road #12-34, Singapore 470045. Yes, he lives in Singapore. Yes, an HDB flat I lived in. 12 months, 3 Aug 2025 to 2 Aug 2026. One month deposit, returned within 14 days after I move out, minus any damage.",
+  "account": "Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier. I am mark from tampines st 99\nUncle seng is from pasir ris st 99 He is from tampines st 99 72684\nuncle seng is from pasir st 99 827462 yes uncle seng is actually from malaysia and claim amount is $31000 claim is $4000 and he is from singapore",
   "done": true,
   "parties": {
    "claimant": {
-    "name": "Mei Ling",
-    "address": "Blk 123 Bedok North Street 1 #05-67, Singapore 460123",
+    "name": "Mark",
+    "address": "Tampines St 99, 72684",
     "id_type": "NRIC"
    },
    "respondent": {
-    "name": "Tan Ah Kow",
-    "role": "landlord",
-    "address": "45 Bedok Reservoir Road #12-34, Singapore 470045",
+    "name": "Uncle Seng Seafood",
+    "role": "seller",
+    "address": "Pasir Ris St 99, 827462",
     "in_singapore": true,
-    "is_company": false
+    "is_company": null
    }
   },
-  "amount": 2600.0,
+  "amount": 4000.0,
   "consent_30k": false,
-  "cause_of_action_date": "2026-08-15",
-  "moveout_date": "2026-07-31",
-  "what_agreed": "One month deposit, $2,600. Returned within 14 days after moving out, minus any damage.",
+  "cause_of_action_date": "2026-09-28",
+  "moveout_date": null,
+  "what_agreed": "Supplier agreed to supply 1,000 kg premium yellowtail fish for S$5,000, S$5 per kg.",
   "premises": {
-   "residential": true,
-   "lease_months": 12,
-   "refund_days": 14
+   "residential": null,
+   "lease_months": null,
+   "refund_days": null
   }
  },
  "checklist": [
@@ -111,40 +135,36 @@
    "done": true
   }
  ],
- "story": "You rented Mr Tan's flat for 12 months and paid a $2,600 deposit on 3 Aug 2025. You moved out on 31 Jul 2026 and he wrote \"ok, all good\". On 15 Aug he refused to return the deposit, saying the sofa was damaged.",
- "summary": "I rented the Respondent's flat at Blk 123 Bedok North Street 1 #05-67 from 3 Aug 2025 for 12 months and paid a $2,600 deposit on 3 Aug 2025. Clause 4 of the tenancy agreement says the deposit is refunded within 14 days of moving out, less damage. I moved out on 31 Jul 2026. The Respondent wrote \"ok, all good\" the same day. On 15 Aug 2026 he refused to return the deposit, saying the sofa was scratched, and sent no photo or invoice. I claim the $2,600 deposit.",
+ "story": "2026-09-10: Event (E1). 2026-09-12: Paid (E1). 2026-10-01: Seller replies (E1). 2026-09-05: Today.",
+ "summary": "On 10 September 2026, I ordered 1,000 kg of premium yellowtail fish from Uncle Seng Seafood at $5/kg, total $5,000, for delivery on 8 October 2026. On 12 September 2026, I paid a $2,000 deposit via UEN transfer. Uncle Seng later said he could not supply the agreed 1,000 kg of yellowtail and offered a smaller quantity or a substitute at a higher price. I did not accept this and asked for the contract to be honoured or the deposit returned.",
  "exhibits": [
   {
    "id": "E1",
    "kind": "pdf",
    "status": "ready",
-   "title": "Tenancy agreement",
+   "title": "SCT_Fishball_Dispute_Messy.pdf",
    "facts": [
     {
-     "evidence_key": "deposit_terms",
+     "evidence_key": "sale_terms",
      "category": "agreement",
-     "fact": "Deposit $2,600, refund within 14 days of moving out, less damage",
-     "date": "2025-08-03",
-     "party": "both",
-     "amount": 2600,
-     "where": "cl. 4",
-     "quote": "The Landlord shall refund the deposit within 14 days after the Tenant moves out",
+     "fact": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
+     "date": "2026-09-10",
+     "party": "respondent",
+     "amount": 5000,
+     "where": null,
+     "note": null,
+     "quote": "Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.",
+     "timeline_label": null,
      "asset_id": "E1",
      "locator": {
       "asset_id": "E1",
-      "page_index": 1,
+      "page_index": 0,
       "boxes": [
        [
-        0.4936,
-        0.3769,
-        0.851,
-        0.3899
-       ],
-       [
-        0.131,
-        0.3947,
-        0.4255,
-        0.4077
+        0.0865,
+        0.2456,
+        0.6211,
+        0.2575
        ]
       ],
       "coord_space": "normalized",
@@ -153,740 +173,190 @@
      }
     },
     {
-     "evidence_key": null,
-     "category": "agreement",
-     "fact": "Lease of 12 months from 3 Aug 2025, signed by both",
-     "timeline_label": "Lease starts",
-     "date": "2025-08-03",
-     "party": "both",
+     "evidence_key": "payment_made",
+     "category": "payment",
+     "fact": "Mark paid $2,000 deposit via correct UEN transfer",
+     "date": "2026-09-12",
+     "party": "claimant",
+     "amount": 2000,
+     "where": null,
+     "note": null,
+     "quote": "S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER",
+     "timeline_label": null,
+     "asset_id": "E1",
+     "locator": {
+      "asset_id": "E1",
+      "page_index": 0,
+      "boxes": [
+       [
+        0.5959,
+        0.8382,
+        0.9022,
+        0.8477
+       ]
+      ],
+      "coord_space": "normalized",
+      "matched_tokens": 5,
+      "quote_tokens": 5
+     }
+    },
+    {
+     "evidence_key": "seller_response",
+     "category": "other_side_words",
+     "fact": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
+     "date": "2026-10-01",
+     "party": "respondent",
      "amount": null,
-     "where": "cl. 1",
-     "quote": "for a term of 12 months starting on 3 August 2025",
+     "where": null,
+     "note": null,
+     "quote": "You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.",
+     "timeline_label": null,
      "asset_id": "E1",
      "locator": {
       "asset_id": "E1",
       "page_index": 1,
       "boxes": [
        [
-        0.5059,
-        0.1239,
-        0.8665,
-        0.1369
-       ],
-       [
-        0.131,
-        0.1417,
-        0.1721,
-        0.1547
+        0.0865,
+        0.8531,
+        0.6523,
+        0.8649
        ]
       ],
       "coord_space": "normalized",
-      "matched_tokens": 11,
-      "quote_tokens": 11
-     }
-    },
-    {
-     "evidence_key": null,
-     "category": "agreement",
-     "fact": "Clause 6 says an inventory list is signed at handover",
-     "timeline_label": null,
-     "date": null,
-     "party": "both",
-     "amount": null,
-     "where": "cl. 6",
-     "quote": "An inventory list signed by both parties at handover",
-     "asset_id": "E1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 2,
-      "boxes": [
-       [
-        0.131,
-        0.1239,
-        0.5501,
-        0.1369
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 9,
-      "quote_tokens": 9
+      "matched_tokens": 14,
+      "quote_tokens": 18
      }
     }
    ],
    "assets": [
     {
      "id": "E1",
-     "filename": "Tenancy_Agreement_2025.pdf",
+     "filename": "SCT_Fishball_Dispute_Messy.pdf",
      "kind": "pdf",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\Tenancy_Agreement_2025.pdf",
-     "size_bytes": 6683,
+     "path": "/Users/tingkang/Documents/LIT Hackathon/LIT-hackathon/builds/case-builder/data/uploads/E1/SCT_Fishball_Dispute_Messy.pdf",
+     "size_bytes": 39999,
      "viewer_url": "/api/viewer?asset_id=E1&page_index=0",
      "meta": {
       "author": "both",
-      "signed": true,
+      "signed": false,
       "dated": true,
       "has_amount": true,
       "from_picture": false
      },
-     "pages": 6
-    }
-   ]
-  },
-  {
-   "id": "E2",
-   "kind": "image_set",
-   "status": "ready",
-   "title": "WhatsApp screenshots",
-   "facts": [
-    {
-     "evidence_key": "handover_acceptance",
-     "category": "other_side_words",
-     "fact": "Landlord wrote \"ok, all good\" at handover, 31 Jul",
-     "date": "2026-07-31",
-     "party": "respondent",
-     "amount": null,
-     "where": null,
-     "note": "His own words, dated, in your chat screenshot",
-     "quote": "ok, all good. will transfer deposit after i check",
-     "asset_id": "E2-4",
-     "locator": {
-      "asset_id": "E2-4",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0792,
-        0.368,
-        0.6792,
-        0.393
-       ],
-       [
-        0.0861,
-        0.4023,
-        0.1958,
-        0.4172
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 9,
-      "quote_tokens": 9
-     }
-    },
-    {
-     "evidence_key": "damage_allegation",
-     "category": "dispute",
-     "fact": "Landlord says sofa damaged, 15 Aug",
-     "date": "2026-08-15",
-     "party": "respondent",
-     "amount": null,
-     "where": null,
-     "note": "His claim in chat and email, no photo sent",
-     "quote": "sofa got scratch, deposit cannot return",
-     "asset_id": "E2-5",
-     "locator": {
-      "asset_id": "E2-5",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0847,
-        0.3227,
-        0.5931,
-        0.3414
-       ],
-       [
-        0.0861,
-        0.3547,
-        0.175,
-        0.3688
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 6,
-      "quote_tokens": 6
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E2-1",
-     "filename": "WhatsApp_01.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_01.png",
-     "size_bytes": 34001,
-     "viewer_url": "/api/viewer?asset_id=E2-1&page_index=0",
-     "meta": {
-      "author": "both",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E2-2",
-     "filename": "WhatsApp_02.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_02.png",
-     "size_bytes": 32839,
-     "viewer_url": "/api/viewer?asset_id=E2-2&page_index=0",
-     "meta": {
-      "author": "both",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E2-3",
-     "filename": "WhatsApp_03.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_03.png",
-     "size_bytes": 24657,
-     "viewer_url": "/api/viewer?asset_id=E2-3&page_index=0",
-     "meta": {
-      "author": "both",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E2-4",
-     "filename": "WhatsApp_04.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_04.png",
-     "size_bytes": 34681,
-     "viewer_url": "/api/viewer?asset_id=E2-4&page_index=0",
-     "meta": {
-      "author": "respondent",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E2-5",
-     "filename": "WhatsApp_05.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_05.png",
-     "size_bytes": 43486,
-     "viewer_url": "/api/viewer?asset_id=E2-5&page_index=0",
-     "meta": {
-      "author": "respondent",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E2-6",
-     "filename": "WhatsApp_06.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\WhatsApp_06.png",
-     "size_bytes": 34019,
-     "viewer_url": "/api/viewer?asset_id=E2-6&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    }
-   ]
-  },
-  {
-   "id": "E3",
-   "kind": "image_set",
-   "status": "ready",
-   "title": "Email from the landlord",
-   "facts": [
-    {
-     "evidence_key": "damage_allegation",
-     "category": "dispute",
-     "fact": "Landlord says sofa damaged, 15 Aug",
-     "date": "2026-08-15",
-     "party": "respondent",
-     "amount": null,
-     "where": null,
-     "quote": "I will not be returning the deposit until this is settled",
-     "asset_id": "E3",
-     "locator": {
-      "asset_id": "E3",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.075,
-        0.4086,
-        0.8778,
-        0.4273
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 10,
-      "quote_tokens": 11
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E3",
-     "filename": "email_landlord.png",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\email_landlord.png",
-     "size_bytes": 38569,
-     "viewer_url": "/api/viewer?asset_id=E3&page_index=0",
-     "meta": {
-      "author": "respondent",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    }
-   ]
-  },
-  {
-   "id": "E4",
-   "kind": "image_set",
-   "status": "ready",
-   "title": "Deposit transfer screenshot",
-   "facts": [
-    {
-     "evidence_key": "deposit_paid",
-     "category": "payment",
-     "fact": "Deposit $2,600 paid 3 Aug 2025",
-     "date": "2025-08-03",
-     "party": "claimant",
-     "amount": 2600,
-     "where": null,
-     "note": "Bank record, third party",
-     "quote": "Transfer of SGD 2,600.00 to TAN AH KOW",
-     "asset_id": "E4",
-     "locator": {
-      "asset_id": "E4",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0569,
-        0.3133,
-        0.7403,
-        0.3312
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 8,
-      "quote_tokens": 8
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E4",
-     "filename": "deposit_transfer.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\deposit_transfer.jpg",
-     "size_bytes": 62097,
-     "viewer_url": "/api/viewer?asset_id=E4&page_index=0",
-     "meta": {
-      "author": "third_party",
-      "signed": false,
-      "dated": true,
-      "has_amount": true,
-      "from_picture": true
-     }
-    }
-   ]
-  },
-  {
-   "id": "E5",
-   "kind": "video",
-   "status": "ready",
-   "title": "Move-out video",
-   "facts": [
-    {
-     "evidence_key": "moveout_condition",
-     "category": "condition",
-     "fact": "Flat condition when you left",
-     "date": "2026-07-31",
-     "party": "claimant",
-     "amount": null,
-     "where": "1:12",
-     "note": "Filmed by you on 31 Jul, sofa shown at 1:12",
-     "quote": null,
-     "asset_id": "E5",
-     "locator": {
-      "asset_id": "E5",
-      "page_index": 0,
-      "boxes": [],
-      "coord_space": "normalized"
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E5",
-     "filename": "moveout_walkthrough.mp4",
-     "kind": "video",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\moveout_walkthrough.mp4",
-     "size_bytes": 79949,
-     "viewer_url": "/api/viewer?asset_id=E5&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": true,
-      "has_amount": false,
-      "from_picture": true
-     }
-    }
-   ]
-  },
-  {
-   "id": "E6",
-   "kind": "image_set",
-   "status": "ready",
-   "title": "Move-in photos",
-   "facts": [
-    {
-     "evidence_key": "movein_condition",
-     "category": "condition",
-     "fact": "Flat condition when you moved in",
-     "date": null,
-     "party": "claimant",
-     "amount": null,
-     "where": null,
-     "note": "No date stamp, sofa not in any photo",
-     "quote": null,
-     "asset_id": "E6-1",
-     "locator": {
-      "asset_id": "E6-1",
-      "page_index": 0,
-      "boxes": [],
-      "coord_space": "normalized"
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E6-1",
-     "filename": "movein_01.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_01.jpg",
-     "size_bytes": 23189,
-     "viewer_url": "/api/viewer?asset_id=E6-1&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": false,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E6-2",
-     "filename": "movein_02.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_02.jpg",
-     "size_bytes": 22523,
-     "viewer_url": "/api/viewer?asset_id=E6-2&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": false,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E6-3",
-     "filename": "movein_03.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_03.jpg",
-     "size_bytes": 23033,
-     "viewer_url": "/api/viewer?asset_id=E6-3&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": false,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E6-4",
-     "filename": "movein_04.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_04.jpg",
-     "size_bytes": 22826,
-     "viewer_url": "/api/viewer?asset_id=E6-4&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": false,
-      "has_amount": false,
-      "from_picture": true
-     }
-    },
-    {
-     "id": "E6-5",
-     "filename": "movein_05.jpg",
-     "kind": "image",
-     "path": "C:\\Users\\jemer\\code\\hackathon\\builds\\case-builder\\sample\\pack\\movein_05.jpg",
-     "size_bytes": 22586,
-     "viewer_url": "/api/viewer?asset_id=E6-5&page_index=0",
-     "meta": {
-      "author": "claimant",
-      "signed": false,
-      "dated": false,
-      "has_amount": false,
-      "from_picture": true
-     }
+     "pages": 3
     }
    ]
   }
  ],
  "evidence": [
   {
-   "id": "deposit_terms",
-   "evidence_key": "deposit_terms",
-   "what": "Deposit $2,600, refund within 14 days of moving out, less damage",
+   "id": "sale_terms",
+   "evidence_key": "sale_terms",
+   "what": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
    "category": "agreement",
-   "date": "2025-08-03",
+   "date": "2026-09-10",
    "strength": "strong",
    "needs_check": false,
    "sources": [
     {
      "exhibit_id": "E1",
      "asset_id": "E1",
-     "label": "E1 cl. 4, p.2",
+     "label": "E1 p.1",
      "locator": {
       "asset_id": "E1",
-      "page_index": 1,
+      "page_index": 0,
       "boxes": [
        [
-        0.4936,
-        0.3769,
-        0.851,
-        0.3899
-       ],
-       [
-        0.131,
-        0.3947,
-        0.4255,
-        0.4077
+        0.0865,
+        0.2456,
+        0.6211,
+        0.2575
        ]
       ],
       "coord_space": "normalized",
       "matched_tokens": 14,
       "quote_tokens": 14
      },
-     "quote": "The Landlord shall refund the deposit within 14 days after the Tenant moves out",
-     "fact": "Deposit $2,600, refund within 14 days of moving out, less damage",
-     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=0"
+     "quote": "Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.",
+     "fact": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
+     "viewer_url": "/api/viewer?evidence_id=sale_terms&source_index=0"
     }
    ],
    "reason": "Signed by both of you, has amount and dates",
    "rank": 1
   },
   {
-   "id": "deposit_paid",
-   "evidence_key": "deposit_paid",
-   "what": "Deposit $2,600 paid 3 Aug 2025",
+   "id": "payment_made",
+   "evidence_key": "payment_made",
+   "what": "Mark paid $2,000 deposit via correct UEN transfer",
    "category": "payment",
-   "date": "2025-08-03",
+   "date": "2026-09-12",
    "strength": "strong",
-   "needs_check": true,
+   "needs_check": false,
    "sources": [
     {
-     "exhibit_id": "E4",
-     "asset_id": "E4",
-     "label": "E4",
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 p.1",
      "locator": {
-      "asset_id": "E4",
+      "asset_id": "E1",
       "page_index": 0,
       "boxes": [
        [
-        0.0569,
-        0.3133,
-        0.7403,
-        0.3312
+        0.5959,
+        0.8382,
+        0.9022,
+        0.8477
        ]
       ],
       "coord_space": "normalized",
-      "matched_tokens": 8,
-      "quote_tokens": 8
+      "matched_tokens": 5,
+      "quote_tokens": 5
      },
-     "quote": "Transfer of SGD 2,600.00 to TAN AH KOW",
-     "fact": "Deposit $2,600 paid 3 Aug 2025",
-     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=0"
+     "quote": "S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER",
+     "fact": "Mark paid $2,000 deposit via correct UEN transfer",
+     "viewer_url": "/api/viewer?evidence_id=payment_made&source_index=0"
     }
    ],
-   "reason": "Bank record, third party. Read from a screenshot, check it",
+   "reason": "Signed by both of you, has amount and dates",
    "rank": 2
   },
   {
-   "id": "handover_acceptance",
-   "evidence_key": "handover_acceptance",
-   "what": "Landlord wrote \"ok, all good\" at handover, 31 Jul",
+   "id": "seller_response",
+   "evidence_key": "seller_response",
+   "what": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
    "category": "other_side_words",
-   "date": "2026-07-31",
-   "strength": "medium",
-   "needs_check": true,
+   "date": "2026-10-01",
+   "strength": "strong",
+   "needs_check": false,
    "sources": [
     {
-     "exhibit_id": "E2",
-     "asset_id": "E2-4",
-     "label": "E2 shot 4",
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 p.2",
      "locator": {
-      "asset_id": "E2-4",
-      "page_index": 0,
+      "asset_id": "E1",
+      "page_index": 1,
       "boxes": [
        [
-        0.0792,
-        0.368,
-        0.6792,
-        0.393
-       ],
-       [
-        0.0861,
-        0.4023,
-        0.1958,
-        0.4172
+        0.0865,
+        0.8531,
+        0.6523,
+        0.8649
        ]
       ],
       "coord_space": "normalized",
-      "matched_tokens": 9,
-      "quote_tokens": 9
+      "matched_tokens": 14,
+      "quote_tokens": 18
      },
-     "quote": "ok, all good. will transfer deposit after i check",
-     "fact": "Landlord wrote \"ok, all good\" at handover, 31 Jul",
-     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=0"
+     "quote": "You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.",
+     "fact": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
+     "viewer_url": "/api/viewer?evidence_id=seller_response&source_index=0"
     }
    ],
-   "reason": "His own words, dated, in your chat screenshot. Read from a screenshot, check it",
+   "reason": "Signed by both of you, has amount and dates",
    "rank": 3
-  },
-  {
-   "id": "moveout_condition",
-   "evidence_key": "moveout_condition",
-   "what": "Flat condition when you left",
-   "category": "condition",
-   "date": "2026-07-31",
-   "strength": "medium",
-   "needs_check": false,
-   "sources": [
-    {
-     "exhibit_id": "E5",
-     "asset_id": "E5",
-     "label": "E5 video, 1:12",
-     "locator": {
-      "asset_id": "E5",
-      "page_index": 0,
-      "boxes": [],
-      "coord_space": "normalized"
-     },
-     "quote": null,
-     "fact": "Flat condition when you left",
-     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=0"
-    }
-   ],
-   "reason": "Filmed by you on 31 Jul, sofa shown at 1:12",
-   "rank": 4
-  },
-  {
-   "id": "damage_allegation",
-   "evidence_key": "damage_allegation",
-   "what": "Landlord says sofa damaged, 15 Aug",
-   "category": "dispute",
-   "date": "2026-08-15",
-   "strength": "medium",
-   "needs_check": true,
-   "sources": [
-    {
-     "exhibit_id": "E2",
-     "asset_id": "E2-5",
-     "label": "E2 shot 5",
-     "locator": {
-      "asset_id": "E2-5",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0847,
-        0.3227,
-        0.5931,
-        0.3414
-       ],
-       [
-        0.0861,
-        0.3547,
-        0.175,
-        0.3688
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 6,
-      "quote_tokens": 6
-     },
-     "quote": "sofa got scratch, deposit cannot return",
-     "fact": "Landlord says sofa damaged, 15 Aug",
-     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=0"
-    },
-    {
-     "exhibit_id": "E3",
-     "asset_id": "E3",
-     "label": "E3",
-     "locator": {
-      "asset_id": "E3",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.075,
-        0.4086,
-        0.8778,
-        0.4273
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 10,
-      "quote_tokens": 11
-     },
-     "quote": "I will not be returning the deposit until this is settled",
-     "fact": "Landlord says sofa damaged, 15 Aug",
-     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=1"
-    }
-   ],
-   "reason": "His claim in chat and email, no photo sent. Read from a screenshot, check it",
-   "rank": 5
-  },
-  {
-   "id": "movein_condition",
-   "evidence_key": "movein_condition",
-   "what": "Flat condition when you moved in",
-   "category": "condition",
-   "date": null,
-   "strength": "weak",
-   "needs_check": false,
-   "sources": [
-    {
-     "exhibit_id": "E6",
-     "asset_id": "E6-1",
-     "label": "E6 photo 1",
-     "locator": {
-      "asset_id": "E6-1",
-      "page_index": 0,
-      "boxes": [],
-      "coord_space": "normalized"
-     },
-     "quote": null,
-     "fact": "Flat condition when you moved in",
-     "viewer_url": "/api/viewer?evidence_id=movein_condition&source_index=0"
-    }
-   ],
-   "reason": "No date stamp, sofa not in any photo",
-   "rank": 6
   }
  ],
  "gate": {
@@ -896,29 +366,37 @@
     "id": "category",
     "pass": true,
     "section_id": "scta_schedule",
-    "text": "Your claim fits a CJTS category: lease not exceeding 2 years (residential premises), refund of rental deposit."
+    "text": "The tribunal hears this kind of claim: a contract for the sale of goods.",
+    "where": "Try CASE mediation, the Employment Claims Tribunals for work matters, or the Magistrate's Court.",
+    "blocked": false
    },
    {
     "id": "amount",
     "pass": true,
     "section_id": "scta_s2",
-    "text": "You are claiming $2,600. The limit is $20,000, or $30,000 if both sides agree."
+    "text": "You are claiming $4,000. The limit is $20,000, or $30,000 if both sides agree.",
+    "where": "A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court.",
+    "blocked": false
    },
    {
     "id": "time",
     "pass": true,
     "section_id": "scta_s5_time",
-    "text": "Date of cause of action: 15 Aug 2026, when the landlord refused. You have 2 years, so until 15 Aug 2028."
+    "text": "The seller refused on 28 Sep 2026. You have 2 years from that day, so until 28 Sep 2028.",
+    "where": "More than 2 years have passed. The civil courts, for example the Magistrate's Court, may still hear it.",
+    "blocked": false
    },
    {
     "id": "service",
     "pass": true,
     "section_id": "scta_s5_service",
-    "text": "The landlord is in Singapore, so the claim can be served."
+    "text": "The seller is in Singapore, so the claim can be served.",
+    "where": "The Magistrate's Court can serve outside Singapore. Ask the court registry.",
+    "blocked": false
    }
   ],
   "stop": null,
-  "result": "All four checks pass. You can continue."
+  "result": "The details entered match all four checks below."
  },
  "statutes": {
   "scta_schedule": {
@@ -959,204 +437,160 @@
  "gaps": [
   {
    "key": "communication",
-   "category": "Communication (chat, email, SMS, calls, spoken)",
-   "why": "The other side's own words, dated, are the strongest thing you can bring.",
+   "category": "Messages and calls",
+   "why": "The seller's own words, dated, are the strongest thing you can bring.",
    "have": [
-    "WhatsApp screenshots (E2)",
-    "Email from the landlord (E3)"
+    "SCT_Fishball_Dispute_Messy.pdf (E1)"
    ],
    "missing": [
-    "The full chat export, in order",
-    "Any voice note or call log",
-    "Anything agreed face to face: date, words, who was there"
+    "Your messages to the seller, in order",
+    "Any call log or voice note",
+    "Anything agreed face to face"
    ]
   },
   {
    "key": "agreement",
-   "category": "Agreement (contract, listing, terms)",
-   "why": "The agreement sets what each side must do.",
+   "category": "The order and receipt",
+   "why": "The order and listing set what was promised.",
    "have": [
-    "Tenancy agreement (E1)"
+    "SCT_Fishball_Dispute_Messy.pdf (E1)"
    ],
    "missing": [
-    "Inventory list signed at handover (cl. 6)",
-    "Stamp duty certificate (the SCT asks for it)",
-    "Property listing, if it described the furniture"
+    "Receipt or invoice",
+    "Order page or listing with the description and photos",
+    "Warranty or terms of sale"
    ]
   },
   {
    "key": "payment",
-   "category": "Payment (transfers, receipts, invoices)",
-   "why": "Shows what you paid and what you still owe, if anything.",
+   "category": "Payments",
+   "why": "Shows what you paid.",
    "have": [
-    "Deposit transfer screenshot (E4)"
+    "SCT_Fishball_Dispute_Messy.pdf (E1)"
    ],
    "missing": [
-    "Last month's rent transfer",
-    "Final utility bill and receipt",
-    "Any repair invoice he sent you"
+    "Bank or card record of the payment",
+    "Delivery record",
+    "Repair quote or invoice"
    ]
   },
   {
    "key": "condition",
-   "category": "Condition (photos, video, reports)",
-   "why": "Dated pictures of the flat before and after are the answer to a damage claim.",
+   "category": "Photos and video",
+   "why": "Dated pictures of the fault are the answer to a dispute about the goods.",
    "have": [
-    "Move-out video (E5)",
-    "Move-in photos (E6)"
+    "Nothing yet"
    ],
    "missing": [
-    "Dated move-in photos or video of the sofa",
-    "Handover form",
-    "Cleaner or mover receipt, 31 Jul"
+    "Dated photos or video of the fault",
+    "A report from a repairer, if you have one"
    ]
   },
   {
    "key": "request",
-   "category": "Your request for the money",
+   "category": "Your letter asking for the money",
    "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
    "have": [
     "Nothing yet"
    ],
    "missing": [
-    "A written request to the landlord for the deposit with a reply date. Draft on the Next steps page."
+    "A written request to the seller with a reply date. You can make one on the last step."
    ]
   }
  ],
  "blindspots": {
-  "intro": "Things that could exist and are not in your files yet: what the landlord may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue his case.",
-  "note": "He can file a counterclaim for damage on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "intro": "Things the seller may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+  "note": "The seller can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
   "total": 6,
-  "answered": 4,
+  "answered": 0,
   "questions": [
    {
     "id": "b1",
-    "q": "Could he have his own photos of the sofa, taken after you left?",
-    "hint": "Your move-out video (E5) shows the sofa at 1:12. Keep it.",
-    "answer": "unsure"
+    "q": "Could the seller have a signed delivery note or an inspection record?",
+    "hint": "Check what you signed on delivery.",
+    "answer": null
    },
    {
     "id": "b2",
-    "q": "Has he sent, or could he get, a repair or cleaning invoice?",
-    "hint": "Ask for it in your written request. On CJTS a Defects Schedule form lists each defect and its cost.",
-    "answer": "no"
+    "q": "Did the listing or terms say the goods were sold as seen, used, or without warranty?",
+    "hint": "Re-read the listing and any terms page.",
+    "answer": null
    },
    {
     "id": "b3",
-    "q": "Did you sign an inventory or handover form?",
-    "hint": "Your agreement, cl. 6, says there is one. Get your copy. If it notes the sofa, it matters either way.",
-    "answer": "yes"
+    "q": "Did you tell the seller about the fault within a reasonable time, in writing?",
+    "hint": "Find the first message where you raised it and its date.",
+    "answer": null
    },
    {
     "id": "b4",
-    "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
-    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back.",
-    "answer": "no"
+    "q": "Did anyone else use, repair or open the goods before you complained?",
+    "hint": "The seller may say the fault came later.",
+    "answer": null
    },
    {
     "id": "b5",
-    "q": "Did anyone else see the handover? A friend, mover or agent.",
-    "hint": "Witnesses go on the Submission for Hearing form on CJTS.",
+    "q": "Did anyone else see the goods when they arrived or when the fault showed?",
+    "hint": "Write down their name. You can name them as a witness later.",
     "answer": null
    },
    {
     "id": "b6",
-    "q": "Did you accept any deduction, even in passing?",
-    "hint": "If yes, say how much and when. It changes the amount you claim.",
+    "q": "Did you accept a partial refund, repair or replacement, even in passing?",
+    "hint": "If yes, say what and when. It changes the amount you claim.",
     "answer": null
    }
   ]
  },
  "timeline": [
   {
-   "id": "d_2025-08-03",
-   "label": "Lease starts, deposit paid (E1, E4)",
-   "date": "2025-08-03",
+   "id": "d_2026-09-10",
+   "label": "Event (E1)",
+   "date": "2026-09-10",
    "future": false,
    "marker": false,
    "computed": false,
-   "detail": "Deposit $2,600, refund within 14 days of moving out, less damage (\"The Landlord shall refund the deposit within 14 days after the Tenant moves out\"). Lease of 12 months from 3 Aug 2025, signed by both (\"for a term of 12 months starting on 3 August 2025\"). Deposit $2,600 paid 3 Aug 2025 (\"Transfer of SGD 2,600.00 to TAN AH KOW\").",
+   "detail": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct (\"Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.\").",
    "sources": [
     {
      "exhibit_id": "E1",
      "asset_id": "E1",
-     "label": "E1 cl. 4, p.2",
-     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=0"
-    },
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 cl. 1, p.2",
-     "viewer_url": "/api/viewer?asset_id=E1&page_index=1"
-    },
-    {
-     "exhibit_id": "E4",
-     "asset_id": "E4",
-     "label": "E4",
-     "viewer_url": "/api/viewer?evidence_id=deposit_paid&source_index=0"
+     "label": "E1 p.1",
+     "viewer_url": "/api/viewer?evidence_id=sale_terms&source_index=0"
     }
    ]
   },
   {
-   "id": "d_2026-07-31",
-   "label": "Move out, \"all good\" (E2, E5)",
-   "date": "2026-07-31",
+   "id": "d_2026-09-12",
+   "label": "Paid (E1)",
+   "date": "2026-09-12",
    "future": false,
    "marker": false,
    "computed": false,
-   "detail": "Landlord wrote \"ok, all good\" at handover, 31 Jul (\"ok, all good. will transfer deposit after i check\"). Flat condition when you left.",
-   "sources": [
-    {
-     "exhibit_id": "E2",
-     "asset_id": "E2-4",
-     "label": "E2 shot 4",
-     "viewer_url": "/api/viewer?evidence_id=handover_acceptance&source_index=0"
-    },
-    {
-     "exhibit_id": "E5",
-     "asset_id": "E5",
-     "label": "E5 video, 1:12",
-     "viewer_url": "/api/viewer?evidence_id=moveout_condition&source_index=0"
-    }
-   ]
-  },
-  {
-   "id": "refund_due",
-   "label": "Refund due (E1 cl. 4, p.2)",
-   "date": "2026-08-14",
-   "future": false,
-   "marker": false,
-   "computed": true,
-   "detail": "14 days after move-out on 31 Jul 2026, under E1 cl. 4, p.2.",
+   "detail": "Mark paid $2,000 deposit via correct UEN transfer (\"S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER\").",
    "sources": [
     {
      "exhibit_id": "E1",
      "asset_id": "E1",
-     "label": "E1 cl. 4, p.2",
-     "viewer_url": "/api/viewer?evidence_id=deposit_terms&source_index=0"
+     "label": "E1 p.1",
+     "viewer_url": "/api/viewer?evidence_id=payment_made&source_index=0"
     }
    ]
   },
   {
-   "id": "d_2026-08-15",
-   "label": "Landlord refuses (E2, E3)",
-   "date": "2026-08-15",
+   "id": "d_2026-10-01",
+   "label": "Seller replies (E1)",
+   "date": "2026-10-01",
    "future": false,
    "marker": false,
    "computed": false,
-   "detail": "Landlord says sofa damaged, 15 Aug (\"sofa got scratch, deposit cannot return\"). Landlord says sofa damaged, 15 Aug (\"I will not be returning the deposit until this is settled\").",
+   "detail": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels (\"You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.\").",
    "sources": [
     {
-     "exhibit_id": "E2",
-     "asset_id": "E2-5",
-     "label": "E2 shot 5",
-     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=0"
-    },
-    {
-     "exhibit_id": "E3",
-     "asset_id": "E3",
-     "label": "E3",
-     "viewer_url": "/api/viewer?evidence_id=damage_allegation&source_index=1"
+     "exhibit_id": "E1",
+     "asset_id": "E1",
+     "label": "E1 p.2",
+     "viewer_url": "/api/viewer?evidence_id=seller_response&source_index=0"
     }
    ]
   },
@@ -1172,7 +606,7 @@
   },
   {
    "id": "written_request",
-   "label": "Written request",
+   "label": "Send your letter",
    "date": null,
    "date_text": "next",
    "future": true,
@@ -1183,7 +617,7 @@
   },
   {
    "id": "prefiling",
-   "label": "Pre-filing check, then file on CJTS",
+   "label": "File your claim online",
    "date": null,
    "date_text": "",
    "future": true,
@@ -1194,7 +628,7 @@
   },
   {
    "id": "serve",
-   "label": "Serve within 7 working days",
+   "label": "Give the other side a copy",
    "date": null,
    "date_text": "",
    "future": true,
@@ -1205,7 +639,7 @@
   },
   {
    "id": "consultation",
-   "label": "Consultation",
+   "label": "First court meeting",
    "date": null,
    "date_text": "",
    "future": true,
@@ -1228,61 +662,61 @@
   {
    "id": "time_bar",
    "label": "Time bar",
-   "date": "2028-08-15",
+   "date": "2028-09-28",
    "future": true,
    "marker": true,
    "computed": true,
-   "detail": "2 years after 15 Aug 2026, the date the landlord refused. Latest filing date.",
+   "detail": "2 years after 28 Sep 2026, the date the seller refused. You must file by then.",
    "sources": []
   }
  ],
  "next_steps": [
   {
    "n": 1,
-   "title": "Send a written request for the deposit",
+   "title": "Send a letter to the seller asking for the money",
    "action": "written_request",
-   "note": "Your biggest gap. Give him 7 days to reply. The draft uses only your facts and your agreement.",
-   "source_label": "Guide p.4",
+   "note": "Say what is wrong, what you want (refund, repair or replacement) and a date to reply by.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   },
   {
    "n": 2,
    "title": "Gather what is missing",
    "action": "gaps",
-   "note": "Stamp duty certificate, signed inventory list, final bill, dated move-in photos.",
-   "source_label": "What else to gather",
+   "note": "Receipt, listing, dated photos of the fault, a repair quote.",
+   "source_label": "See the list",
    "source_url": null
   },
   {
    "n": 3,
-   "title": "Pre-filing assessment on CJTS",
+   "title": "Do the check on the court website",
    "action": "link",
-   "note": "Pick the category, enter the refusal date and the amount, answer the questions. The ID it gives you lasts 7 days.",
-   "source_label": "Open CJTS",
+   "note": "Answer a few questions on the court website. It gives you a number. Use it within 7 days.",
+   "source_label": "Court website",
    "source_url": "https://cjts.judiciary.gov.sg/"
   },
   {
    "n": 4,
    "title": "Fill the claim form and pay",
    "action": "link",
-   "note": "Six parts: you, him, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order. Singpass login. Then pick a Consultation date.",
-   "source_label": "Guide s.12",
+   "note": "Log in with Singpass. Fill in your details, the seller, the claim, and a short summary. Upload your files as PDF.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/file-small-claim"
   },
   {
    "n": 5,
-   "title": "Serve him within 7 working days",
+   "title": "Give the seller a copy within 7 working days",
    "action": "link",
-   "note": "Save the Respondent Copy from CJTS, hand it to him or send by registered post, then file the Declaration of Service.",
-   "source_label": "Guide p.11",
+   "note": "Download the copy for the seller. Hand it over or send it by registered post. Then tell the court you have done so.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/how-to-file-serve-small-claim"
   },
   {
    "n": 6,
-   "title": "Before the Consultation",
+   "title": "Before the first court meeting",
    "action": "link",
-   "note": "He may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses. Bring E1 to E6 in evidence sheet order.",
-   "source_label": "Guide s.21, s.36",
+   "note": "The seller may offer to settle online. Fill in the court form: what happened in date order, and any witnesses.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   }
  ],
@@ -1291,5 +725,6 @@
   "basis": "up to $5,000",
   "source_label": "Guide p.5",
   "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
- }
+ },
+ "_text_key": "[{\"account\": \"Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier. I am mark from tampines st 99\\nUncle seng is from pasir ris st 99 He is from tampines st 99 72684\\nuncle seng is from pasir st 99 827462 yes uncle seng is actually from malaysia and claim amount is $31000 claim is $4000 and he is from singapore\", \"amount\": 4000.0, \"cause_of_action_date\": \"2026-09-28\", \"consent_30k\": false, \"done\": true, \"moveout_date\": null, \"parties\": {\"claimant\": {\"address\": \"Tampines St 99, 72684\", \"id_type\": \"NRIC\", \"name\": \"Mark\"}, \"respondent\": {\"address\": \"Pasir Ris St 99, 827462\", \"in_singapore\": true, \"is_company\": null, \"name\": \"Uncle Seng Seafood\", \"role\": \"seller\"}}, \"premises\": {\"lease_months\": null, \"refund_days\": null, \"residential\": null}, \"what_agreed\": \"Supplier agreed to supply 1,000 kg premium yellowtail fish for S$5,000, S$5 per kg.\"}, [[\"Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct\", 1], [\"Mark paid $2,000 deposit via correct UEN transfer\", 2], [\"Uncle Seng refused refund, said deposit non-refundable if buyer cancels\", 3]], \"goods\"]"
 }

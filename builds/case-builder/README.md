@@ -29,9 +29,12 @@ in `sample/pack/` (Mei Ling's tenancy deposit) and takes about a minute live.
 The intake model collects facts; it does not decide legal rights or give advice. Its output is a structured
 scope decision, confidence level, neutral `You say...` reflection, and one or two fact questions. The server
 rejects legal conclusions and recommendation language, refuses unrelated or prompt-injection requests, does
-not apply fields from unsafe or low-confidence turns, and independently decides when intake is complete.
-Conversation text, filenames, OCR, images, and document contents are always treated as untrusted data rather
-than instructions. These controls reduce risk; they do not make model output infallible.
+not apply new facts from unsafe or low-confidence turns, and independently decides when intake is complete.
+A person may correct a fact they gave earlier. On a low-confidence turn the server still writes a field the
+model names as changed, but only when that field is already recorded and the new value differs, so a
+correction can never add a fact that was not there before. Conversation text, filenames, OCR, images, and
+document contents are always treated as untrusted data rather than instructions. These controls reduce risk;
+they do not make model output infallible.
 
 General web access is intentionally disabled. A future legal-fact verifier should be separate from intake and
 restricted to an allowlist of official sources: Singapore Statutes Online (`sso.agc.gov.sg`), Singapore Courts

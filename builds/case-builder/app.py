@@ -42,6 +42,17 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
+INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
+NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
+    "story": "Tell me what happened, in your own words.",
+    "claimant": "What is your name, and your full address with unit number and postal code?",
+    "respondent": "Who are you claiming against? What is their full address, and are they in Singapore?",
+    "category": "Was this about goods, services, a home lease, or damage to property?",
+    "agreed": "What did the two sides agree?",
+    "amount": "How much are you claiming in total?",
+    "when": "On what date did they refuse, or the problem start?",
+    "files": "Add your files on the right.",
+}
 SAMPLE_BLINDSPOTS = {"b1": "unsure", "b2": "no", "b3": "yes", "b4": "no"}
 
 app = FastAPI(title=APP_NAME)
@@ -155,6 +166,36 @@ def apply_fields(case, fields):
     it["account"] = " ".join(m["text"] for m in it["chat"] if m["who"] == "user")
 
 
+def known_value(case, key):
+    """The value already recorded for one intake field, or None when it is not set yet."""
+    it = case["intake"]
+    if key == "claim_type":
+        return None if case["claim_type"] == "unknown" else case["claim_type"]
+    if key in FIELD_PATH:
+        *path, leaf = FIELD_PATH[key]
+        node = it
+        for step in path:
+            node = node[step]
+        value = node[leaf]
+    else:
+        value = it.get(key)
+    return None if value is None or value == "" else value
+
+
+def apply_corrections(case, turn):
+    """A low-confidence turn is not trusted to add new facts, but the person may still be fixing one.
+    Only a field the model names as changed, that is already recorded and now differs, is written."""
+    fields = turn.get("fields", {})
+    changed = {}
+    for k in turn.get("corrections", []):
+        old = known_value(case, k)
+        if k in fields and old is not None and fields[k] != old:
+            changed[k] = fields[k]
+    if changed:
+        apply_fields(case, changed)
+    return list(changed)
+
+
 def explicit_claim_amount(message):
     """Return a total the user explicitly calls their claim; never infer one."""
     money = r"(?:S\s*\$|SGD\s*)?\$?\s*([0-9][0-9,]*(?:\.\d{1,2})?)"
@@ -242,21 +283,32 @@ def chat_turn(case, message):
         return recompute(case)
     turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
-    trusted_turn = turn.get("scope", "claim_intake") == "claim_intake" and turn.get("confidence", "high") != "low"
+    in_scope = turn.get("scope", "claim_intake") == "claim_intake"
+    trusted_turn = in_scope and turn.get("confidence", "high") != "low"
     if stated_amount is not None and trusted_turn:
         turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
+    corrected = []
     if trusted_turn:
         apply_fields(case, turn.get("fields", {}))
+    elif in_scope:
+        corrected = apply_corrections(case, turn)
     if case["claim_type"] != before and rules.ctype(case) != rules.ctype({"claim_type": before}):
         for ex in case["exhibits"]:   # files read before the kind of claim was known: read them again under its keys
             for a in ex["assets"]:
                 if ex["status"] == "ready":
                     process_asset(case, ex, a)
-    missing = [c["id"] for c in checklist_state(case) if not c["done"]]
-    it["done"] = not missing
+    case = recompute(case)   # the gate must reflect this turn before we choose what to say
+    blocked = [c for c in case["gate"]["checks"] if c["blocked"]]
+    missing = [c["id"] for c in case["checklist"] if not c["done"]]
     reply = safe_intake_reply(turn)
-    if missing == ["files"]:
+    if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
+        # The model asked nothing usable. Having read the person correctly, saying we could not is both
+        # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
+        reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
+    if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
+        reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
+    elif missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
         needed = {
             "tenancy": "the agreement, payment records, messages, and photos",
@@ -265,8 +317,13 @@ def chat_turn(case, message):
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
         reply = f"I have enough details about your claim against {other}. Now add {needed} on the right."
+    elif not missing:
+        reply = INTAKE_COMPLETE
+    if corrected:   # the turn was not trusted overall, but the person did fix a fact we already had
+        reply = "I have updated that. " + reply
     it["chat"].append({"who": "bot", "text": reply})
-    return recompute(case)
+    save(case)
+    return case
 
 
 def checklist_state(case):
@@ -341,6 +398,7 @@ def current():
     global CASE
     if CASE is None and CASE_FILE.exists():
         CASE = json.loads(CASE_FILE.read_text(encoding="utf-8"))
+        CASE["gate"] = rules.gate(CASE, dt.date.fromisoformat(CASE["today"]))   # the rules may have moved on since it was saved
     if CASE is None:
         CASE = recompute(new_case(dt.date.today()))
     today = dt.date.today().isoformat()
