@@ -2,7 +2,7 @@
 
 Fill this in before the first build session. Everything else reads from here.
 
-- **Event:** TBD
+- **Event:** LIT Hackathon (SMU)
 - **Dates / deadline (SGT):** TBD
 - **Location / format:** TBD (in person, online, hybrid)
 - **Theme or problem statement:** TBD
