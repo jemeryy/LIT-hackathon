@@ -1,0 +1,2181 @@
+
+===== PAGE 1 =====
+ 
+ 
+ 
+ 
+ 
+  
+FILING A SMALL 
+CLAIMS IN CJTS  
+ 
+A guide to filing small claims online 
+ 
+===== PAGE 2 =====
+ 
+1 
+ 
+TABLE OF CONTENTS  
+1. Accessing the CJTS ................................ ................................ ................................ ... 3 
+2. Pre-filing assessment................................ ................................ ................................ .. 4 
+3. User Login Options................................ ................................ ................................ ..... 9 
+4. Register for a CJTS Pass ................................ ................................ ...........................  10 
+5. Update CJTS Pass Registration Email................................ ................................ ...... 13 
+6. Login using CJTS Pass ................................ ................................ ..............................  14 
+7. Home Page ................................ ................................ ................................ ............. 16 
+8. Notifications................................ ................................ ................................ ............. 17 
+9. My Filings................................ ................................ ................................ ..................  18 
+10. Payment Details ................................ ................................ ................................ ...... 20 
+11. Online Applications................................ ................................ ................................ . 20 
+12. Submitting a Claim................................ ................................ ................................ .. 23 
+13. Pay Later................................ ................................ ................................ ..................  33 
+14. Case File ................................ ................................ ................................ ..................  34 
+15. Accessing the Case File by Respondent................................ ................................  36 
+16. Submitting a Counter Claim ................................ ................................ ...................  38 
+17. Application for Representative ................................ ................................ .............. 40 
+18. Request for Amendments ................................ ................................ .......................  45 
+19. Request for Change of Court Date................................ ................................ ........ 48 
+20. Withdrawal Request Form................................ ................................ .......................  50 
+21. Submission for Hearing ................................ ................................ ............................  52 
+22. Summon to Witness Form ................................ ................................ ........................  55 
+23. Defect Schedule Form ................................ ................................ ............................  58 
+24. Submit Supporting Documents ................................ ................................ ............... 59 
+25. Set Aside Application................................ ................................ ..............................  61 
+26. General Form ................................ ................................ ................................ .......... 63 
+27. Application for Record of Tribunal ................................ ................................ ......... 65 
+28. Request to Enforce Work Order Form................................ ................................ ..... 67 
+29. Appeal Against Order of Registrar ................................ ................................ ......... 69 
+30. Application for Leave to Appeal ................................ ................................ ........... 71 
+31. Application for Stay of Execution ................................ ................................ ........... 73 
+32. Extraction of Order for Leave to Appeal ................................ ...............................  75 
+33. Notice of Appeal ................................ ................................ ................................ .... 77 
+===== PAGE 3 =====
+ 
+2 
+ 
+34. Petition of Appeal ................................ ................................ ................................ ... 83 
+35. Respondent’s Notice ................................ ................................ ..............................  85 
+36. eNegotiation ................................ ................................ ................................ ........... 87 
+37. General Appointment ................................ ................................ ..........................  106 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+===== PAGE 4 =====
+ 
+3 
+ 
+1. Accessing the CJTS  
+ 
+The CJTS web site can be accessed from state courts website or using the link 
+https://www.statecourts.gov.sg/CJTS/ 
+The landing page will be displayed like the screen shown below  
+ 
+Landing Page displays the   
+1. Provision to start Filing with Pre-filing assessment 
+2. Login options  
+3. CJTS eServices (list of eServices that CJTS offers to the court users) 
+4. Useful information guide links to Fee Schedule, Payment Guide etc. 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+4 
+ 
+2. Pre -filing assessment  
+Pre-filing assessment is the process to validate that the claim is within the jurisdiction 
+and Claimant is ready for filing with all the pre-requisites to file the claim.  
+The process is initiated when users click on the Box labelled “SCT” below the “File 
+Online at:”  
+User will be displayed the Terms and Conditions Page. 
+ 
+ 
+ 
+• Read the entire Terms and Conditions by using the vertical scroll bar  
+• Tick the box beside the text “By using this service, you agree to the Terms and Conditions”. 
+• Enter the captcha characters shown in the image and click on the Proceed button 
+• Error messages will be displayed in red for mandatory fields that have not been entered . 
+ 
+  
+
+===== PAGE 6 =====
+ 
+5 
+ 
+Click on <Proceed> button to go to the prefiling checklist page. 
+ 
+ 
+Click on the down arrow key against each category to view the sub category 
+permitted under it. Only one main category is allowed for a claim. Choose the 
+appropriate course of action pertaining to your dispute. Multiple claims on the same 
+party for more than one main category will have to be filed separately. 
+  
+
+===== PAGE 7 =====
+ 
+6 
+ 
+The following section is an example of a claim for LEASE NOT EXCEEDING 2 YEARS 
+(RESIDENTIAL PREMISES)→ Refund of Rental Deposit assessment. 
+ 
+ 
+• Click the appropriate sub category example: Refund of Rental Deposit 
+• Click on the text box next to calendar icon  in Date of Cause of Action to select the date. 
+• Enter the Claim Amount.  
+• Mouse over on  icon to see more details about that field.  
+• Data will be validated,  and appropriate message will be displayed, if the claim is time barred 
+or not within the monetary Jurisdiction of SCT.  
+ 
+ 
+Upon entering the Claim Amount system will prompt to answer the set of pre-filing 
+questions related to Party Details, Nature of Dispute and Service of Documents. The 
+questions will be displayed one by one depending on the previously submitted 
+data/ answer and nature of dispute. 
+ 
+
+===== PAGE 8 =====
+ 
+7 
+ 
+ 
+• After choosing Yes or No system will display only the answer chosen and the other option will not be 
+visible. To change the answer, click on the answer again and the Yes and No buttons will appear 
+for selection again. 
+• Messages displayed in red gives you information to consider before filing your claim. 
+ 
+When all the questions are answered the Form Completion Status will show 100% and 
+the <Submit> button will be enabled to click. 
+              
+ 
+Click on <Submit> button to go to the Acknowledgement page. 
+
+===== PAGE 9 =====
+ 
+8 
+ 
+ 
+• The system will generate a pre -filing assessment ID.  
+• A pre-filing assessment ID is required for filing a claim. The generated ID will be valid for 7 days . You 
+are required to note the pre -filing ID as this ID will not be displayed in your HOME screen. If a claim is 
+not filed using this ID within 7 days, then the user needs to perform pre-filing assessment again.  
+• Click on <Proceed to eFiling> button to continue filing the claim.  
+Click on <Proceed to eFiling> button, the system will display a pop-up window with 
+options to login to proceed with filing. 
+                                  
+Refer to User Login Options section in the document for information on the various 
+login methods.   
+
+===== PAGE 10 =====
+ 
+9 
+ 
+3. User Login  Options  
+Users need to Login to the system to access all the CJTS eservices (except prefiling 
+assessment) using one of the following methods. 
+ 
+a) If you are an Individual filing a claim or responding to a claim in personal 
+capacity,  you need to use your Singpass to login. Click on the  
+                     
+icon and follow the instructions. 
+ 
+b) If you are a corporate entity, including sole proprietors, associations and 
+societies filing a claim or responding to a claim, you need to click on the  
+                    
+icon and follow the instructions. 
+ 
+c) If you are not eligible for a Singpass (example tourist), click on the  
+                          
+icon and follow the instructions. Details about registering for a CJTS pass is 
+provided under   Register for a CJTS Pass. 
+  
+
+===== PAGE 11 =====
+ 
+10 
+ 
+4. Register  for a CJTS Pass  
+To start the process, Click on the icon 
+  
+The CJTS login page will be displayed 
+ 
+              
+ 
+Click on “Register here” and a new page will be displayed 
+ 
+ 
+ 
+• If you want  to claim or respond as an Individual select the “Individual ” radio button.  
+• If you want  to claim or respond as an Entity select the “Entity” radio button.  
+ 
+ 
+ 
+Step 1. Enter particulars 
+
+===== PAGE 12 =====
+ 
+11 
+ 
+ 
+ 
+• Enter the details in the form. T he fields marked (*) are mandatory fields. 
+• Use the drop-down arrow symbol for ID Type, Contact No, and Premises Type.  
+• For Individuals - allowed Type for ID are PASSPORT and OTHERS.  
+• For Entity - allowed Type for ID are Foreign ID – company registration number and OTHERS.  
+• Error messages will be displayed in red for mandatory fields that have not been entered . 
+Step 2. Select court attendance date and time 
+ 
+ 
+• Use the drop-down arrow symbol to Select a Court Date and Time to obtain the pass from 
+Registry Officer. 
+ 
+For applicant type Entity, additional information on the Representative is to be 
+provided. 
+
+===== PAGE 13 =====
+ 
+12 
+ 
+ 
+ 
+ 
+ 
+• Enter the captcha characters.  
+• Tick the declaration b ox to declare the information  provided. 
+• Click on <Submit> button. 
+• Error messages will be displayed in red for mandatory fields that have not been entered . 
+ 
+If there are no errors found, an Acknowledgment page indicating the successful 
+submission for CJTS Pass registration, registration request number and the date and 
+time to appear at Tribunals will be displayed. The acknowledgment can be saved 
+by clicking on the hyper link click “here”  in the page. 
+             
+ 
+• You need to appear before the Tribunal Registry on the date and time mentioned for user 
+verification.  
+• Upon approval you will receive the notification via e -mail. You need to activate the user 
+credentials through the link provided in the email and create a password.  
+
+===== PAGE 14 =====
+ 
+13 
+ 
+5. Update CJTS Pass Registration Email  
+If the email address provided in the registration form is incorrect, you may click on 
+<Update CJTS Pass Registration Email> link provided to submit the application to 
+update your email. 
+ 
+ 
+ 
+Following screen will be displayed. 
+ 
+ 
+ 
+• Enter the particulars  
+• Enter the captcha characters  
+• Tick the declaration box to declare the information provided  
+• Click on <Submit> button 
+• Error messages will be displayed in red for mandatory fields that have not been entered  
+If successful, an Acknowledgment page indicating the successful submission will be 
+displayed. The acknowledgment can be saved by clicking on the link <here>. 
+
+===== PAGE 15 =====
+ 
+14 
+ 
+ 
+6. Login us ing CJTS Pass  
+From the login options on the homepage or login options pop-up displayed by the 
+system during a process, click on the icon 
+  
+CJTS login page will be displayed. 
+ 
+ 
+ 
+• Enter the User ID and the Password.  
+• Click on <Login> button. 
+ 
+          
+     
+• If the credentials entered are correct the system will generate a One -time Password  (OTP) to the 
+registered email address  and mobile number via SMS. Retrieve the OTP from your 
+email or SMS. 
+
+===== PAGE 16 =====
+ 
+15 
+ 
+• Enter the OTP.  
+• Click on <Submit> button and the User Home Page will be displayed . 
+ 
+When you login for the the first time, system will display the MY PROFILE page with 
+details already entered. Users can edit the information if required and submit.  
+ 
+ 
+  
+
+===== PAGE 17 =====
+ 
+16 
+ 
+7. Home Page  
+After successful Login using any one of the three login methods described above 
+the system will display users’ home page. 
+ 
+ 
+Page Contents - Attention Box 
+- Notifications table 
+- Draft(s) table 
+- Active Case(s) table 
+- Next Court Date            
+Button to enter  
+One-time 
+Reference Number 
+Provides provision to link to a case using One-time reference 
+number for respondents or other claimants and 
+representatives. 
+Notifications  Displays the latest four notifications received. 
+Next Court Date Next Court Date is highlighted in the Home page. 
+Drafts  Valid Claims/Applications that have been created in the 
+system and saved as draft. Drafts will expire after 7 days 
+Active Case(s) List of Active Cases for the user with case no, parties 
+involved, status and next court date. 
+
+===== PAGE 18 =====
+ 
+17 
+ 
+8. Notificati ons  
+Notifications page displays the list of all notifications received through CJTS. Search 
+function has been provided to filter the notifications with key word in the subject or 
+body. Click on “VIEW” link to open and view the Notification 
+ 
+  
+
+===== PAGE 19 =====
+ 
+18 
+ 
+9. My Filings  
+Links will be provided in left panel to view draft applications, active cases and 
+archived cases. In each page the cases/claims will be listed with the latest on the 
+top by default. Search Function is provided in each page 
+              
+Drafts Listing: 
+ 
+ 
+Active Cases: 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+19 
+ 
+Applications: 
+ 
+  
+
+===== PAGE 21 =====
+ 
+20 
+ 
+10.   Payment Details  
+Displays all the payments made by the user (lodgement fee, hearing fee etc.). 
+Search function is provided to filter the details using Case No, Application No, 
+Receipt No or Date Range for payments. Latest payments will be displayed on top 
+by default. Receipt column provides the link to display the Receipt using PDF Icon, 
+Click on PDF icon to view/save the receipt. 
+ 
+ 
+ 
+11.  Online Applications  
+ 
+Displays the list of all the applications (eServices). By default, system will display the 
+list in grid view. Click on the bar icon  on the top right to change the view to “List 
+View”. Click on the relevant form to start entering details for submission.   
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+21 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+22 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+23 
+ 
+12.  Submitting a Claim  
+Login to the website using one of the methods Singpass / Corppass / CJTS Pass. 
+From the left panel of the Home Page click on Online Applications, select SCT. 
+From the grid view of the application forms click on the CLAIM FORM. 
+                   
+             
+ Following page will be displayed  
+ 
+• Enter Pre-filing Reference ID and click <Retrieve> button.  
+If you do not have a Pre -filing Reference ID click on the link “here” to start Pre-filing. 
+ 
+
+===== PAGE 25 =====
+ 
+24 
+ 
+The form has 6 sections. 
+A. Particulars of Claimant(s) 
+B. Particulars of Respondent(s) 
+C. Particulars of Claim 
+D. Brief Summary of Claim 
+E. Supporting Documents 
+F. Type of Claim 
+The system will display 
+Step 1.  Enter Particulars of Claimant(s) 
+ 
+Information about the claimant is retrieved from the Pre-filing assessment ID.  
+• Claimant details will be retrieved from the profile of the applicant.  
+• Any changes to the displayed information can be m ade at this stage.  
+• Phone Number entered in Contact No 1 may be used for communication from the Tribunals. 
+• Email ID may be used for sending electronic mails, therefore  a valid email address must be 
+entered. 
+• If you have more than one claimant/address to add, please click on the respective button.  
+• Please note that you will not be allowed to subsequently delete any additional addresses or 
+remove any additional Claimant/Respondent for a submitted Claim.   
+
+===== PAGE 26 =====
+ 
+25 
+ 
+Step 2. Enter particulars of Respondent(s)            
+ 
+• All fields marked ( *) is mandatory and must  be entered. 
+• Phone Number entered in Contac t No 1 may be used for communication from the Tribunals.  
+• If you have more than one respondent/address to add, please click on the respective button.  
+Step 3. Enter Claim Details          
+ 
+• All fields marked ( *) is mandatory and must entered.  
+• Nature of Dispute and Type of Dispute is retrieved from the Pre -filing assessment. 
+• Enter Name Type of Goods Sold or Serviced Provided – a mandatory field. 
+• Enter details against other fields applicable to the Nature of Dispute.  
+• Entering as much information will help in the processing of the claim . 
+
+===== PAGE 27 =====
+ 
+26 
+ 
+Step 4. Enter Brief Summary of Claim      
+         
+• You can enter up to 500 characters.  
+Step 5. Upload Supporting Documents         
+     
+All documents should be in PDF format only and 5MB (maximum size) per document. 
+• Select the document to upload using the <Browse> button. 
+• The system will suggest type of documents to be uploaded based on the nature of dispute . 
+• Click on down arrow in the Doc Type field to select the type of document being uploaded.  
+• Enter the document description in the field next to Doc Type.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document . 
+• If there is no document to upload, click on the delete  icon to clear. 
+ 
+Step 6. Enter Claiming For 
+                         
+ 
+
+===== PAGE 28 =====
+ 
+27 
+ 
+• You can choose more than one type by checking against the option.  
+• If Money Order is chosen, enter the Value claimed for.  
+• If Work Order is chosen, enter the nature and value of Work Order. 
+• Click on Add another Work Order to add more work orders. 
+• Cost or Disbursements, these will be aw arded at the discretion of the T ribunals and evidence will 
+have to be submitted to support the request. 
+ 
+Step 7. Once all the sections of the form are completed user may ‘Submit’ or ‘Save 
+As Draft’  
+             
+ 
+ 
+• Click on <Save As Draft>  button to save the form as a draft and use it for later submission. A 
+draft number will be issued by the system and  will be available for 7 days.   
+• Draft number be displayed under the draft section of the home page . It is recommended to 
+note down the draft number to continue the filing later.  
+•  
+• Saving the claim form as a draft does not mean the Claim has been received by the Tribunals. 
+The claim is considered submitted and a claim number will be issued upon payment of fees.  
+• Click on <Submit> button and the system will display the confirmation pag e if no errors are 
+found. 
+• If there are errors, the fields will be highlighted with red border with an explanation of the error 
+below the field. 
+•  
+ 
+  
+
+===== PAGE 29 =====
+ 
+28 
+ 
+Following is the screen for claim form confirmation page for dispute type “Lease not 
+exceeding 2 years (Residential Premises)”.         
+ 
+ 
+
+===== PAGE 30 =====
+ 
+29 
+ 
+ 
+ 
+• Review the information contained in the form.  
+• Tick the declaration box “I declare that I am the claimant and all the information  provided  is 
+true and correct”. 
+• Click on <Amend> button to go back to claim form to make changes to information entered .  
+• Click on <Confirm to Proceed> button to go to Payment Page  if fees are applicable . 
+ 
+  
+
+===== PAGE 31 =====
+ 
+30 
+ 
+Step 8. Payment Page  
+ 
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section 
+in the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+ 
+• Click on <Save Payment Receipt> button to generate the receipt in a PDF file format for future 
+reference. 
+• Click on <Continue > button to proceed further to Select Court Date / Time for Consultation. 
+Step 9. Click on <Continue> button to go to the court date selection page 
+ 
+ 
+
+===== PAGE 32 =====
+ 
+31 
+ 
+ 
+• Court proceedings are conducted in English. If you do not understand and speak English, click 
+on the radio button <No> for the system to display a box to choose the language  you 
+understand and speak. 
+ 
+ 
+• Registry will try to arrange for an Interpreter of the language chosen on the date of consultation 
+/ hearing.  Please note your proceedings will commence only upon the availability / 
+attendance of the Interpreter.  
+• If “Others” is chosen, the user will have to arrange for the qualified interpreter and the 
+interpreter will be allowed subject to approval by the Registry.  
+ 
+• Click on the dates shown and use the double arrow icon on  either side to see more dates.  
+• Once a date and time is selected system will highlight the selected date in green and show the 
+selected date and time below. 
+            
+ 
+ 
+  
+
+===== PAGE 33 =====
+ 
+32 
+ 
+Step 10. Click on <Next> button to view the Acknowledgment page 
+            
+ 
+ 
+• Acknowledgement page displays the case number assigned and first consultation date and 
+time.  
+• Click on <Save Payment Receipt> button to print a copy of the payment made.  
+• Click on <Save Claimant Copy>  button to save in PDF file format Claimant notice of 
+consultation and claim form with bar code to scan at CQMS during court attendance.  
+• Click on <Save Respondent Copy>  button to save in PDF file format the notice  of consultation as 
+well as claim details to be served to the Respondent. This will contain the bar code to scan at 
+CQMS during court attendance and the One-time Reference number to access the case 
+details by the respondent.  
+• Click on <Done> button to go back to the Home page.  
+  
+
+===== PAGE 34 =====
+ 
+33 
+ 
+13.  Pay Later  
+From the Payment page at step 8 of Submitting a Claim 
+ 
+when you click on <Pay Later> button the following screen will be displayed 
+ 
+Click on <Generate Payment Advice> button to get a payment advice for payment 
+thereafter via CJTS (draft will be kept for 3 days) or to the Finance Counter/ ACS 
+machine located at the State Courts to make payment by cash/cheque.  
+System will store the claim as a draft and will be displayed in the drafts section of the 
+home page.
+ 
+To pay click on the hyper link Payment Pending and system will go to step 8 of 
+Submitting a Claim to continue to process payment by eNets or Credit. 
+
+===== PAGE 35 =====
+ 
+34 
+ 
+14.  Case File  
+On the home page under the Active Case(s) section, click on CASE NO hyperlink to 
+display the case file. This page has six tabs to navigate. 
+ 
+Case Summary  1. Status (current status  of the case) 
+2. Nature of Claim / Claiming For  
+3. Next Court Date  
+4. Purpose (purpose of the next court date)  
+5. Venue (venue of the next court date)  
+6. Claimant(s) 
+7. Respondent(s) 
+ 
+Case History Displays all the actions/updates performed on the case from latest to earliest 
+dates. 
+
+===== PAGE 36 =====
+ 
+35 
+ 
+ 
+Documents Displays all the documents  relating to the case uploaded  by the parties 
+/generated by the system including Order of Tribunals once case has been 
+concluded.  
+Documents will be listed from latest to earliest dates.  
+ 
+ 
+Payment Details Displays all the payments submitted by the user for this case (lodgement fee, 
+hearing fee etc.) from latest to earliest dates.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Correspondence Displays all the party correspondence initiated by the registry where user can 
+view the details given by registry and reply to it by clicking  the “View/Reply” 
+button. 
+===== PAGE 37 =====
+ 
+36 
+ 
+15.  Accessing the Case File by Respondent  
+As a respondent you should have received the notice served by the claimant. The 
+notice will contain the Claim No. and a paragraph giving the One-time reference 
+number. Sample text in the notice 
+ 
+ 
+ 
+Note that the Claim No. and One-time reference number are required to access the 
+case filed against you. 
+ 
+Login to the website using one of the methods Singpass / Corppass / CJTS Pass. 
+Upon successful login the Home page will be displayed. 
+ 
+• Click on < Enter one-time reference number> located at the top of the screen to go to the Case 
+Access page. 
+ 
+• Enter Case Number. 
+• Enter One -time Reference No. 
+• Tick the box “I declare that I am the party to the Case”. 
+• Click on <Submit> button. 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 38 =====
+ 
+37 
+ 
+If there are no errors in the entered values system will display a pop-up window  
+ 
+Click <OK> button or ‘x’, system will list the case number entered above, in the 
+“ACTIVE CASE(S)” section of the Home page. 
+        
+ 
+ 
+    Click on CASE NO hyperlink to view the Case file. 
+Notice that system allows you to start an e-Negotiation process with the Claimant.  
+• Click on eNegotiate link to start the e-Negotiation process. For details refer to e -Negotiation 
+section. 
+  
+
+===== PAGE 39 =====
+ 
+38 
+ 
+16.  Submitting a Counter Claim  
+Counter Claim to the main Claim can be submitted, provided an order is not 
+already issued for main claim or main claim is withdrawn or discontinued.  
+Counter claim should be filed at least 3 days before the Consultation / Hearing date. 
+Submitting a Counter Claim follows the similar steps as Submitting a Claim.  
+• Pre-filing assessment is a must. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the COUNTER CLAIM FORM. 
+Step 1. System will show the pre-filing assessment page. 
+• Complete the Pre -filing assessment. 
+• In the Acknowledgment page click on <Proceed to eFiling>  to continue. 
+System will display the Counter Claim Form. Your will be retrieved from your profile 
+data and displayed in the “Particulars of the Counter Claimant(s)” section of the 
+form. 
+              
+Step 2. 
+• Enter Claim Number.  
+• Click on <Retrieve> button 
+
+===== PAGE 40 =====
+ 
+39 
+ 
+Step 3. System will auto populate the section “Particulars of the Respondent(s)” and 
+“Particulars of Claim” from the Claim Number entered. If any information is incorrect, 
+then to file and application for request for amendment or should be informed to the 
+officer during consultation. 
+• Complete the sections “Brief Summary of Claim”, “Supporting Documents” and  
+“Claiming For”  
+• Click on <Save as Draft>  button to proceed with the filing later.  
+• Click on <Submit> button to continue.  
+System will display “COUNTER CLAIM FORM (FORM 2) – CONFIRMATION” page. 
+• Review the information contained in the form.  
+• Tick on the declaration box “I declare that I am the claimant and all the information provided 
+is true and correct”. 
+• Click on <Amend> button to go back to counter claim form to amend.  
+• Click on <Confirm to Proceed> button to go to Payment Page if fees are appl icable. 
+• Follow the steps in Payment Details to complete the payment.  
+ 
+Upon successful completion of the Payment, system will display the 
+Acknowledgement page. 
+ 
+• Acknowledgement page displays the counter claim number assigned and consultation date 
+and time.  
+• Click on <Save Payment Receipt> button to print a copy of the payment made.  
+• Click on <Save Claimant Copy>  button to save in PDF file format. 
+• Click on <Save Respondent Copy>  button to save in PDF file format the notice to serve to the 
+other party.  
+• Click on <Next> button to go back to the Home page.  
+• Please note the counter claim will be tagged to the original claim and the claimant can see 
+the details in CJTS.  
+• Notice the Counter Claim No  is tagged to the Main Claim No. This is to facilitate Claimant(s) 
+and Respondent(s) to view all related claims to a case.  
+
+===== PAGE 41 =====
+ 
+40 
+ 
+17.  Application for Representative  
+Application for Representative can be filed by either 
+a) The Claimant/Respondent to a case to authorise someone else to represent 
+them Or 
+b) The Representative can apply for him/herself to submit the application on 
+behalf of Claimant /Respondent.  
+c) If you are representing a company or entity, please upload your letter of 
+authorization for both the consultation and hearing using the "submit 
+supporting documents" e-service before the court date. 
+ 
+• There can be only one Representative for Claimant or Respondent in a case. 
+• The application  for Representative  is subject to verification of the identity of the representative 
+by Duty AR of the Tribunals at the time Consultation / Hearing.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the APPLICATION FOR 
+REPRESENTATIVE. 
+System will display the form 
+ 
+Depending on the Submission Type details to be entered will be different. 
+
+===== PAGE 42 =====
+ 
+41 
+ 
+Option 1. If as a Claimant / Respondent you wish to appoint a Representative 
+choose the following option in Submission Type 
+ 
+ 
+• Enter the Claim No.  
+• Select Reason for Application by clicking on the down -arrow button. 
+• Enter Details of Reason.  
+• Upload any Supporting Documents to support / substantiate the reason chosen. 
+• Proceed to enter the details of Representa tive. 
+ 
+
+===== PAGE 43 =====
+ 
+42 
+ 
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display confirmation page if no errors are found.  
+ 
+Option 2. If you wish to apply as a Representative for an existing case on behalf of a 
+Claimant / Respondent choose the following option in Submission Type 
+ 
+ 
+• Enter the Claim No.  
+• Select Reason for Application from by clicking on the down -arrow button. 
+• Enter Details of Reason.  
+• Upload any Supporting Documents to support / substantiate the reason chosen.  
+• Proceed to select the party you wish to represent. 
+ 
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display th e confirmation page if no errors are 
+found. 
+ 
+ 
+ 
+
+===== PAGE 44 =====
+ 
+43 
+ 
+Option 3. If you wish to apply as a Representative to file a case on behalf of a 
+Claimant / Respondent choose the following option in Submission Type 
+              
+              
+• Select Reason for Application from by clicking on the down -arrow button. 
+• Enter Details of Reason.  
+• Upload any Supporting Documents to support / substantiate the reason chosen. 
+• Enter the Details of the Claimant/Respondent  in the next screenshot. 
+ 
+
+===== PAGE 45 =====
+ 
+44 
+ 
+ 
+• Select Attendance Date and Time to appear before the Registry at the Tribunals  for a Duty AR 
+to deal with your application . 
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and system will display the confirmation pa ge if no errors are found.  
+• Review the information contained in the form.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page  
+ 
+ 
+Click on <Go to Home> button to go back the Home page.  
+Click on the Case No. hyperlink,  for which this application has been made, to go to 
+the case file. You can view the status of your application submitted in the 
+Applications & Appeals tab of Case Details page.  
+
+===== PAGE 46 =====
+ 
+45 
+ 
+18.  Request fo r Amendments  
+Request for amendments to the case is allowed for the following items only: 
+1. Claimant’s Name 
+2. Claimant’s ID Type / ID 
+3. Claimant’s Contact Details (Phone / Email) 
+4. Claimant’s Address 
+5. Respondent’s Name 
+6. Respondent’s ID Type / ID 
+7. Respondent’s Contact Details (Phone / Email) 
+8. Respondent’s Address 
+9. Particulars of Claim 
+10. Brief Summary of the Claim 
+11. Money Order / Work Order Requested 
+• The request for amendments is subject to approval by the Tribunals Registry.  
+ 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the REQUEST FOR AMENDMENTS. 
+System will display the form 
+ 
+
+===== PAGE 47 =====
+ 
+46 
+ 
+• Enter the Claim No.  
+• From the ‘Details to be amended ’ list, tick the box against the item you want to change.  
+• Enter Reason for Amendment.  
+• Upload any Supporting Documents to substantiate the amendment requested.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and system will display the confirmation page if no errors are found.  
+ 
+
+===== PAGE 48 =====
+ 
+47 
+ 
+• Review the information contained in the form.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page  
+ 
+Click on <Go to Home> button to go back the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+Once the application has been processed and approved in the list of Active 
+Case(s) the remarks column against the case no for which the application was 
+made will show Amend Claim 
+ 
+ 
+ 
+Click on Click here to amend hyper link to make changes for the items applied for. 
+ 
+ 
+ 
+
+===== PAGE 49 =====
+ 
+48 
+ 
+19.  Request for Change of Court Date  
+You can request for a Change of Court Date for consultation / mediation / hearing 
+already fixed.  
+• The request for Change of Court Date is subject to approval by the Tribunals Registry.  
+ 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the REQUEST FOR CHANGE OF 
+COURT DATE. 
+System will display the form 
+ 
+• Enter the Claim No. / Counter Claim No.  
+System will display the existing Court Date 
+ 
+• Enter Unavailable from Date 
+• Enter Unavailable till Date 
+Based on the unavailability period system will display list of dates after the 
+Unavailable Till date to select the new preferred court date and time. 
+
+===== PAGE 50 =====
+ 
+49 
+ 
+ 
+• Select the Preferred Court Date and Preferred Time.  
+• Enter Reason for Application.  
+• Upload the supporting document to substantiate  the reason stated.  
+• Tick declaration box if consent has bee n obtained from all parties to proposed date and time.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and system will display the confirmation page if no errors are found.            
+• Review the information contained in the confirmation page . 
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page  
+ 
+Click on <Go to Home> button to go back to the Home page.  
+On the Application List, you can view the status of your application submitted. 
+ 
+• Once the application is processed and approved by the Tribunals Registry, email  notification will be 
+sent to all Claimant(s) and Respondent(s) of the case.  
+• If the application is Rejected, only the applicant  will receive the email notification   
+
+===== PAGE 51 =====
+ 
+50 
+ 
+20.  Withdrawal Request Form  
+Withdrawal of a case at any stage is possible by Claimant/ Counter Claimant or their 
+Representative provided an order is not already issued on the main claim. (1219) 
+ 
+• The application  for Withdrawal Request is subject to approval by the Tribunals Registry.  
+ 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the WITHDRAWAL REQUEST FORM. 
+System will display the form 
+ 
+ 
+• Enter the Claim No. / Counter Claim No.   
+• Enter Reason for Withdrawal Requ est. 
+• Upload the supporting document to substantiate  the reason stated.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement  Page 
+
+===== PAGE 52 =====
+ 
+51 
+ 
+ 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+             
+ 
+ 
+• Once the application is processed and approved by the Tribunals Registry, email notification  will be 
+sent to all Claimant(s) and Respondent(s) of the case.  
+• If the application is Rejected, only the applicant will receive the email notification. 
+  
+
+===== PAGE 53 =====
+ 
+52 
+ 
+21.  Submission for  Hearing  
+"Submission for Hearing" form allows to provide the sequence of events of the case in 
+the chronological order of date and list of witnesses, where applicable. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the SUBMISSION FOR HEARING 
+FORM. 
+System will display the form 
+ 
+ 
+
+===== PAGE 54 =====
+ 
+53 
+ 
+• Enter the Claim No. or Counterc laim No. (if any).  
+• Enter Summary of Claim.  
+• Click on <Add another Event> button to enter event details in a pop -up window  and click on 
+<Submit> button. 
+ 
+ 
+The entered details will be displayed on the form 
+ 
+Use the  icon against the event details to edit. 
+ 
+• Click on Add Events for adding more than one event.  
+ 
+              
+
+===== PAGE 55 =====
+ 
+54 
+ 
+ 
+• Enter Witness Name and the Language spoken by the Witness as Witness No. 1.  
+• Click on <Add another Witness>  button to add more witnesses.  
+• Click on <Remove Witness>  button to remove the current Witness Entry.    
+• Click on <Save as Draft>  button to proceed with the application la ter. 
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to vi ew the Acknowledgement Page  
+ 
+ 
+• Click on < click here for the application> to request Summons to Witness application.  For details 
+refer section on “Summons to Witness Form”. 
+• Please note that both parties will only be able to view each other’s “Submission for H earing” if both 
+the Claimant and the Respondent to the claim made a submission. Otherwise, only the submitted 
+party and the AR/Referee will be able to view the submission.  
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+             
+  
+
+===== PAGE 56 =====
+ 
+55 
+ 
+22.  Summon to  Witness Form  
+This form is to be also submitted if you wish to serve the witness(es) mentioned in the 
+"Submission for Hearing” to give evidence at the time of hearing. 
+• Can be submitted only if the case been fixed for Hearing before the Referee and the date has 
+been fixed.  
+• Can only be submitted at least 3 days before the Hearing date.  
+• Can be submitted only once by any party.  
+• The application for Summon to Witness is subject to approval by the Tribunals Registry.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the SUMMONS TO WITNESS 
+FORM. 
+System will display the form 
+ 
+• Enter the Claim No.  
+• Enter the Counter Claim No. (if any).  
+Details about the Witness will be populated from the Submissions For Hearing form 
+with an option to edit information already entered.  If Witness details was not 
+entered when filing the Submissions For Hearing, you can do so here. 
+
+===== PAGE 57 =====
+ 
+56 
+ 
+ 
+• Enter the Witness Details.   
+• Court proceedings are conducted in English. If the Witness do es not understand and speak English , 
+Please <Select Language> that the Witness prefers to converse in order for the Tribunals to arrange 
+an interpreter. If the desired language is not reflected in the list, kindly make your own 
+arrangements for a certified interpreter to be present on the date of the hearing.   
+• Click <Add Witness> to add more witness  
+ 
+ 
+ 
+ 
+
+===== PAGE 58 =====
+ 
+57 
+ 
+• Enter Reasons for request.   
+• Read the declaration statement and agree to comply with the requirements.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to a mend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page  
+ 
+ 
+• Once the application is processed by the Tribunals Registry, the outcome will be communicated to 
+the applicant  via email. 
+• The Registry will generate LOC / summons based on the details provided to the applicant to serve 
+to the witness. 
+ 
+Click on <Go to Home> button to go back to the Home page. 
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+  
+
+===== PAGE 59 =====
+ 
+58 
+ 
+23.  Defect Schedule Form  
+A Defects Schedule is to be submitted wherever it is applicable. This can be done 
+before/during e-negotiation, consultation or before first hearing to facilitate 
+settlement. 
+• This is applicable only where the dispute involves allegations of defective and / or incomplete 
+works arising from renovation works, or of a dispute on a tenancy of a residential premises not 
+exceeding 2 years. 
+• The form is to be initiated by the Claimant.  
+• The Respondent will receive notification to fill in re medial work for each defect and  estimated cost. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the DEFECTS SCHEDULE FORM. 
+System will display the form 
+ 
+• Enter the Claim No.  
+• Enter Description defect(s) and Repair Cost – estimated cost. 
+• Click on <Add another Defect>  to more to the schedule.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement  Page. 
+
+===== PAGE 60 =====
+ 
+59 
+ 
+24.  Submit Supporting Documents  
+Any document that was not submitted or missed when using the respective 
+eServices can be done using this form. The supporting documents may relate to 
+Claim / Counter Claim / Applications. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the SUBMIT SUPPORTING 
+DOCUMENTS. 
+System will display the form 
+ 
+ 
+ 
+
+===== PAGE 61 =====
+ 
+60 
+ 
+• Enter the Claim No. / Counter Claim No. / Application No. to tag the documents uploaded.  
+• Enter Reason for Application.  
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document> to add more documents. 
+• Tick the box against “I declare that above  information provided above is true and correct”.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page.  
+ 
+Click on <Go to Home> button to go back to the Home page. 
+ 
+On the Active Case(s) section, click on Case No. hyperlink for which this application 
+has been made, to go to the case file. In the Documents tab you can view the 
+documents uploaded against the Supporting Documents row. 
+ 
+ 
+  
+
+===== PAGE 62 =====
+ 
+61 
+ 
+25.  Set Aside Application  
+This application can be made only under the following circumstances. 
+• Where a default Order is made by the Registrar or the Referee in the absence of any one party, the 
+party that was not present may file an application to Set-Aside the default Order giving grounds or 
+reasons for absence.  
+• A date will be fixed for hearing and notification will be sent to the Applicant and the other party.  
+• Attendance is compulsory on hearing date.  
+• The application must be made within ONE month from the date of the default Order  made. 
+• Applications submitted more than  ONE month of the date of the default Order is subject to the 
+Tribunal’s approval . 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the SET ASIDE APPLICATION. 
+System will display the form 
+ 
+
+===== PAGE 63 =====
+ 
+62 
+ 
+• Enter the Claim No. / Counter Claim No. / Application No. to tag the documents uploaded.  
+• Enter the Default Order No.  
+• Enter Reason for Application.  
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description. 
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document>  to add more documents.  
+• Click on <Save as Draft>  button to proceed with the applic ation later. 
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page.  
+ 
+ 
+Click on <Go to Home> button to go back to the Home page. 
+ 
+You can view the status of your application submitted under Application List. 
+ 
+You will receive an email notification once your set-aside application has been 
+processed. The notice of set-aside application will be made available in your 
+documents tab. You are to attend the hearing accordingly. Failure to attend may 
+result in your set-aside application being dismissed and a preclusion order made 
+against you / your company. 
+  
+
+===== PAGE 64 =====
+ 
+63 
+ 
+26.  General Form  
+This is to be used only for case related applications that do not have specific 
+eService. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the GENERAL FORM. 
+System will display the form 
+ 
+• Enter the Claim No. / Counter Claim No . / Application No. to tag the documents uploaded.  
+• Enter Reason for Application.  
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document > to add more documents.  
+• Tick the box against “I declare that above  information provided above is true and correct”.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmatio n page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page.  
+
+===== PAGE 65 =====
+ 
+64 
+ 
+ 
+ 
+Click on <Go to Home> button to go back to the Home page...  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+ 
+  
+
+===== PAGE 66 =====
+ 
+65 
+ 
+27.  Application for Record of Tribunal  
+The record of proceedings containing grounds of the order and a copy of the notes 
+of proceedings recorded by the referee can be obtained using this form. 
+• A fee is payable and is subject to change without any prior notice.  
+• If the case is concluded, a representative must declare that they still have t he authority to request 
+for the record of proceedings.   
+• Grounds of Decision and Notes of Proceedings are the two records that can be requested.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the APPLICATION FOR RECORD 
+OF TRIBUNAL. 
+System will display the form 
+ 
+
+===== PAGE 67 =====
+ 
+66 
+ 
+• Enter the Claim No. / Counter Claim No.  
+• Tick Grounds of Decision for the record during hearing and enter the date of order, or  
+• Tick Notes of Proceedings for the record during consultation  and enter the date of consultation.  
+• If there were more than one hearing, enter all hearing dates. 
+• Enter the purpose and reason for request.  
+• Tick the box against “ I agree to use the information obtained… ”. 
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to go to the Payment Page. 
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+ 
+• Click on <Save Payment Receipt> button to generate the receipt in a PDF file format for future 
+reference. 
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Pa ge. 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+You can view the status of your application submitted under Application List. 
+ 
+ 
+
+===== PAGE 68 =====
+ 
+67 
+ 
+28.  Request to Enforce Work Order Form  
+This form is to be used if a party fails to comply with the work order issued by the 
+Referee or the Registrar. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the REQUEST TO ENFORCE WORK 
+ORDER FORM. 
+System will display the form 
+ 
+ 
+ 
+
+===== PAGE 69 =====
+ 
+68 
+ 
+• Enter the Claim No.  
+• Enter the order no.  as found in the order.  
+• Enter the reason for request.  
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document>  to add more documents.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to a mend.  
+• Click on <Confirm to Proceed> to view the Acknowledgement Page.  
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+  
+
+===== PAGE 70 =====
+ 
+69 
+ 
+29.  Appeal Against Order of Registrar  
+This form is to be used only when a discontinuance order is issued by a Registrar. 
+• A fee is payable and is subject to change without any prior notice.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the APPEAL AGAINST ORDER OF 
+REGISTRAR. 
+System will display the form 
+ 
+ 
+ 
+
+===== PAGE 71 =====
+ 
+70 
+ 
+• Enter the Claim No.  
+• Enter the order no.  as found in the order.  
+• Enter the Grounds of appeal . 
+• Select the attachment to be uploaded u sing the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document>  to add more documents.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to go to the Payment Page. 
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+ 
+• Click on <Save Payment Receipt> button to generate the receipt in a PDF file format for future 
+reference. 
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page . 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+
+===== PAGE 72 =====
+ 
+71 
+ 
+30.  Application for Leave to Ap peal  
+This form is to be used for appeal in relation to adjudicated orders made by the 
+Tribunal Magistrate of the Small Claims Tribunals. You may appeal against the 
+Tribunal Magistrate’s Order within 14 days from the date of the order only on: - 
+a) Question of law 
+b) Claim was outside the jurisdiction of the Tribunals 
+c) Both (a) and (b) 
+• Must be filed within 14 days from the date of Adjudicated  Order. 
+• A fee is payable and is subject to change without any prior notice.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the APPLICATION FOR LEAVE TO 
+APPEAL. System will display the form 
+ 
+
+===== PAGE 73 =====
+ 
+72 
+ 
+• Enter the Claim No.  
+• Enter the order no.  as found in the order.  
+• Tick the appropriate Grounds of appeal . 
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document > to add more documents.  
+• Select Attendance Date and Time to appear before Registrar to discuss the grounds of appeal.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to go to the Payment Page. 
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+              
+• Click on <Save Payment Receipt> button to generate receipt in  PDF file format for future reference.  
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page . 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+
+===== PAGE 74 =====
+ 
+73 
+ 
+31.  Application for Stay of Execution  
+This form is to be used if you wish to file an application to Stay the Order of the 
+Tribunal made by the Referee/Tribunal Magistrate. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the APPLICATION FOR STAY OF 
+EXECUTION. 
+System will display the form 
+ 
+  
+
+===== PAGE 75 =====
+ 
+74 
+ 
+• Enter the Claim No.  
+• Enter the order no.  as found in the order.  
+• Enter Reason for application  
+• Select the attachment to be uploaded using the <Browse> button. 
+• Enter the document description.  
+• Enter the Page number of the document that you are referring to.  
+• Click on the  to upload  
+• Click on the  to delete the document  
+• Click on <Add another Document > to add more documents.  
+• Tick on the box against “I declare that above  information….”. 
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> t o go to Acknowledgment Page. 
+ 
+ 
+      
+ 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+You can view the status of your application submitted under Application List. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 76 =====
+ 
+75 
+ 
+32.  Extraction of Order for Leave to Appeal  
+This form is to be used if you wish to extract the Order given during the hearing of 
+Leave to Appeal to District Court. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the EXTRACTION OF ORDER FOR 
+LEAVE TO APPEAL. 
+System will display the form 
+ 
+• Enter the Claim No.  
+• Enter the Leave to Appeal application No.  
+• Enter Reason for application  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Tick on the box against “I declare that above information….”.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to ame nd.  
+• Click on <Confirm to Proceed>  to go to the Payment Page. 
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed. 
+
+===== PAGE 77 =====
+ 
+76 
+ 
+             
+ 
+ 
+• Click on <Save Payment Receipt> button to generate receipt in PDF file format for future reference.  
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page . 
+ 
+ 
+• Click on <Save Leave to Appeal Order > button to down load the Leave to Appeal Order in PDF file 
+format. 
+• Click on <Go to Home> button to go back to the Home page.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 78 =====
+ 
+77 
+ 
+33.  Notice of Appea l 
+If leave is granted by the District Court, you may commence appeal proceedings in 
+the High Court by filing a Notice of Appeal. The Notice of Appeal and other related 
+document(s) must be filed within one month from the date on which leave was 
+granted by the District Judge. 
+The Requirements for filing Notice of Appeal are, 
+i. Extract Leave to Appeal Order 
+ii. Directions to AGD for Certificate for Security for Costs 
+iii. Request the Certificate for Security for Costs 
+ 
+• Must be filed within  one month from the date of the Or der of the District Judge granting Leave to 
+Appeal.  
+• A fee is payable and is subject to change without any prior notice.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the NOTICE OF APPEAL. System 
+will display the form 
+ 
+ 
+• Enter the Claim No.  
+• Enter the Leave to Appeal application No.  
+• Click on Retrieve button.  
+• If the Leave to Appeal Order is already extracted using the application “Extraction of Order for 
+Leave to Appeal”, then the Order will be auto populated and step 1 will be disabled.  
+• If the Order for Leave to Appeal is not extracted using the application “E xtraction of Order for 
+Leave to Appeal”, proceed with step 1, make the payment to extract the order accordingly.  
+
+===== PAGE 79 =====
+ 
+78 
+ 
+ 
+ 
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+ 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+ 
+              
+ 
+• Click on <Save Payment Receipt> button to generate receipt in PDF file format for future ref erence. 
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page . 
+
+===== PAGE 80 =====
+ 
+79 
+ 
+ 
+• Click on <Save Template for Notice of Payment into Court> and affix the signature accordingly for 
+uploading subsequently.  
+• Click on <Save Template for Payment to AGD> and affix the signature accordingly. This document 
+together with the Directions to AGD document is to be presented to Accountant -General’s 
+Department. 
+• Click on <Go to Home> button to go back to the Home page.  
+ 
+Once payment has been made at Accountant-General’s Department, to continue 
+with the Notice of Appeal, proceed to online application and choose the Notice of 
+Appeal module. System will display the following form: 
+ 
+ 
+
+===== PAGE 81 =====
+ 
+80 
+ 
+• Upload the signed Notice of Payment into Court along  with the receipt of payment given by AGD 
+accordingly. 
+• Click on <Submit> button and the system will display the payment page if no errors are found.  
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed.  
+             
+ 
+ 
+• Click on <Save Payment Receipt> button to generate receipt in PDF file format for future refe rence. 
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page . 
+ 
+ 
+Click on <Go to Home> button to go back to the Home page.  
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 82 =====
+ 
+81 
+ 
+Once Certificate for Security for Costs has been approved, continue with the Notice 
+of Appeal and indicate the grounds of Appeal. Proceed to online application and 
+choose the Notice of Appeal module. System will display the following form: 
+ 
+ 
+• Click on <Preview Notice of Appeal > button to preview the Notice of Appeal.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed>  to go to payment page. 
+• Click on <Pay by Credit Card>  button if you are paying by Credit Card.  
+• Click on <Internet Banking> button if you are paying by Internet Banking.  
+• Click on <Pay Later> button if you want to make payment offline.  Refer to the Pay Later section in 
+the document. 
+<Pay by Credit Card> or <Internet Banking> will take you to the respective 
+processing screens and once the payment is successful the following page will be 
+displayed. 
+             
+ 
+ 
+
+===== PAGE 83 =====
+ 
+82 
+ 
+• Click on <Save Payment Receipt> button to generate receipt in PDF file format for future reference.  
+• Click on <Continue>  button to proceed further to go to the Acknowledgment Page.  
+ 
+• Click on <Save Notice of Appeal to High  Court> to generate Notice of Appeal to High Court PDF.  
+• Click on <Go to Home> button to go back to the Home page.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 84 =====
+ 
+83 
+ 
+34.  Petition of Appeal  
+Once the Notes of Proceedings and Grounds of Decision is extracted, your Petition 
+of Appeal must be filed within 21 days of notification of the extraction of the Notes 
+of Proceedings and Grounds of Decision. In the event your Petition of Appeal is not 
+filed within 21 days, the Appeal will be deemed as withdrawn.    
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the PETITION OF APPEAL. System 
+will display the form 
+ 
+ 
+• Enter the Notice of Appeal No. 
+• Click on Retrieve button.  
+• System displays the preview of the Petition of Appeal.  
+
+===== PAGE 85 =====
+ 
+84 
+ 
+ 
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed>  button to proceed further to go to the Acknowledgment Page.  
+• Click on <Save Petition of Appeal Notice>  to save the Petition of Appeal notice in PDF. 
+ 
+
+===== PAGE 86 =====
+ 
+85 
+ 
+35.  Respondent’s Notice  
+As a respondent, if you intend to not have appealed from the Order of the Tribunal, 
+to contend on the appeal by specifying the grounds of that contention.  
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the RESPONDENT’S NOTICE. 
+System will display the form 
+ 
+ 
+ 
+• Enter the Claim No.  
+• Enter the Notice of Appeal No. 
+• Select the Date of Service. 
+• Click on Retrieve button.  
+• Enter the Grounds of Appeal.  
+
+===== PAGE 87 =====
+ 
+86 
+ 
+ 
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed>  button to proceed further to go to the Acknowledgment Page.  
+• Click on <Save Respondent’s Notice> to save the Respondent’s Notice in PDF. 
+ 
+ 
+ 
+ 
+
+===== PAGE 88 =====
+ 
+87 
+ 
+36.  eNegotiation  
+eNegotiation is a process by which the parties can negotiate between themselves 
+to settle the dispute amicably without having to come to the court.  
+• eNegotiation has to be initiated by the Respondent .  
+• If no hearing has been fixed before the Tribunals, the eNegotiation module will be available till an 
+Order of Tribunal has been issued.  
+• If hearing has been fixed before the Tribunal Magistrate, the eNegotiation module will be avail able 
+till the eve of the hearing.   
+• System allows only FIVE rounds of eNegotiation.  
+• A Round is deemed complete when Started  by Respondent and replied by the Claimant.  
+On the Home Page in the Active Cases section, cases for which eNegotiation can 
+be done will have “eNegotiation” under the status column. 
+ 
+When initiating the eNegotiation process for the first time click on the hyper link   
+eNegotiate against the case no to start the process. 
+System will display the confirmation page displaying the claimant details, brief 
+summary and what the claimant is asking for pertaining to the case. 
+ 
+Click on  <Start eNegotiation> button to go to eNegotiation page.         
+ 
+
+===== PAGE 89 =====
+ 
+88 
+ 
+ 
+The ROUND column shows the current round number of the eNegotiation. 
+The document tab when opening the case folder, after the end of round THREE 
+enables you to view eNegotiation summary of the eNegotiation.  
+ 
+
+===== PAGE 90 =====
+ 
+89 
+ 
+The figure 
+                                                           
+displays the current round number of the eNegotiation. 
+The caption “Negotiation Items:” contains color coded number boxes matching the 
+number of items claimed in the case. 
+              
+• Numbers shown in Grey box means not yet responded.  
+• Numbers shown in Blue box  means responded. 
+• Numbers shown in Green box means the claim has been resolved mutually.  
+To enter your repsonse click on down arrow button aginst Select Action.    
+           
+Four options will be displayed 
+ 
+
+===== PAGE 91 =====
+ 
+90 
+ 
+• I agree 
+• I agree to pay by instalments  
+• I would like to propose  another  amount/date/instalments. 
+• I do not agree. 
+ 
+System will display additional messages / guidance text depending on the action 
+selected, round number and your login status as Claimant / Respondent. 
+ 
+Scenario 1.  (“I agree” option by both respondent and claimant at Round 1) 
+Action “I Agree ” 
+Round Number 1 
+Login Status  Respondent 
+           
+System will display 
+ 
+• Note the amount /payment date  is not editable once you agree to the claim . 
+• Click on the <Done> button. 
+ 
+<Edit> allows to change the Action. 
+Click on <Confirm and Proceed> button. 
+System will display the acknowledgement page 
+
+===== PAGE 92 =====
+ 
+91 
+ 
+ 
+• Click on <Save eNegotiation Summary>  button to save the eN egotiation Summay PDF.  
+• Click on <Apply for Order of Tribunal>  button and <Confirm>  button in the Confirmation page to 
+apply for consent order.  
+Since “I Agree” option was chosen by the respondent, eNegotiation is settled at first 
+round. Respondent can save the eNegotiation Summary and apply for consent 
+order by clicking the repective buttons. 
+Click on <Applyfor the Order of Tribunal>  button to view the confirmation page 
+ 
+Click on <Confirm> button to view the acknowledgement page 
+
+===== PAGE 93 =====
+ 
+92 
+ 
+ 
+ 
+What the claimant will see. 
+Action “I Agree ” 
+Round Number 1 
+Login Status  Claimant 
+When you login as the claimant and go to the eNegotiations page and select the 
+hyper link to view the details. System will display 
+ 
+             Notice the item number is shown in Green box meaning resolved.  
+• <Save eNegotiation Summary>  button does what the caption suggests.  
+• Click on <Apply for the Order of Tribunal>   if you wish to obtain a court order.    
+
+===== PAGE 94 =====
+ 
+93 
+ 
+Scenario 2.  (“I agree to pay by instalment” option by respondent and “I agree” 
+option by claimant) 
+Action “I agree to pay by instalment ” 
+Round Number 1 
+Login Status  Respondent 
+ 
+System will display 
+ 
+• By default system displays 50% of the Claim amount as initial amount, and the 50% of claim 
+amount to be paid in 5 instalments.  
+• You are allowed to change initial amount, Due date of initial amount and No. of 
+Instalments. 
+• Click on the <Generate Instalments> button, to generate the instalment plan . 
+• Click on <Done/Preview>  button,  
+ 
+ 
+
+===== PAGE 95 =====
+ 
+94 
+ 
+<Edit> allows to change the Action and amend if any. 
+Click on <Confirm and Proceed> button. 
+System will display the acknowledgement page 
+ 
+What the claimant will see. 
+Action “I Agree ” 
+Round Number 1 
+Login Status  Claimant 
+ 
+When you login as the claimant and go to the eNegotiations page and select the 
+hyper link to view the details. System will display 
+ 
+
+===== PAGE 96 =====
+ 
+95 
+ 
+• Select option “I agree”. 
+• Click on <Done/Preview>  button,  
+ 
+<Edit> allows to change the Action. 
+Click on <Confirm and Proceed> button. 
+System will display the acknowledgement page 
+ 
+
+===== PAGE 97 =====
+ 
+96 
+ 
+• Click on <Save eNegotiation Summary>  button to save the eNegotiation Summay PDF.  
+• Click on <Apply for Order of Tribunal>  button and <Confirm>  button in the Confirmation page to 
+apply for consent order.  
+Since “I Agree” option was chosen by the claimant, eNegotiation is settled at first 
+round. Claimant can save the eNegotiation Summary and apply for consent order 
+by clicking the respective buttons. 
+Click on <Apply for the Order of Tribunal>  button to view the confirmation page 
+ 
+Click on <Confirm> button to view the acknowledgement page 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 98 =====
+ 
+97 
+ 
+Scenario 3.  (“I would like to propose another amount/ date/ instalments” option by 
+respondent and claimant) 
+Action “I would like to propose another amount/ date/ instalments” 
+Round Number 1 
+Login Status  Respondent 
+               
+Changing the amount will display the %-age of orginal claim amount being 
+proposed now.  
+ 
+• Select the Payment Date / Completion Date.  
+• Click on <Done> button. 
+• Enter reasons for your proposal in the message box.  
+• Click on <Confirm and Proceed> . 
+
+===== PAGE 99 =====
+ 
+98 
+ 
+Acknowledgment page will be displayed. 
+              
+Scenario 3.  (Continued..) 
+Action “I would like to propose another amount/ date/ instalments” 
+Round Number 1 
+Login Status  Claimant 
+When you log in as Claimant and go to the eNegotiations page and select the 
+hyper link to view the details. System will display 
+              
+
+===== PAGE 100 =====
+ 
+99 
+ 
+Claimant chooses “I would like to propose another amount/ date/ instalments”  
+enter the details             
+ 
+Enters additional message to the repsondent and clicks on <Confirm and Proceed> 
+button.   
+ 
+Acknowledgment Page will be displayed. 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 101 =====
+ 
+100 
+ 
+Scenario 3.  (Continued..) 
+Action “I would like to propose another amount/ date/ instalments” 
+Round Number 4 
+Login Status  Claimant 
+ 
+When the Respondent continues the eNegotiation process, and claimant choose “I 
+would like to propose another amount/date/instalments” at Round 4, the system will 
+display 
+            
+ 
+Click on “Confirm and Proceed” button, Acknowledgement page will be displayed. 
+ 
+ 
+Scenario 3.  (Continued..) 
+Action “I would like to propose another amount/ date/ instalments” 
+Round Number 5 
+Login Status  Respondent 
+ 
+
+===== PAGE 102 =====
+ 
+101 
+ 
+When the Respondent continues the eNegotiation process, and choose “I would like 
+to propose another amount/date/instalments” at Round 5, the system will display 
+ 
+Click on “Confirm and Proceed” button, Acknowledgement Page will be displayed. 
+ 
+ 
+
+===== PAGE 103 =====
+ 
+102 
+ 
+Scenario 3.  (Continued..) 
+Action “I donot agree” 
+Round Number 5 
+Login Status  Claimant 
+ 
+When the Claimant continues the eNegotiation process, and choose “I donot 
+agree” at Round 5, the system will display, 
+ 
+• Enter the Reasons for disagreement. 
+• Click on <Done> button. 
+• Enter additional information you wish to convey in the  message box.  
+• Click on <Confirm and Proceed>   to view the Acknowledgment Page.  
+ 
+ 
+Scenario 3.  (Continued..) 
+Action “I agree” 
+Round Number 5 
+Login Status  Claimant 
+
+===== PAGE 104 =====
+ 
+103 
+ 
+When the Claimant continues the eNegotiation process, and choose “I donot 
+agree” at Round 5, the system will display, 
+ 
+
+===== PAGE 105 =====
+ 
+104 
+ 
+Click on <Confirm and Proceed> button. 
+System will display the acknowledgement page 
+ 
+ 
+• Click on <Save eNegotiation Summary>  button to save the eNegotiation Summay PDF.  
+• Click on <Apply for Order of Tribunal>  button and <Confirm>  button in the Confirmation page to 
+apply for consent order.  
+Since “I Agree” option was chosen by the claimant, eNegotiation is settled at final 
+round. Claimant can save the eNegotiation Summary and apply for consent order 
+by clicking the repective buttons. 
+Click on <Apply for Order of Tribunal>  button to view the confirmation page 
+
+===== PAGE 106 =====
+ 
+105 
+ 
+ 
+ 
+Click on <Confirm> button to view the acknowledgement page 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 107 =====
+ 
+106 
+ 
+37.  General Appointment  
+This form is to be used if you wish to seek an appointment. 
+From the left panel of the Home Page click on Online Applications. 
+From the grid view of the application forms click on the GENERAL APPOINTMENT. 
+System will display the form 
+ 
+• Select Date and Time for the appointment.  
+• Enter Reason for Appointment.  
+• Click on <Save as Draft>  button to proceed with the application later.  
+• Click on <Submit> button and the system will display the confirmation page if no errors are found.  
+• Review the information contained in the confirmation page.  
+• Click on <Amend> button to go back to the form to amend.  
+• Click on <Confirm to Proceed> to go to the Acknowledgement Page. 
+ 
+ 

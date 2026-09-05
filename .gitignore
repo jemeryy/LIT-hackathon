@@ -5,3 +5,5 @@ node_modules/
 .venv/
 .playwright-mcp/
 *.pyc
+documents/
+notes/wireframe/wireframe-print.html

@@ -1,0 +1,72 @@
+{
+ "artboards": [
+  {
+   "file": "Main.dc.html",
+   "x": 0,
+   "y": 160,
+   "w": 1280,
+   "h": 820,
+   "title": "1. Tell us what happened"
+  },
+  {
+   "file": "Gate.dc.html",
+   "x": 1380,
+   "y": 160,
+   "w": 1280,
+   "h": 820,
+   "title": "2. Can the SCT hear it?"
+  },
+  {
+   "file": "Evidence.dc.html",
+   "x": 2760,
+   "y": 160,
+   "w": 1280,
+   "h": 820,
+   "title": "3. Your evidence, ranked"
+  },
+  {
+   "file": "Gaps.dc.html",
+   "x": 0,
+   "y": 1120,
+   "w": 1280,
+   "h": 820,
+   "title": "4. What else to gather"
+  },
+  {
+   "file": "Blindspots.dc.html",
+   "x": 1380,
+   "y": 1120,
+   "w": 1280,
+   "h": 820,
+   "title": "5. Evidence blind spots"
+  },
+  {
+   "file": "Timeline.dc.html",
+   "x": 2760,
+   "y": 1120,
+   "w": 1280,
+   "h": 820,
+   "title": "6. Timeline"
+  },
+  {
+   "file": "NextSteps.dc.html",
+   "x": 0,
+   "y": 2080,
+   "w": 1280,
+   "h": 820,
+   "title": "7. Next steps"
+  }
+ ],
+ "annotations": [
+  {
+   "id": "flow",
+   "x": 0,
+   "y": 0,
+   "w": 900,
+   "text": "Wireframe v4, 5 Sep 2026. Read left to right, top to bottom: 1 intake, 2 gate, 3 evidence ranked, 4 what else to gather, 5 evidence blind spots, 6 timeline, 7 next steps.\nChecked against the CJTS filing guide: pre-filing assessment, 6-part claim form, 500-character summary, PDF-only uploads of 5MB, money order, Submission for Hearing, Defects Schedule, counterclaims.\nScenario: Mei Ling, $2,600 tenancy deposit withheld by the landlord. Claim types in scope: tenancy and sale of goods."
+  }
+ ],
+ "launch": {
+  "view": "canvas"
+ }
+}

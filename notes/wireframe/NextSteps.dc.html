@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+    body { margin: 0; font-family: 'Patrick Hand', 'Segoe Print', 'Comic Sans MS', cursive; color: #222; background: #fbfaf7; font-size: 17px; }
+    a { color: #1d4ed8; } a:hover { color: #1e3a8a; }
+    .box { border: 2px solid #222; border-radius: 4px; background: #fff; }
+    .dash { border: 2px dashed #777; border-radius: 4px; background: #fff; color: #666; }
+    .grey { background: #e9e6df; border: 2px solid #222; border-radius: 4px; }
+    .btn { border: 2px solid #222; border-radius: 4px; padding: 9px 16px; background: #fff; color: #222; font-family: inherit; font-size: 17px; min-height: 42px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap; box-shadow: 3px 3px 0 #222; cursor: pointer; }
+    .btn:hover { background: #fef9c3; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #222; }
+    .btn.primary { background: #222; color: #fff; font-size: 19px; padding-left: 26px; padding-right: 26px; }
+    .btn.primary:hover { background: #333; }
+    .btn.small { min-height: 34px; padding: 3px 11px; font-size: 15px; box-shadow: 2px 2px 0 #222; }
+    .btn.disabled { color: #888; border-color: #aaa; background: #e9e6df; box-shadow: none; cursor: default; }
+    .btn.disabled:hover { background: #e9e6df; transform: none; box-shadow: none; }
+    .meta { border-radius: 999px; padding: 3px 10px; font-size: 14px; background: #e9e6df; color: #444; white-space: nowrap; }
+    .source-link { border-bottom: 2px solid #1d4ed8; padding: 1px 2px; color: #1d4ed8; cursor: pointer; white-space: nowrap; }
+    .source-link:hover { background: #dbeafe; color: #1e3a8a; }
+    .dropzone { color: #222; cursor: pointer; text-align: center; }
+    .dropzone:hover { border-color: #1d4ed8; background: #dbeafe; }
+    .status-label { border-radius: 2px; padding: 3px 8px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: inset 5px 0 0 rgba(34,34,34,.32); }
+    .status-label.have, .status-label.strong { background: #bbf7d0; }
+    .status-label.missing, .status-label.weak { background: #fecaca; }
+    .status-label.medium { background: #fef08a; }
+    .status-label.optional { background: #e9e6df; }
+    .muted { color: #666; font-size: 15px; }
+    .eyebrow { color: #666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+    .h { font-size: 30px; line-height: 1; margin: 0; font-weight: normal; }
+    .section-title { font-size: 20px; line-height: 1.1; }
+    .hl { background: #fde047; padding: 0 2px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; align-items: center; column-gap: 9px; row-gap: 1px; padding: 7px 8px; border-radius: 4px; min-height: 48px; box-sizing: border-box; color: #666; }
+    .step.done { color: #222; }
+    .step.current { background: #222; color: #fff; }
+    .num { grid-row: 1 / span 2; width: 26px; height: 26px; border: 1.5px solid currentColor; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .step.done .num { background: #bbf7d0; color: #222; }
+    .step-state { font-size: 12px; line-height: 1; text-transform: uppercase; letter-spacing: .6px; opacity: .8; }
+    .rank { width: 38px; height: 38px; border: 2px solid #222; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; background: #fff; box-shadow: 2px 2px 0 #222; }
+    .rank.top { background: #fde047; }
+    .evidence-row { cursor: pointer; }
+    .evidence-row:hover td { background: #dbeafe; }
+    .strength { display: flex; align-items: center; gap: 7px; min-width: 82px; font-weight: bold; }
+    .strength-dot { width: 14px; height: 14px; border: 2px solid #222; border-radius: 999px; flex-shrink: 0; }
+    .strength.strong .strength-dot { background: #22c55e; }
+    .strength.medium .strength-dot { background: #fde047; }
+    .strength.weak .strength-dot { background: #fca5a5; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    th, td { border: 1.5px solid #222; padding: 3px 6px; text-align: left; vertical-align: middle; line-height: 1.25; }
+    th { background: #e9e6df; font-weight: normal; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .col { display: flex; flex-direction: column; gap: 12px; }
+    .nav-footer { border-top: 2px solid #222; padding-top: 12px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    .preview { padding: 0; overflow: hidden; }
+    .preview-head { padding: 12px 14px; border-bottom: 2px solid #222; background: #e9e6df; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .preview-name { font-size: 21px; line-height: 1.05; overflow-wrap: anywhere; }
+    .preview-type { color: #555; font-size: 14px; margin-top: 3px; }
+</style>
+</helmet>
+<div style="width: 1280px; height: 820px; display: flex; flex-direction: column; background: #fbfaf7; box-sizing: border-box;">
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-bottom: 2px solid #222; background: #fff;">
+    <div style="font-size: 22px;">[App name] &middot; Build your Small Claims case from your evidence</div>
+    <div class="row"><span class="meta">Mei Ling</span><span class="meta">Case: tenancy deposit</span></div>
+  </div>
+  <div style="display: flex; flex-grow: 1; min-height: 0;">
+    <div style="width: 220px; border-right: 2px solid #222; padding: 14px 12px; display: flex; flex-direction: column; gap: 3px; background: #fff; flex-shrink: 0; box-sizing: border-box;">
+      <div class="eyebrow" style="padding: 0 8px 5px;">Your progress</div><div class="step done"><div class="num">1</div><div>Tell us what happened</div><div class="step-state">Done</div></div><div class="step done"><div class="num">2</div><div>Can the SCT hear it?</div><div class="step-state">Done</div></div><div class="step done"><div class="num">3</div><div>Your evidence, ranked</div><div class="step-state">Done</div></div><div class="step done"><div class="num">4</div><div>What else to gather</div><div class="step-state">Done</div></div><div class="step done"><div class="num">5</div><div>Evidence blind spots</div><div class="step-state">Done</div></div><div class="step done"><div class="num">6</div><div>Timeline</div><div class="step-state">Done</div></div><div class="step current"><div class="num">7</div><div>Next steps</div><div class="step-state">Now</div></div>
+    </div>
+    <div style="flex-grow: 1; padding: 16px 28px 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow: hidden;">
+      <div><div class="eyebrow">Step 7 of 7</div><h1 class="h">What to do next</h1></div>
+      <div style="flex-grow: 1; min-height: 0; overflow: hidden;">
+<div style="display: flex; gap: 20px; height: 100%; min-height: 0;">
+  <div class="box" style="flex-grow: 1; padding: 12px 14px; display: flex; flex-direction: column; gap: 7px;">
+    <div><div class="section-title">Your checklist</div><div class="muted">Start with item 1. Keep this page as you work through the list.</div></div>
+    <div class="row" style="justify-content: space-between; padding: 8px; background: #fef9c3;"><div><b>1. Send a written request for the deposit</b><br><span class="muted">Your biggest gap. Give him 7 days to reply. The draft uses only your facts and your agreement.</span></div><div class="btn small">Open draft</div></div>
+    <div class="row" style="justify-content: space-between;"><div><b>2. Gather what is missing</b><br><span class="muted">Stamp duty certificate, signed inventory list, final bill, dated move-in photos.</span></div><div class="btn small">Open checklist</div></div>
+    <div class="row" style="justify-content: space-between;"><div><b>3. Pre-filing assessment on CJTS</b><br><span class="muted">Pick the category, enter 15 Aug 2026 and $2,600, answer the questions. The ID it gives you lasts 7 days.</span></div><div class="btn small">Open CJTS</div></div>
+    <div class="row" style="justify-content: space-between;"><div><b>4. Fill the claim form and pay</b><br><span class="muted">Six parts: you, him, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order $2,600. Singpass login. Fee $10 up to $5,000. Then pick a Consultation date.</span></div><div class="source-link">Guide s.12</div></div>
+    <div class="row" style="justify-content: space-between;"><div><b>5. Serve him within 7 working days</b><br><span class="muted">Save the Respondent Copy from CJTS, hand it to him or send by registered post, then file the Declaration of Service.</span></div><div class="source-link">Guide p.11</div></div>
+    <div class="row" style="justify-content: space-between;"><div><b>6. Before the Consultation</b><br><span class="muted">He may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses. Bring E1 to E6 in evidence sheet order.</span></div><div class="source-link">Guide s.21, s.36</div></div>
+  </div>
+  <div class="col" style="width: 400px; flex-shrink: 0;">
+    <div class="box" style="padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div class="section-title">Evidence sheet (xlsx)</div>
+      <div class="grey" style="padding: 8px; font-size: 13px; display: flex; flex-direction: column; gap: 2px;">
+        <div class="row" style="gap: 6px;"><b style="width: 30px;">No.</b><b style="width: 40px;">Exh.</b><b style="width: 70px;">Date</b><b style="flex-grow: 1;">What it shows</b><b style="width: 60px;">Where</b><b style="width: 50px;">Rank</b></div>
+        <div class="row" style="gap: 6px;"><span style="width: 30px;">1</span><span style="width: 40px;">E1</span><span style="width: 70px;">3 Aug 25</span><span style="flex-grow: 1;">Deposit clause</span><span style="width: 60px;">p.2 cl.4</span><span style="width: 50px;">1</span></div>
+        <div class="row" style="gap: 6px;"><span style="width: 30px;">2</span><span style="width: 40px;">E4</span><span style="width: 70px;">3 Aug 25</span><span style="flex-grow: 1;">Deposit paid</span><span style="width: 60px;">image</span><span style="width: 50px;">2</span></div>
+        <div class="row" style="gap: 6px;"><span style="width: 30px;">3</span><span style="width: 40px;">E2</span><span style="width: 70px;">31 Jul 26</span><span style="flex-grow: 1;">"ok, all good"</span><span style="width: 60px;">shot 4</span><span style="width: 50px;">3</span></div>
+        <div class="row" style="gap: 6px; color: #888;"><span style="width: 30px;">7</span><span style="width: 40px;">E7</span><span style="width: 70px;"></span><span style="flex-grow: 1;">(you add rows here)</span><span style="width: 60px;"></span><span style="width: 50px;"></span></div>
+      </div>
+      <div class="btn small">Download sheet</div>
+      <div class="muted">Every upload, any format, listed in order with a notes column. Add rows as you gather more.</div>
+    </div>
+    <div class="box" style="padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div class="section-title">Claim pack</div>
+      <div class="muted">Everything the CJTS claim form asks for, ready to paste and upload: your and his particulars, the 500-character summary, each file turned into a PDF under 5MB with a description and page number, the money order amount, and the events list for the Submission for Hearing form.</div>
+      <div class="btn primary">Export claim pack</div>
+      <div class="muted">Filing on the portal itself is not built. You upload this yourself.</div>
+    </div>
+  </div>
+</div>
+</div>
+      <div class="nav-footer">
+        <div class="btn" style="justify-self: start; min-width: 94px;">Back</div>
+        <div class="muted" style="text-align: center;">Step 7 of 7</div>
+        <div class="btn disabled" style="justify-self: end; min-width: 94px;">Next</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 8px 24px; border-top: 2px solid #222; background: #e9e6df; font-size: 14px; color: #333;">Under the Courts' guide on generative AI (Registrar's Circular 1 of 2024) you are responsible for what you file. Check sections on Singapore Statutes Online and cases on eLitigation, never by asking another AI. This tool does not give legal advice.</div>
+</div>
+</x-dc>
+</body>
+</html>

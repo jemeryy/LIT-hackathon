@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+    body { margin: 0; font-family: 'Patrick Hand', 'Segoe Print', 'Comic Sans MS', cursive; color: #222; background: #fbfaf7; font-size: 17px; }
+    a { color: #1d4ed8; } a:hover { color: #1e3a8a; }
+    .box { border: 2px solid #222; border-radius: 4px; background: #fff; }
+    .dash { border: 2px dashed #777; border-radius: 4px; background: #fff; color: #666; }
+    .grey { background: #e9e6df; border: 2px solid #222; border-radius: 4px; }
+    .btn { border: 2px solid #222; border-radius: 4px; padding: 9px 16px; background: #fff; color: #222; font-family: inherit; font-size: 17px; min-height: 42px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap; box-shadow: 3px 3px 0 #222; cursor: pointer; }
+    .btn:hover { background: #fef9c3; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #222; }
+    .btn.primary { background: #222; color: #fff; font-size: 19px; padding-left: 26px; padding-right: 26px; }
+    .btn.primary:hover { background: #333; }
+    .btn.small { min-height: 34px; padding: 3px 11px; font-size: 15px; box-shadow: 2px 2px 0 #222; }
+    .btn.disabled { color: #888; border-color: #aaa; background: #e9e6df; box-shadow: none; cursor: default; }
+    .btn.disabled:hover { background: #e9e6df; transform: none; box-shadow: none; }
+    .meta { border-radius: 999px; padding: 3px 10px; font-size: 14px; background: #e9e6df; color: #444; white-space: nowrap; }
+    .source-link { border-bottom: 2px solid #1d4ed8; padding: 1px 2px; color: #1d4ed8; cursor: pointer; white-space: nowrap; }
+    .source-link:hover { background: #dbeafe; color: #1e3a8a; }
+    .dropzone { color: #222; cursor: pointer; text-align: center; }
+    .dropzone:hover { border-color: #1d4ed8; background: #dbeafe; }
+    .status-label { border-radius: 2px; padding: 3px 8px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: inset 5px 0 0 rgba(34,34,34,.32); }
+    .status-label.have, .status-label.strong { background: #bbf7d0; }
+    .status-label.missing, .status-label.weak { background: #fecaca; }
+    .status-label.medium { background: #fef08a; }
+    .status-label.optional { background: #e9e6df; }
+    .muted { color: #666; font-size: 15px; }
+    .eyebrow { color: #666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+    .h { font-size: 30px; line-height: 1; margin: 0; font-weight: normal; }
+    .section-title { font-size: 20px; line-height: 1.1; }
+    .hl { background: #fde047; padding: 0 2px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; align-items: center; column-gap: 9px; row-gap: 1px; padding: 7px 8px; border-radius: 4px; min-height: 48px; box-sizing: border-box; color: #666; }
+    .step.done { color: #222; }
+    .step.current { background: #222; color: #fff; }
+    .num { grid-row: 1 / span 2; width: 26px; height: 26px; border: 1.5px solid currentColor; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .step.done .num { background: #bbf7d0; color: #222; }
+    .step-state { font-size: 12px; line-height: 1; text-transform: uppercase; letter-spacing: .6px; opacity: .8; }
+    .rank { width: 38px; height: 38px; border: 2px solid #222; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; background: #fff; box-shadow: 2px 2px 0 #222; }
+    .rank.top { background: #fde047; }
+    .evidence-row { cursor: pointer; }
+    .evidence-row:hover td { background: #dbeafe; }
+    .strength { display: flex; align-items: center; gap: 7px; min-width: 82px; font-weight: bold; }
+    .strength-dot { width: 14px; height: 14px; border: 2px solid #222; border-radius: 999px; flex-shrink: 0; }
+    .strength.strong .strength-dot { background: #22c55e; }
+    .strength.medium .strength-dot { background: #fde047; }
+    .strength.weak .strength-dot { background: #fca5a5; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    th, td { border: 1.5px solid #222; padding: 3px 6px; text-align: left; vertical-align: middle; line-height: 1.25; }
+    th { background: #e9e6df; font-weight: normal; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .col { display: flex; flex-direction: column; gap: 12px; }
+    .nav-footer { border-top: 2px solid #222; padding-top: 12px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    .preview { padding: 0; overflow: hidden; }
+    .preview-head { padding: 12px 14px; border-bottom: 2px solid #222; background: #e9e6df; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .preview-name { font-size: 21px; line-height: 1.05; overflow-wrap: anywhere; }
+    .preview-type { color: #555; font-size: 14px; margin-top: 3px; }
+</style>
+</helmet>
+<div style="width: 1280px; height: 820px; display: flex; flex-direction: column; background: #fbfaf7; box-sizing: border-box;">
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-bottom: 2px solid #222; background: #fff;">
+    <div style="font-size: 22px;">[App name] &middot; Build your Small Claims case from your evidence</div>
+    <div class="row"><span class="meta">Mei Ling</span><span class="meta">Case: tenancy deposit</span></div>
+  </div>
+  <div style="display: flex; flex-grow: 1; min-height: 0;">
+    <div style="width: 220px; border-right: 2px solid #222; padding: 14px 12px; display: flex; flex-direction: column; gap: 3px; background: #fff; flex-shrink: 0; box-sizing: border-box;">
+      <div class="eyebrow" style="padding: 0 8px 5px;">Your progress</div><div class="step done"><div class="num">1</div><div>Tell us what happened</div><div class="step-state">Done</div></div><div class="step current"><div class="num">2</div><div>Can the SCT hear it?</div><div class="step-state">Now</div></div><div class="step todo"><div class="num">3</div><div>Your evidence, ranked</div><div class="step-state">To do</div></div><div class="step todo"><div class="num">4</div><div>What else to gather</div><div class="step-state">To do</div></div><div class="step todo"><div class="num">5</div><div>Evidence blind spots</div><div class="step-state">To do</div></div><div class="step todo"><div class="num">6</div><div>Timeline</div><div class="step-state">To do</div></div><div class="step todo"><div class="num">7</div><div>Next steps</div><div class="step-state">To do</div></div>
+    </div>
+    <div style="flex-grow: 1; padding: 16px 28px 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow: hidden;">
+      <div><div class="eyebrow">Step 2 of 7</div><h1 class="h">Can the Small Claims Tribunals hear this?</h1></div>
+      <div style="flex-grow: 1; min-height: 0; overflow: hidden;">
+<div class="muted" style="margin-bottom: 10px;">Four fixed checks from the Act, using your answers. CJTS runs the same checks in its pre-filing assessment before you can file. Open a source to read the rule.</div>
+<div class="col" style="max-width: 900px; gap: 10px;">
+  <div class="box" style="padding: 14px 16px; display: flex; align-items: center; gap: 16px;">
+      <div class="status-label have" style="width: 48px; text-align: center;">Pass</div>
+      <div style="flex-grow: 1;">Your claim fits a CJTS category: Lease not exceeding 2 years (residential premises), refund of rental deposit.</div>
+      <span class="source-link">SCTA 1984 s 5 + Schedule</span>
+    </div>
+  <div class="box" style="padding: 14px 16px; display: flex; align-items: center; gap: 16px;">
+      <div class="status-label have" style="width: 48px; text-align: center;">Pass</div>
+      <div style="flex-grow: 1;">You are claiming $2,600. The limit is $20,000, or $30,000 if both sides agree.</div>
+      <span class="source-link">SCTA 1984 s 2</span>
+    </div>
+  <div class="box" style="padding: 14px 16px; display: flex; align-items: center; gap: 16px;">
+      <div class="status-label have" style="width: 48px; text-align: center;">Pass</div>
+      <div style="flex-grow: 1;">Date of cause of action: 15 Aug 2026, when the landlord refused. You have 2 years, so until 15 Aug 2028.</div>
+      <span class="source-link">SCTA 1984 s 5</span>
+    </div>
+  <div class="box" style="padding: 14px 16px; display: flex; align-items: center; gap: 16px;">
+      <div class="status-label have" style="width: 48px; text-align: center;">Pass</div>
+      <div style="flex-grow: 1;">The landlord is in Singapore, so he can be served.</div>
+      <span class="source-link">SCTA 1984 s 5</span>
+    </div>
+</div>
+<div class="box" style="max-width: 900px; padding: 15px; margin-top: 10px; background: #bbf7d0; border-width: 3px;"><div class="eyebrow" style="color: #222;">Result</div><div style="font-size: 23px;">All four checks pass. You can continue.</div></div>
+<div class="dash muted" style="max-width: 900px; padding: 10px; margin-top: 10px;">If a check does not pass, this page says which one and lists other places to start, such as CASE mediation, the Employment Claims Tribunals or the Magistrate's Court. No case page is built.</div>
+</div>
+      <div class="nav-footer">
+        <div class="btn" style="justify-self: start; min-width: 94px;">Back</div>
+        <div class="muted" style="text-align: center;">Step 2 of 7</div>
+        <div class="btn primary" style="justify-self: end; min-width: 94px;">Next</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 8px 24px; border-top: 2px solid #222; background: #e9e6df; font-size: 14px; color: #333;">Under the Courts' guide on generative AI (Registrar's Circular 1 of 2024) you are responsible for what you file. Check sections on Singapore Statutes Online and cases on eLitigation, never by asking another AI. This tool does not give legal advice.</div>
+</div>
+</x-dc>
+</body>
+</html>
