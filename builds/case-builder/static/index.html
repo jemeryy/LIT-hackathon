@@ -57,12 +57,13 @@
   .side > .panel { width: 360px; flex-shrink: 0; }
   .nav-footer { border-top: 2px solid var(--ink); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   textarea, input[type=text] { width: 100%; font: inherit; padding: 12px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; }
-  #shell { min-height: 100vh; display: flex; flex-direction: column; }
+  #shell { height: 100vh; display: flex; flex-direction: column; }
   header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 2px solid var(--ink); background: #fff; }
-  #layout { display: flex; flex-grow: 1; }
+  #layout { display: flex; flex-grow: 1; min-height: 0; }
   #rail { width: 260px; border-right: 2px solid var(--ink); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; background: #fff; flex-shrink: 0; }
-  main { flex-grow: 1; padding: 18px 28px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  #body { flex-grow: 1; }
+  main { flex-grow: 1; padding: 18px 28px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; overflow: hidden; }
+  #body { flex-grow: 1; display: flex; flex-direction: column; min-height: 0; overflow-y: auto; }
+  #body > .fill { flex: 1 1 0; min-height: 0; }
   .foot { padding: 12px 24px; border-top: 2px solid var(--ink); background: var(--grey); font-size: 18px; }
   #preview { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; max-width: 100vw; background: #fff; border-left: 2px solid var(--ink); display: flex; flex-direction: column; z-index: 20; }
   .preview-head { padding: 12px 14px; border-bottom: 2px solid var(--ink); background: var(--grey); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -75,7 +76,9 @@
   #modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 30; padding: 8px; }
   #modal .box { width: 760px; max-width: 100%; max-height: 95vh; display: flex; flex-direction: column; padding: 16px; gap: 10px; }
   #modal textarea { flex-grow: 1; min-height: 300px; }
-  .chat { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding: 16px; height: 62vh; min-height: 320px; }
+  .chat { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding: 16px; flex: 1 1 0; min-height: 200px; }
+  .spin { width: 18px; height: 18px; border: 3px solid #ccc; border-top-color: var(--ink); border-radius: 999px; display: inline-block; vertical-align: middle; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   #say { resize: vertical; min-height: 60px; max-height: 40vh; overflow-y: auto; }
   .bubble { max-width: 85%; padding: 12px 16px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; white-space: pre-wrap; }
   .bubble.user { align-self: flex-end; background: var(--pale); }
@@ -106,7 +109,6 @@
     .side { flex-direction: column; }
     .side > .panel { width: 100%; }
     .two { grid-template-columns: 1fr; }
-    .chat { height: 50vh; }
     .bubble { max-width: 95%; }
     table, tr, td { display: block; width: 100%; }
     thead, th { display: none; }
@@ -215,6 +217,7 @@ function render() {
   $("back").disabled = step === 0;
   if (step === 2 && C.blindspots.answered < C.blindspots.total) $("centre").textContent = `Answer all ${C.blindspots.total} questions to go on.`;
   if (step === 1 && !C.gate.pass) $("centre").textContent = "Go back to step 1 and tell us what is missing.";
+  if (step === 0) $("centre").innerHTML = '<button class="btn" onclick="clearChat()">Start over</button>';
   $("next").disabled = step + 1 > max;
   $("body").innerHTML = [intake, gate, evidence, timeline, nextsteps][step]();
   if (step === 0) scrollChat();
@@ -224,13 +227,12 @@ function render() {
 /* 1. intake: a chat. Files come in step 3. */
 function intake() {
   const msgs = C.intake.chat.map(m => `<div class="bubble ${m.who}">${esc(m.text)}</div>`).join("") + (waiting ? '<div class="bubble bot wait">One moment...</div>' : "");
-  return `<div class="col">
+  return `<div class="col fill">
     <div class="box chat" id="chat">${msgs}</div>
     <div class="row" style="align-items: stretch;">
-      <textarea id="say" rows="2" style="flex: 1 1 240px;" placeholder="Type here. Drag the corner to make this box bigger." oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'" onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }"></textarea>
+      <textarea id="say" rows="2" style="flex: 1 1 240px;" placeholder="Type here. Enter sends. Shift and Enter starts a new line." oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'" onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }"></textarea>
       <button class="btn primary" onclick="send()" ${waiting ? "disabled" : ""}>Send</button>
     </div>
-    <div class="row" style="justify-content: space-between;"><div class="muted">Press Enter to send. Shift and Enter for a new line. You add your files in step 3.</div><button class="btn" onclick="clearChat()">Start over</button></div>
   </div>`;
 }
 function scrollChat() { const el = $("chat"); if (el) el.scrollTop = el.scrollHeight; }
@@ -249,8 +251,12 @@ function statusText(e) {
 async function upload(input, exhibitId) {
   const f = input.files[0]; if (!f) return;
   const fd = new FormData(); fd.append("exhibit_id", exhibitId); fd.append("file", f);
-  const ex = C.exhibits.find(e => e.id === exhibitId); if (ex) ex.status = "reading"; render();
-  const c = await api("/api/upload", {method: "POST", body: fd}); if (c) C = c; render();
+  const ex = C.exhibits.find(e => e.id === exhibitId);
+  if (ex) ex.status = "reading"; else C.exhibits.push({id: exhibitId, title: f.name, status: "reading", assets: [{}]});
+  render();
+  const c = await api("/api/upload", {method: "POST", body: fd});
+  if (c) C = c; else C.exhibits = C.exhibits.filter(e => e.id !== exhibitId || e.assets[0].path);
+  render();
 }
 
 /* 2. gate */
@@ -267,7 +273,9 @@ function gate() {
 
 /* 3. evidence: add files, see what to gather, answer what the other side may have, then rank both sides */
 function evidence() {
-  const exh = e => `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.status}">${statusText(e)}</span></div>`;
+  const exh = e => e.status === "reading"
+    ? `<div class="box" style="padding: 8px 12px; color: #444;"><span class="spin"></span> ${e.id} ${esc(e.title)} <span class="status-label reading">Reading</span></div>`
+    : `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.status}">${statusText(e)}</span></div>`;
   const b = C.blindspots, ready = C.exhibits.some(e => e.status === "ready"), allAnswered = b.answered >= b.total;
   const canRank = ready && allAnswered;
   const part = (n, title, note, body) => `<div class="col" style="gap: 8px;"><div><div class="section-title">${n}. ${title}</div><div class="muted">${note}</div></div>${body}</div>`;
