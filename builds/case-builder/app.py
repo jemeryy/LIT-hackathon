@@ -1,13 +1,13 @@
 """Case Helper: FastAPI backend. Run: uvicorn app:app --reload --port 8000 (from builds/case-builder)."""
-import datetime as dt, io, json, logging, pathlib, re, shutil, threading
-from fastapi import FastAPI, File, Form, UploadFile
+import contextvars, datetime as dt, io, json, logging, pathlib, re, shutil, threading, uuid
+from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 import exports, extract, llm, rules, viewer
 
 ROOT = pathlib.Path(__file__).resolve().parent
 DATA, PACK = ROOT / "data", ROOT / "sample" / "pack"
-CASE_FILE, UPLOADS = DATA / "case.json", DATA / "uploads"
+CASES_DIR, UPLOADS = DATA / "cases", DATA / "uploads"
 APP_NAME = "Case Helper"
 KINDS = {".pdf": "pdf", ".png": "image", ".jpg": "image", ".jpeg": "image", ".webp": "image",
          ".gif": "image", ".bmp": "image", ".dib": "image", ".tif": "image", ".tiff": "image",
@@ -45,14 +45,33 @@ UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
 SAMPLE_BLINDSPOTS = {"b1": "unsure", "b2": "no", "b3": "yes", "b4": "no"}
 
 app = FastAPI(title=APP_NAME)
-CASE = None
+CASES = {}                      # one case per visitor, keyed by the visitor cookie
+EXAMPLE = None                  # the worked example, built once and copied per visitor
+VISITOR = contextvars.ContextVar("visitor", default="local")
 SAMPLE_LOCK = threading.Lock()
 log = logging.getLogger("case-helper")
 
 
+@app.middleware("http")
+async def visitor_cookie(request: Request, call_next):
+    """Each browser gets its own case. Without this every visitor shared one case and saw each other's files."""
+    vid = request.cookies.get("visitor", "")
+    fresh = not re.fullmatch(r"[0-9a-f]{32}", vid)
+    if fresh:
+        vid = uuid.uuid4().hex
+    token = VISITOR.set(vid)
+    try:
+        response = await call_next(request)
+    finally:
+        VISITOR.reset(token)
+    if fresh:
+        response.set_cookie("visitor", vid, max_age=365 * 86400, httponly=True, samesite="lax")
+    return response
+
+
 def save(case):
-    DATA.mkdir(exist_ok=True)
-    CASE_FILE.write_text(json.dumps(case, indent=1, ensure_ascii=False), encoding="utf-8")
+    CASES_DIR.mkdir(parents=True, exist_ok=True)
+    (CASES_DIR / f"{case['visitor']}.json").write_text(json.dumps(case, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
 def make_asset(aid, path, kind=None):
@@ -87,7 +106,7 @@ def upload_kind(filename, content_type, data):
 
 
 def new_case(today, sample=False):
-    case = {"case_id": "example" if sample else "mine", "claim_type": "unknown", "app_name": APP_NAME, "today": today.isoformat(),
+    case = {"case_id": "example" if sample else "mine", "visitor": VISITOR.get(), "claim_type": "unknown", "app_name": APP_NAME, "today": today.isoformat(),
             "intake": json.loads(json.dumps(EMPTY_INTAKE)), "checklist": rules.content("questions")["checklist"],
             "story": "", "summary": "", "exhibits": [], "evidence": [], "gate": {}, "statutes": rules.content("statutes"),
             "gaps": [], "blindspots": {}, "timeline": [], "next_steps": [], "fee": {}}
@@ -164,6 +183,7 @@ def explicit_claim_amount(message):
         rf"\b(?:I\s+am|I'm|we\s+are|we're)\s+claiming\s*{money}",
         rf"\b(?:claim|claiming|seek|seeking|ask|asking)\s+(?:a\s+)?(?:total\s+)?(?:claim\s+)?(?:of|for)?\s*{money}",
         rf"\bwant\s*{money}\s+back\b",
+        rf"\bclaim\s+amount\s+(?:is|of|:|should\s+be|to)?\s*{money}",
     ]
     for pattern in patterns:
         matches = list(re.finditer(pattern, message, flags=re.IGNORECASE))
@@ -225,14 +245,46 @@ def safe_intake_reply(turn):
     if not questions[:2]:
         # Compatibility for the deterministic worked example only.
         legacy = _plain_sentence(turn.get("reply"))
-        return legacy or UNSAFE_OUTPUT_REPLY
+        return legacy or reflection or ""
     # If the model over-summarises, omit its reflection. The questions remain safe
     # and contextual, and omitting a statement is better than misstating the case.
     reply = " ".join([*([reflection] if reflection else []), *questions[:2]])
     return reply if len(reply.split()) <= 65 else UNSAFE_OUTPUT_REPLY
 
 
+CHANGE_WORDS = {"amount": "the amount you claim", "cause_of_action_date": "the date the other side refused",
+                "moveout_date": "the move-out date", "what_agreed": "what was agreed", "consent_30k": "the $30,000 agreement"}
+PARTY_WORDS = {"name": "name", "address": "address", "in_singapore": "in Singapore", "is_company": "a company", "role": "role"}
+
+
+def describe_changes(before, case):
+    """Plain words for every fact that was already known and has now been corrected."""
+    a, b = before["intake"], case["intake"]
+    out = []
+    for k, w in CHANGE_WORDS.items():
+        if a.get(k) not in (None, "") and b.get(k) != a.get(k):
+            v = b.get(k)
+            out.append(f"{w} is now {rules.money(v) if k == 'amount' else rules.fmt(dt.date.fromisoformat(v)) if k.endswith('_date') else v}")
+    for who in ("claimant", "respondent"):
+        for k, w in PARTY_WORDS.items():
+            old, new = a["parties"][who].get(k), b["parties"][who].get(k)
+            if old not in (None, "") and new != old:
+                label = "your" if who == "claimant" else "the other side's"
+                if k in ("in_singapore", "is_company"):
+                    out.append(f"the other side is {'' if new else 'not '}{w}")
+                else:
+                    out.append(f"{label} {w} is now {new}")
+    for k, w in (("residential", "a home"), ("lease_months", "months long")):
+        old, new = a.get("premises", {}).get(k), b.get("premises", {}).get(k)
+        if old is not None and new != old:
+            out.append(f"the lease is {'' if new else 'not '}{w}" if k == "residential" else f"the lease is {new} {w}")
+    if before["claim_type"] not in ("unknown", "other") and case["claim_type"] != before["claim_type"]:
+        out.append("the kind of claim has changed")
+    return ("Noted: " + "; ".join(out) + ".") if out else ""
+
+
 def chat_turn(case, message):
+    snap = json.loads(json.dumps(case))
     it = case["intake"]
     if not it["chat"]:
         it["chat"].append({"who": "bot", "text": FIRST_MESSAGE})
@@ -243,7 +295,11 @@ def chat_turn(case, message):
     turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
     trusted_turn = turn.get("scope", "claim_intake") == "claim_intake" and turn.get("confidence", "high") != "low"
-    if stated_amount is not None and trusted_turn:
+    if stated_amount is not None and turn.get("scope", "claim_intake") not in ("off_topic", "prompt_attack"):
+        # A stated total is a fact we can read ourselves. Keep it even when the model found the message unclear.
+        if not trusted_turn:
+            turn.update(scope="claim_intake", confidence="high", questions=[], reflection=None, fields={})
+            trusted_turn = True
         turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
     if trusted_turn:
@@ -255,6 +311,9 @@ def chat_turn(case, message):
                     process_asset(case, ex, a)
     missing = [c["id"] for c in checklist_state(case) if not c["done"]]
     it["done"] = not missing
+    changed = describe_changes(snap, case)
+    if changed:
+        turn["reflection"] = None   # the change note already says it; do not say it twice
     reply = safe_intake_reply(turn)
     if missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
@@ -265,8 +324,12 @@ def chat_turn(case, message):
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
         reply = f"I have enough details about your claim against {other}. Now add {needed} on the right."
+    reply = f"{changed} {reply}".strip() or "Noted. Nothing else is missing."
     it["chat"].append({"who": "bot", "text": reply})
-    return recompute(case)
+    case = recompute(case)
+    if not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
+        it["chat"][-1]["text"] += " " + case["gate"]["stop"]   # eligibility problem: say it here, not only in step 2
+    return case
 
 
 def checklist_state(case):
@@ -314,7 +377,6 @@ def _add_sample_chat(case):
 
 
 def build_sample(today=None, include_chat=False):
-    global CASE
     case = new_case(today or dt.date.today(), sample=True)
     if include_chat:
         # Know the claim type before reading files, so each file is read only once
@@ -325,8 +387,8 @@ def build_sample(today=None, include_chat=False):
             process_asset(case, ex, a, use_saved=True)
         ex["status"] = "ready"
     case["blindspots"] = rules.blindspots(case, SAMPLE_BLINDSPOTS)
-    CASE = recompute(case)
-    return CASE
+    CASES[case["visitor"]] = recompute(case)
+    return CASES[case["visitor"]]
 
 
 def sample_is_ready(case):
@@ -338,18 +400,20 @@ def sample_is_ready(case):
 
 
 def current():
-    global CASE
-    if CASE is None and CASE_FILE.exists():
-        CASE = json.loads(CASE_FILE.read_text(encoding="utf-8"))
-    if CASE is None:
-        CASE = recompute(new_case(dt.date.today()))
+    vid = VISITOR.get()
+    case = CASES.get(vid)
+    if case is None and (CASES_DIR / f"{vid}.json").exists():
+        case = json.loads((CASES_DIR / f"{vid}.json").read_text(encoding="utf-8"))
+    if case is None:
+        case = recompute(new_case(dt.date.today()))
+    CASES[vid] = case
     today = dt.date.today().isoformat()
-    if CASE and CASE.get("today") != today:   # a saved case keeps its facts; only the date-driven parts move
-        CASE["today"] = today
-        CASE["gate"] = rules.gate(CASE, dt.date.today())
-        CASE["timeline"] = rules.timeline(CASE, dt.date.today())
-        save(CASE)
-    return CASE
+    if case.get("today") != today:   # a saved case keeps its facts; only the date-driven parts move
+        case["today"] = today
+        case["gate"] = rules.gate(case, dt.date.today())
+        case["timeline"] = rules.timeline(case, dt.date.today())
+        save(case)
+    return case
 
 
 def err(code, message, status=400):
@@ -369,18 +433,24 @@ def reset():
     """Load the worked example (Mei Ling's deposit) from the sample pack."""
     # Browser Back or a double-click can leave an earlier reset running. Let that
     # one finish, then reuse it instead of reading all sample files a second time.
+    global EXAMPLE
     with SAMPLE_LOCK:
         case = current()
         if sample_is_ready(case):
             return case
-        return build_sample(include_chat=True)
+        if EXAMPLE is None or not sample_is_ready(EXAMPLE):
+            EXAMPLE = build_sample(include_chat=True)
+        case = json.loads(json.dumps(EXAMPLE))
+        case["visitor"] = VISITOR.get()
+        CASES[case["visitor"]] = case
+        save(case)
+        return case
 
 
 @app.post("/api/case/new")
 def new():
-    global CASE
-    CASE = recompute(new_case(dt.date.today()))
-    return CASE
+    CASES[VISITOR.get()] = recompute(new_case(dt.date.today()))
+    return CASES[VISITOR.get()]
 
 
 @app.get("/api/case")
@@ -415,7 +485,6 @@ def chat_clear():
 
 @app.post("/api/upload")
 async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: UploadFile = File(...)):
-    global CASE
     case = current()
     data = await file.read()
     if len(data) > MAX_UPLOAD:
@@ -432,19 +501,19 @@ async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: 
             case["exhibits"].append(ex)
         asset_id = asset_id or (exhibit_id if not ex["assets"] else f"{exhibit_id}-{len(ex['assets']) + 1}")
         UPLOADS.mkdir(parents=True, exist_ok=True)
-        path = UPLOADS / asset_id / pathlib.Path(file.filename).name   # keep the original name (fixtures key on it)
+        path = UPLOADS / case["visitor"] / asset_id / pathlib.Path(file.filename).name   # per visitor: E1 must never mean another person's E1
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
         asset = make_asset(asset_id, path, kind)   # opens the file (page_count for PDFs), so it is inside the guard
         ex["assets"] = [a for a in ex["assets"] if a["id"] != asset_id] + [asset]
-        for p in (extract.CACHE.glob(f"{asset_id}_*")):
+        for p in extract.CACHE.glob(f"{extract.cache_key(asset_id, path)}_*"):
             p.unlink()
         ex["status"] = "reading"
         process_asset(case, ex, asset)
         ex["status"] = "ready"
         return recompute(case)   # recompute can also raise, so it stays inside the guard
     except Exception as exc:
-        CASE = snapshot   # roll back in-memory; do not save, so case.json on disk is untouched
+        CASES[case["visitor"]] = snapshot   # roll back in-memory; do not save, so the file on disk is untouched
         return err("parse_failed", f"Could not read {file.filename} ({type(exc).__name__}).")
 
 

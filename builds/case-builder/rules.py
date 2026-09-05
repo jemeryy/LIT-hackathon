@@ -18,7 +18,10 @@ CATEGORY_TEXT = {"goods": "a contract for the sale of goods", "services": "a con
 
 def ctype(case):
     """Content set for this claim: tenancy and goods have their own, everything else shares the general one."""
-    return case["claim_type"] if case["claim_type"] in ("tenancy", "goods") else "general"
+    ct = case["claim_type"]
+    if ct == "tenancy" and (case.get("intake", {}).get("parties", {}).get("respondent", {}).get("role") or "").lower().startswith("tenant"):
+        return "general"   # the tenancy set is written for a tenant claiming a deposit; a landlord gets the general set
+    return ct if ct in ("tenancy", "goods") else "general"
 CAT_WEIGHT = {"agreement": 0, "payment": 1, "other_side_words": 2, "condition": 3, "dispute": 4}
 STRENGTH_ORDER = {"strong": 0, "medium": 1, "weak": 2}
 AUTHOR = {"both": "Signed by both of you", "third_party": "Third-party record",
@@ -145,7 +148,8 @@ def gate(case, today):
         cat_ok, cat_text = True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
         cat_ok, cat_text = False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
-                                   "home leases up to 2 years, and damage to property not from a motor accident.")
+                                   "home leases up to 2 years, and damage to property not from a motor vehicle or a neighbour. "
+                                   "It does not hear work disputes.")
     else:
         cat_ok, cat_text = False, "Tell us what happened so we can check if the tribunal hears this kind of claim."
     amt_ok = amt is not None and (amt <= 20000 or (it.get("consent_30k") and amt <= 30000))
@@ -156,7 +160,8 @@ def gate(case, today):
     checks = [
         {"id": "category", "pass": cat_ok, "section_id": "scta_schedule", "text": cat_text},
         {"id": "amount", "pass": amt_ok, "section_id": "scta_s2",
-         "text": (f"You are claiming {money(amt)}. The limit is $20,000, or $30,000 if both sides agree." if amt is not None
+         "text": (f"You are claiming {money(amt)}. The limit is $20,000, or $30,000 if both sides agree."
+                  + (" You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
                   else "Tell us how much you are claiming. The limit is $20,000, or $30,000 if both sides agree.")},
         {"id": "time", "pass": time_ok, "section_id": "scta_s5_time",
          "text": (f"The {role} refused on {fmt(cause)}. You have 2 years from that day, so until {fmt(bar)}."

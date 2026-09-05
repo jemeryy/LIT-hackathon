@@ -86,7 +86,9 @@ out = app.DATA
 
 # the viewer route for row 1 must return the same boxes the front end will draw
 from fastapi.testclient import TestClient
-c = TestClient(app.app)
+vid = "0" * 32   # the browser cookie that owns the case built above
+app.CASES[vid] = case; case["visitor"] = vid
+c = TestClient(app.app, cookies={"visitor": vid})
 v = c.get(top["sources"][0]["viewer_url"]).json()
 assert v["boxes"] == loc["boxes"] and v["image_url"].startswith("/api/render?asset_id=E1&page_index=1"), v
 png = c.get(v["image_url"]).content
@@ -98,7 +100,7 @@ complete = app.build_sample(today, include_chat=True)
 assert app.sample_is_ready(complete)
 assert complete["intake"]["chat"][-1]["text"] == llm.FIX["chat"][-1]["reply"]
 assert complete["gate"]["pass"] and complete["claim_type"] == "tenancy"
-demo = app.CASE
+demo = app.CASES[app.VISITOR.get()]
 demo["intake"] = {**json.loads(json.dumps(app.EMPTY_INTAKE)), "chat": [{"who": "bot", "text": app.FIRST_MESSAGE}]}
 demo["claim_type"] = "unknown"
 app.recompute(demo)   # leaves case.json demo-ready: files read, chat empty, gate waiting

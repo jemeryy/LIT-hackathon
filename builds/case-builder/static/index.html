@@ -180,9 +180,7 @@ function banner(msg) { $("banner").textContent = msg; show("banner"); }
 
 async function load() {
   const example = new URLSearchParams(location.search).get("example") === "1";
-  let c = example
-    ? await api("/api/case")
-    : await api("/api/case/new", {method: "POST"});
+  let c = await api(example ? "/api/case/reset" : "/api/case/new", {method: "POST"});
   if (!c) return;
   C = c; render();
 }
@@ -201,6 +199,7 @@ function go(n) {
 
 function render() {
   const max = maxStep();
+  if (step > max) step = max;   // a correction can lock later steps again
   $("who").textContent = C.intake.parties.claimant.name || "";
   $("rail").innerHTML = STEPS.map((s, i) => {
     const st = i > max ? "locked" : i < step ? "done" : i === step ? "current" : "todo";
@@ -303,7 +302,8 @@ function blindspots() {
   const p = x => `<div class="box col" style="padding: 12px 14px; gap: 8px; ${x.answer ? "" : "border-color: #b91c1c;"}">
       <div style="font-weight: 600;">${esc(x.q)}</div>
       <div class="muted">${esc(x.hint)}</div>
-      <div class="row">${[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]].map(([k, l]) => `<button class="btn ${x.answer === k ? "on" : ""}" onclick="answer('${x.id}', '${k}')">${l}</button>`).join("")}</div></div>`;
+      <div class="row" style="justify-content: space-between;"><div class="row">${[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]].map(([k, l]) => `<button class="btn ${x.answer === k ? "on" : ""}" onclick="answer('${x.id}', '${k}')">${l}</button>`).join("")}</div>
+      ${x.answer === "yes" ? `<label class="btn primary" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label>` : ""}</div></div>`;
   return `<div class="muted" style="margin-bottom: 10px;">${esc(b.intro)}</div>
   <div class="two">${b.questions.map(p).join("")}</div>
   <div class="box" style="margin-top: 12px; padding: 12px 14px; background: var(--pale);"><b>${b.answered} of ${b.total} answered.</b> ${b.answered < b.total ? `Answer all ${b.total} to go on.` : "You can go on."}</div>
