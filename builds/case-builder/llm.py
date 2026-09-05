@@ -1,6 +1,6 @@
 """The only file that talks to a model. Two jobs: read facts off one file, write three short texts.
 USE_FIXTURES=1 returns content/fixtures.json so every lane runs without credits."""
-import base64, io, json, os, pathlib
+import base64, io, json, os, pathlib, re
 
 ROOT = pathlib.Path(__file__).resolve().parent
 FIX = json.loads((ROOT / "content" / "fixtures.json").read_text(encoding="utf-8"))
@@ -265,6 +265,16 @@ INTAKE_FIELDS = {
 }
 
 
+def question_list(value):
+    """The model sometimes returns the questions as one string with quotes inside instead of a list.
+    Iterating that string gave letters, and only the '?' characters survived the safety filter."""
+    if isinstance(value, list):
+        return [q for q in value if isinstance(q, str)]
+    if isinstance(value, str):
+        return [q.strip() for q in re.findall(r'[^"?]+\?', value) if q.strip(' ,')]
+    return []
+
+
 def intake_turn(case, checklist):
     """One chat turn -> {reply, fields, done}. Fixtures replay the scripted Mei Ling conversation."""
     it = case["intake"]
@@ -302,5 +312,5 @@ def intake_turn(case, checklist):
     corrections = [k for k in (out.get("corrections") or []) if k in fields]
     return {"scope": out.get("scope") if out.get("scope") in ("claim_intake", "unclear", "off_topic", "prompt_attack") else "unclear",
             "confidence": out.get("confidence") if out.get("confidence") in ("high", "medium", "low") else "low",
-            "reflection": out.get("reflection"), "questions": out.get("questions") or [],
+            "reflection": out.get("reflection"), "questions": question_list(out.get("questions")),
             "fields": fields, "corrections": corrections, "done": bool(out.get("done"))}
