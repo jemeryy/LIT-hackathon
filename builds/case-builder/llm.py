@@ -222,9 +222,13 @@ def write_text(kind, case):
     text = str(out.get("text") or next((v for v in out.values() if isinstance(v, str)), "")).strip()
     if not text:   # the model returned nothing usable: fall back to the dated events, never to an empty screen
         text = " ".join(f"{e['date']}: {e['label']}." for e in case.get("timeline", []) if e.get("date") and not e.get("future") and e["id"] != "today")
+    text = text.replace(" – ", ", ").replace(" — ", ", ").replace("–", "-").replace("—", "-")   # plain hyphens and commas, no dashes
     if kind == "summary" and len(text) > 500:
         cut = text[:500]
         text = cut[:max(cut.rfind(". "), cut.rfind(".\n"), 0) + 1] or cut
+    amt = case["intake"].get("amount")
+    if kind == "summary" and amt is not None and money(amt) not in text and len(text) + 20 <= 500:
+        text = text.rstrip() + f" I claim {money(amt)}."   # the form summary must end with what is claimed
     return text
 
 
