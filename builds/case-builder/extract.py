@@ -27,6 +27,11 @@ def _pdf_pages(path):
 
 
 def load_image(path):
+    try:
+        import pillow_heif
+        pillow_heif.register_heif_opener()
+    except ImportError:
+        pass
     from PIL import Image, ImageOps
     im = Image.open(path)
     return ImageOps.exif_transpose(im).convert("RGB")
@@ -46,12 +51,44 @@ def _image_page(im, page_index=0):
     return {"page_index": page_index, "words": words, "text": " ".join(w["text"] for w in words)}
 
 
-def keyframe_path(asset_id, path):
-    """Extract (once) and return the PNG of the video frame at VIDEO_KEYFRAME_S."""
+def video_seconds(path):
+    try:
+        out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        return float(out)
+    except (subprocess.CalledProcessError, ValueError, FileNotFoundError):
+        return None
+
+
+def keyframe_seconds(asset_id, path):
+    """The frame we read: 1:12 into the clip, or the middle of a shorter one. Remembered next to the frame."""
+    note = CACHE / f"{cache_key(asset_id, path)}_frame.txt"
+    if note.exists():
+        return int(note.read_text())
+    dur = video_seconds(path)
+    t = VIDEO_KEYFRAME_S if dur is None or dur > VIDEO_KEYFRAME_S * 2 else int(dur // 2)
     CACHE.mkdir(parents=True, exist_ok=True)
-    out = CACHE / f"{asset_id}_frame.png"
+    note.write_text(str(t))
+    return t
+
+
+def frame_label(asset_id, path):
+    t = keyframe_seconds(asset_id, path)
+    return f"{t // 60}:{t % 60:02d}"
+
+
+def cache_key(asset_id, path):
+    """Cache files are keyed by id plus the file, so a new case's E1 never reuses the last case's E1 images."""
+    import hashlib
+    return f"{asset_id}_{hashlib.md5(str(path).encode()).hexdigest()[:8]}"
+
+
+def keyframe_path(asset_id, path):
+    """Extract (once) and return the PNG of one video frame. ponytail: one frame; several if a clip needs it."""
+    CACHE.mkdir(parents=True, exist_ok=True)
+    out = CACHE / f"{cache_key(asset_id, path)}_frame.png"
     if not out.exists():
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(VIDEO_KEYFRAME_S), "-i", str(path),
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(keyframe_seconds(asset_id, path)), "-i", str(path),
                         "-frames:v", "1", str(out)], check=True)
     return out
 

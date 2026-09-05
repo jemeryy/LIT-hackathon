@@ -2,7 +2,7 @@
  "tenancy": [
   {
    "key": "communication",
-   "category": "Communication (chat, email, SMS, calls, spoken)",
+   "category": "Messages and calls",
    "why": "The other side's own words, dated, are the strongest thing you can bring.",
    "missing": [
     "The full chat export, in order",
@@ -12,17 +12,17 @@
   },
   {
    "key": "agreement",
-   "category": "Agreement (contract, listing, terms)",
+   "category": "The agreement",
    "why": "The agreement sets what each side must do.",
    "missing": [
-    "Inventory list signed at handover (cl. 6)",
-    "Stamp duty certificate (the SCT asks for it)",
+    "Inventory list signed at handover, if your agreement has one",
+    "Stamp duty certificate (the court asks for it)",
     "Property listing, if it described the furniture"
    ]
   },
   {
    "key": "payment",
-   "category": "Payment (transfers, receipts, invoices)",
+   "category": "Payments",
    "why": "Shows what you paid and what you still owe, if anything.",
    "missing": [
     "Last month's rent transfer",
@@ -32,27 +32,27 @@
   },
   {
    "key": "condition",
-   "category": "Condition (photos, video, reports)",
+   "category": "Photos and video",
    "why": "Dated pictures of the flat before and after are the answer to a damage claim.",
    "missing": [
-    "Dated move-in photos or video of the sofa",
+    "Dated move-in photos or video of the rooms and furniture",
     "Handover form",
     "Cleaner or mover receipt, 31 Jul"
    ]
   },
   {
    "key": "request",
-   "category": "Your request for the money",
+   "category": "Your letter asking for the money",
    "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
    "missing": [
-    "A written request to the landlord for the deposit with a reply date. Draft on the Next steps page."
+    "A written request to the landlord for the deposit with a reply date. You can make one on the last step."
    ]
   }
  ],
  "goods": [
   {
    "key": "communication",
-   "category": "Communication (chat, email, SMS, calls, spoken)",
+   "category": "Messages and calls",
    "why": "The seller's own words, dated, are the strongest thing you can bring.",
    "missing": [
     "Your messages to the seller, in order",
@@ -62,7 +62,7 @@
   },
   {
    "key": "agreement",
-   "category": "Agreement (receipt, order, listing, terms)",
+   "category": "The order and receipt",
    "why": "The order and listing set what was promised.",
    "missing": [
     "Receipt or invoice",
@@ -72,7 +72,7 @@
   },
   {
    "key": "payment",
-   "category": "Payment (transfers, receipts, invoices)",
+   "category": "Payments",
    "why": "Shows what you paid.",
    "missing": [
     "Bank or card record of the payment",
@@ -82,7 +82,7 @@
   },
   {
    "key": "condition",
-   "category": "Condition (photos, video, reports)",
+   "category": "Photos and video",
    "why": "Dated pictures of the fault are the answer to a dispute about the goods.",
    "missing": [
     "Dated photos or video of the fault",
@@ -91,10 +91,10 @@
   },
   {
    "key": "request",
-   "category": "Your request for the money",
+   "category": "Your letter asking for the money",
    "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
    "missing": [
-    "A written request to the seller with a reply date. Draft on the Next steps page."
+    "A written request to the seller with a reply date. You can make one on the last step."
    ]
   }
  ],
@@ -115,7 +115,7 @@
  "general": [
   {
    "key": "communication",
-   "category": "Communication (chat, email, SMS, calls, spoken)",
+   "category": "Messages and calls",
    "why": "The other side's own words, dated, are the strongest thing you can bring.",
    "missing": [
     "Your messages with the other side, in order",
@@ -135,7 +135,7 @@
   },
   {
    "key": "payment",
-   "category": "Payment (transfers, receipts, invoices)",
+   "category": "Payments",
    "why": "Shows what you paid and when.",
    "missing": [
     "Bank or card record of every payment",
@@ -145,7 +145,7 @@
   },
   {
    "key": "condition",
-   "category": "Condition (photos, video, reports)",
+   "category": "Photos and video",
    "why": "Dated pictures show what happened.",
    "missing": [
     "Dated photos or video of the work, the damage or the item",
@@ -154,10 +154,10 @@
   },
   {
    "key": "request",
-   "category": "Your request for the money",
+   "category": "Your letter asking for the money",
    "why": "The tribunal expects you to have asked first, in writing, with a date to reply by.",
    "missing": [
-    "A written request to the other side with a reply date. Draft on the Next steps page."
+    "A written request to the other side with a reply date. You can make one on the last step."
    ]
   }
  ]

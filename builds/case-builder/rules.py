@@ -26,8 +26,8 @@ AUTHOR = {"both": "Signed by both of you", "third_party": "Third-party record",
 TIMELINE_LABEL = {"deposit_paid": "deposit paid", "handover_acceptance": 'Move out, "all good"',
                   "damage_allegation": "{role} refuses", "payment_made": "paid", "delivery": "delivered",
                   "complaint_sent": "you complained", "seller_response": "{role} replies"}
-FUTURE_STEPS = [("written_request", "Written request", "next"), ("prefiling", "Pre-filing check, then file on CJTS", ""),
-                ("serve", "Serve within 7 working days", ""), ("consultation", "Consultation", ""), ("hearing", "Hearing", "")]
+FUTURE_STEPS = [("written_request", "Send your letter", "next"), ("prefiling", "File your claim online", ""),
+                ("serve", "Give the other side a copy", ""), ("consultation", "First court meeting", ""), ("hearing", "Hearing", "")]
 
 
 def d(s):
@@ -136,18 +136,18 @@ def gate(case, today):
     ct = case["claim_type"]
     if ct == "tenancy":
         cat_ok = bool(prem.get("residential")) and (prem.get("lease_months") or 0) <= 24
-        cat_text = "Your claim fits a CJTS category: lease not exceeding 2 years (residential premises), refund of rental deposit."
+        cat_text = "The tribunal hears this kind of claim: a home lease of 2 years or less, and a deposit refund."
         if prem.get("residential") is None or prem.get("lease_months") is None:
             cat_ok, cat_text = False, "Tell us if the place was your home, and how long the lease was."
         elif not cat_ok:
-            cat_text = "A lease over 2 years, or a shop or office lease, is not a CJTS category."
+            cat_text = "The tribunal does not hear a lease over 2 years, or a shop or office lease."
     elif ct in CATEGORY_TEXT:
-        cat_ok, cat_text = True, f"Your claim fits a CJTS category: {CATEGORY_TEXT[ct]}."
+        cat_ok, cat_text = True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
-        cat_ok, cat_text = False, ("This does not fit a CJTS category. The tribunal hears contracts for goods or services, "
+        cat_ok, cat_text = False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
                                    "home leases up to 2 years, and damage to property not from a motor accident.")
     else:
-        cat_ok, cat_text = False, "Tell us what happened so we can check which CJTS category fits."
+        cat_ok, cat_text = False, "Tell us what happened so we can check if the tribunal hears this kind of claim."
     amt_ok = amt is not None and (amt <= 20000 or (it.get("consent_30k") and amt <= 30000))
     bar = plus_years(cause, 2) if cause else None
     time_ok = bool(cause) and today <= bar
@@ -159,7 +159,7 @@ def gate(case, today):
          "text": (f"You are claiming {money(amt)}. The limit is $20,000, or $30,000 if both sides agree." if amt is not None
                   else "Tell us how much you are claiming. The limit is $20,000, or $30,000 if both sides agree.")},
         {"id": "time", "pass": time_ok, "section_id": "scta_s5_time",
-         "text": (f"Date of cause of action: {fmt(cause)}, when the {role} refused. You have 2 years, so until {fmt(bar)}."
+         "text": (f"The {role} refused on {fmt(cause)}. You have 2 years from that day, so until {fmt(bar)}."
                   if cause else "Tell us the date the other side refused, or the problem started.")},
         {"id": "service", "pass": served_ok, "section_id": "scta_s5_service",
          "text": f"The {role} is in Singapore, so the claim can be served." if served_ok
@@ -174,7 +174,7 @@ def gate(case, today):
     failed = [c for c in checks if not c["pass"]]
     stop = None if ok else "This check did not pass: " + failed[0]["text"] + " " + where[failed[0]["id"]]
     return {"pass": ok, "checks": checks, "stop": stop,
-            "result": "All four checks pass. You can continue." if ok else "The tribunal cannot hear this claim as it stands."}
+            "result": "The details entered match all four checks below." if ok else "One or more details do not match the checks below."}
 
 
 def gaps(case):
@@ -246,7 +246,7 @@ def timeline(case, today):
     if cause:
         bar = plus_years(cause, 2)
         events.append({"id": "time_bar", "label": "Time bar", "date": bar.isoformat(), "future": True, "marker": True,
-                       "computed": True, "detail": f"2 years after {fmt(cause)}, the date the {role} refused. Latest filing date.",
+                       "computed": True, "detail": f"2 years after {fmt(cause)}, the date the {role} refused. You must file by then.",
                        "sources": []})
     return events
 

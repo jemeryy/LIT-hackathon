@@ -1,22 +1,44 @@
-# Case Builder
+# Case Helper
 
-Build your Small Claims case from your evidence. A demo for the LIT Hackathon 2026, problem statement 4
+Build your Small Claims case from your evidence. Built at the LIT Hackathon 2026 for problem statement 4
 (self-represented persons at the Small Claims Tribunals). It does not give legal advice.
+
+It works for a real case, not only the example. Open it, press New case, type what happened, add your own files
+(PDF, screenshots, photos, video). The model reads your words and your files live. Everything after that is rules.
 
 ## Run it
 
 ```
 cd builds/case-builder
 python sample/make_pack.py        # makes the synthetic sample files (needs ffmpeg on PATH; add --no-video to skip the mp4)
-python selfcheck.py               # builds the sample case through the pipeline and checks the demo path
-uvicorn app:app --port 8000       # then open http://127.0.0.1:8000
+python selfcheck.py               # replays the worked example on fixtures and checks the whole path (no credits)
+uvicorn app:app --port 8000       # then open http://127.0.0.1:8000 and press New case, or Load the example
 ```
 
 Needs Python 3.12, the packages in `requirements.txt`, `tesseract` and `ffmpeg` on PATH.
 
-Model calls: `.env` in the repo root holds `OPENROUTER_API_KEY`, `ANTHROPIC_BASE_URL` and `MODEL`.
-`USE_FIXTURES=1` (the default when no key is set) answers from `content/fixtures.json` instead of calling
-the model. Set `USE_FIXTURES=0` to read the files with the model for real.
+Model calls: `.env` in the repo root holds `OPENROUTER_API_KEY`, `ANTHROPIC_BASE_URL` and `MODEL`. With a key
+the model is live by default. `USE_FIXTURES=1` (forced when there is no key) replays the saved run of the worked
+example from `content/fixtures.json` instead, so the example is repeatable on stage without credits.
+
+One case at a time, kept in `data/case.json`. New case clears it. Load the example reads the six sample files
+in `sample/pack/` (Mei Ling's tenancy deposit) and takes about a minute live.
+
+## AI boundaries
+
+The intake model collects facts; it does not decide legal rights or give advice. Its output is a structured
+scope decision, confidence level, neutral `You say...` reflection, and one or two fact questions. The server
+rejects legal conclusions and recommendation language, refuses unrelated or prompt-injection requests, does
+not apply fields from unsafe or low-confidence turns, and independently decides when intake is complete.
+Conversation text, filenames, OCR, images, and document contents are always treated as untrusted data rather
+than instructions. These controls reduce risk; they do not make model output infallible.
+
+General web access is intentionally disabled. A future legal-fact verifier should be separate from intake and
+restricted to an allowlist of official sources: Singapore Statutes Online (`sso.agc.gov.sg`), Singapore Courts
+and Judiciary (`judiciary.gov.sg`), and CJTS (`cjts.judiciary.gov.sg`). It should quote and link the exact
+supporting passage, record its retrieval date, treat retrieved pages as untrusted data, and abstain when no
+current authoritative passage supports the statement. Blogs, forums, law-firm pages, and unrestricted search
+should not be used for legal assertions.
 
 ## What is real and what is stubbed
 

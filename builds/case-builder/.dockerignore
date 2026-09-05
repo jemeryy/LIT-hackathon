@@ -1,7 +1,10 @@
+__pycache__/
+*.py[cod]
+.env
 data/cache/
 data/uploads/
+data/case.json
 data/*.log
+data/*.jsonl
 data/*.xlsx
 data/*.zip
-sample/pack/_frames/
-__pycache__/

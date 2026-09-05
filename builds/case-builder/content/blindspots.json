@@ -1,22 +1,22 @@
 {
  "tenancy": {
-  "intro": "Things that could exist and are not in your files yet: what the landlord may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue his case.",
-  "note": "He can file a counterclaim for damage on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "intro": "Things the landlord may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+  "note": "The landlord can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
   "questions": [
    {
     "id": "b1",
-    "q": "Could he have his own photos of the sofa, taken after you left?",
-    "hint": "Your move-out video (E5) shows the sofa at 1:12. Keep it."
+    "q": "Could the landlord have their own photos of the flat or furniture, taken after you left?",
+    "hint": "Your own dated move-out photos or video are the answer. Keep them."
    },
    {
     "id": "b2",
-    "q": "Has he sent, or could he get, a repair or cleaning invoice?",
-    "hint": "Ask for it in your written request. On CJTS a Defects Schedule form lists each defect and its cost."
+    "q": "Has the landlord sent, or could he get, a repair or cleaning invoice?",
+    "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed."
    },
    {
     "id": "b3",
     "q": "Did you sign an inventory or handover form?",
-    "hint": "Your agreement, cl. 6, says there is one. Get your copy. If it notes the sofa, it matters either way."
+    "hint": "Check your agreement for an inventory clause. Get your copy. If it lists the item, it matters either way."
    },
    {
     "id": "b4",
@@ -26,7 +26,7 @@
    {
     "id": "b5",
     "q": "Did anyone else see the handover? A friend, mover or agent.",
-    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+    "hint": "Write down their name. You can name them as a witness later."
    },
    {
     "id": "b6",
@@ -36,8 +36,8 @@
   ]
  },
  "goods": {
-  "intro": "Things that could exist and are not in your files yet: what the seller may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue their case.",
-  "note": "The seller can file a counterclaim on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "intro": "Things the seller may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+  "note": "The seller can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
   "questions": [
    {
     "id": "b1",
@@ -62,7 +62,7 @@
    {
     "id": "b5",
     "q": "Did anyone else see the goods when they arrived or when the fault showed?",
-    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+    "hint": "Write down their name. You can name them as a witness later."
    },
    {
     "id": "b6",
@@ -72,8 +72,8 @@
   ]
  },
  "general": {
-  "intro": "Things that could exist and are not in your files yet: what the other side may hold, and what you may have missed. Listed so you are not surprised at the Consultation. We do not argue their case.",
-  "note": "The other side can file a counterclaim on CJTS up to 3 days before the Consultation. Your evidence sheet is your answer to it.",
+  "intro": "Things the other side may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+  "note": "The other side can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
   "questions": [
    {
     "id": "b1",
@@ -98,7 +98,7 @@
    {
     "id": "b5",
     "q": "Did anyone else see what happened?",
-    "hint": "Witnesses go on the Submission for Hearing form on CJTS."
+    "hint": "Write down their name. You can name them as a witness later."
    },
    {
     "id": "b6",

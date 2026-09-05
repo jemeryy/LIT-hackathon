@@ -1,6 +1,6 @@
 """Render one PDF page, image or video keyframe to PNG. One path for every format. Cached on disk."""
 import io, pathlib
-from extract import keyframe_path, load_image
+from extract import cache_key, keyframe_path, load_image
 
 CACHE = pathlib.Path(__file__).resolve().parent / "data" / "cache"
 
@@ -16,7 +16,7 @@ def page_count(asset):
 def render(asset, page_index=0):
     """-> PNG bytes of the page/image/frame, normalised the same way the locator boxes were."""
     CACHE.mkdir(parents=True, exist_ok=True)
-    out = CACHE / f"{asset['id']}_p{page_index}.png"
+    out = CACHE / f"{cache_key(asset['id'], asset['path'])}_p{page_index}.png"
     if out.exists():
         return out.read_bytes()
     if asset["kind"] == "pdf":

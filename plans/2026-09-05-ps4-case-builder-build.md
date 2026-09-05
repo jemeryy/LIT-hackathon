@@ -539,3 +539,9 @@ sample asset is oversized), README --no-video (pack ships with the mp4).
   replaces the eight fixed questions. Claim types: tenancy, goods, services, property_damage, other, unknown; content
   falls back to a `general` set. Fixtures replay a three-turn Mei Ling chat; live run on a services claim filled every
   field in 39 s. selfcheck extended and passing; browser click-through done; screenshot `notes/screens/01-chat-intake.png`.
+- 5 Sep ~18:50 SGT: made it a real product (Jeremy: "use it like a real client"). Live model by default
+  (`USE_FIXTURES` defaults to 0 when a key exists). `POST /api/case/new` starts empty; `/api/case/reset` loads the
+  example. Story and summary are written only when the facts behind them change (no extra model calls per chat turn).
+  Files read before the claim type is known are read again once the chat sets it. Video frame time follows the clip
+  length (1:12, or the middle of a shorter clip) and is shown in captions. Example-only wording scrubbed from the
+  tenancy gaps, blind spots and next steps. Real-user run on the live server passed (services claim, own image).

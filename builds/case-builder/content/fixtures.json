@@ -262,7 +262,7 @@
  },
  "chat": [
   {
-   "reply": "Thank you. This sounds like a home lease and a deposit refund, which the tribunal can hear. Two things I still need. Your full name and address, which go on the claim form. And Mr Tan's full name and address, and whether he lives in Singapore, because the claim has to be served on him.",
+   "reply": "You say your landlord kept your $2,600 deposit. What is your full name and address? What is the landlord's full name and Singapore address?",
    "fields": {
     "claim_type": "tenancy",
     "respondent_role": "landlord",
@@ -275,7 +275,7 @@
    "done": false
   },
   {
-   "reply": "Got it. Was the flat your home, and how long was the lease? The tribunal only hears home leases of up to 2 years. And what did the agreement say about when the deposit comes back?",
+   "reply": "You say both addresses are in Singapore. Was the flat your home, and how long was the lease? When was the deposit due under the agreement?",
    "fields": {
     "claimant_name": "Mei Ling",
     "claimant_address": "Blk 123 Bedok North Street 1 #05-67, Singapore 460123",
@@ -287,7 +287,7 @@
    "done": false
   },
   {
-   "reply": "That is everything I need for the checks. Now add your files on the right: the tenancy agreement, the chat, the transfer, and any photos or video. Only files count as evidence. Then press Next.",
+   "reply": "You say the flat was your home under a 12-month lease. Add the agreement, messages, payment record, photos, and video on the right.",
    "fields": {
     "residential": true,
     "lease_months": 12,

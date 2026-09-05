@@ -2,10 +2,10 @@
  "tenancy": [
   {
    "n": 1,
-   "title": "Send a written request for the deposit",
+   "title": "Send a letter asking for the deposit",
    "action": "written_request",
-   "note": "Your biggest gap. Give him 7 days to reply. The draft uses only your facts and your agreement.",
-   "source_label": "Guide p.4",
+   "note": "Give the landlord 7 days to reply. The letter uses only your facts and your agreement.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   },
   {
@@ -13,49 +13,49 @@
    "title": "Gather what is missing",
    "action": "gaps",
    "note": "Stamp duty certificate, signed inventory list, final bill, dated move-in photos.",
-   "source_label": "What else to gather",
+   "source_label": "See the list",
    "source_url": null
   },
   {
    "n": 3,
-   "title": "Pre-filing assessment on CJTS",
+   "title": "Do the check on the court website",
    "action": "link",
-   "note": "Pick the category, enter the refusal date and the amount, answer the questions. The ID it gives you lasts 7 days.",
-   "source_label": "Open CJTS",
+   "note": "Answer a few questions on the court website. It gives you a number. Use it within 7 days.",
+   "source_label": "Court website",
    "source_url": "https://cjts.judiciary.gov.sg/"
   },
   {
    "n": 4,
    "title": "Fill the claim form and pay",
    "action": "link",
-   "note": "Six parts: you, him, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order. Singpass login. Then pick a Consultation date.",
-   "source_label": "Guide s.12",
+   "note": "Log in with Singpass. Fill in your details, the other side, the claim, and a short summary. Upload your files as PDF. Then pick a date for the first court meeting.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/file-small-claim"
   },
   {
    "n": 5,
-   "title": "Serve him within 7 working days",
+   "title": "Give the landlord a copy within 7 working days",
    "action": "link",
-   "note": "Save the Respondent Copy from CJTS, hand it to him or send by registered post, then file the Declaration of Service.",
-   "source_label": "Guide p.11",
+   "note": "Download the copy for the landlord. Hand it to him or send it by registered post. Then tell the court you have done so.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/how-to-file-serve-small-claim"
   },
   {
    "n": 6,
-   "title": "Before the Consultation",
+   "title": "Before the first court meeting",
    "action": "link",
-   "note": "He may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses. Bring E1 to E6 in evidence sheet order.",
-   "source_label": "Guide s.21, s.36",
+   "note": "The landlord may offer to settle online. Fill in the court form: what happened in date order, and any witnesses. Bring your files in the order of your evidence list.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   }
  ],
  "goods": [
   {
    "n": 1,
-   "title": "Send a written request to the seller",
+   "title": "Send a letter to the seller asking for the money",
    "action": "written_request",
    "note": "Say what is wrong, what you want (refund, repair or replacement) and a date to reply by.",
-   "source_label": "Guide p.4",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   },
   {
@@ -63,39 +63,39 @@
    "title": "Gather what is missing",
    "action": "gaps",
    "note": "Receipt, listing, dated photos of the fault, a repair quote.",
-   "source_label": "What else to gather",
+   "source_label": "See the list",
    "source_url": null
   },
   {
    "n": 3,
-   "title": "Pre-filing assessment on CJTS",
+   "title": "Do the check on the court website",
    "action": "link",
-   "note": "Pick the category, enter the date and the amount, answer the questions. The ID it gives you lasts 7 days.",
-   "source_label": "Open CJTS",
+   "note": "Answer a few questions on the court website. It gives you a number. Use it within 7 days.",
+   "source_label": "Court website",
    "source_url": "https://cjts.judiciary.gov.sg/"
   },
   {
    "n": 4,
    "title": "Fill the claim form and pay",
    "action": "link",
-   "note": "Six parts: you, the seller, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order. Singpass login.",
-   "source_label": "Guide s.12",
+   "note": "Log in with Singpass. Fill in your details, the seller, the claim, and a short summary. Upload your files as PDF.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/file-small-claim"
   },
   {
    "n": 5,
-   "title": "Serve the seller within 7 working days",
+   "title": "Give the seller a copy within 7 working days",
    "action": "link",
-   "note": "Save the Respondent Copy from CJTS, hand it over or send by registered post, then file the Declaration of Service.",
-   "source_label": "Guide p.11",
+   "note": "Download the copy for the seller. Hand it over or send it by registered post. Then tell the court you have done so.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/how-to-file-serve-small-claim"
   },
   {
    "n": 6,
-   "title": "Before the Consultation",
+   "title": "Before the first court meeting",
    "action": "link",
-   "note": "The seller may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses.",
-   "source_label": "Guide s.21, s.36",
+   "note": "The seller may offer to settle online. Fill in the court form: what happened in date order, and any witnesses.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   }
  ],
@@ -123,10 +123,10 @@
  "general": [
   {
    "n": 1,
-   "title": "Send a written request to the other side",
+   "title": "Send a letter asking for the money",
    "action": "written_request",
    "note": "Say what is wrong, what you want (refund, repair or replacement) and a date to reply by.",
-   "source_label": "Guide p.4",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   },
   {
@@ -134,39 +134,39 @@
    "title": "Gather what is missing",
    "action": "gaps",
    "note": "Contract or quote, payment records, dated photos, a quote for putting it right.",
-   "source_label": "What else to gather",
+   "source_label": "See the list",
    "source_url": null
   },
   {
    "n": 3,
-   "title": "Pre-filing assessment on CJTS",
+   "title": "Do the check on the court website",
    "action": "link",
-   "note": "Pick the category, enter the date and the amount, answer the questions. The ID it gives you lasts 7 days.",
-   "source_label": "Open CJTS",
+   "note": "Answer a few questions on the court website. It gives you a number. Use it within 7 days.",
+   "source_label": "Court website",
    "source_url": "https://cjts.judiciary.gov.sg/"
   },
   {
    "n": 4,
    "title": "Fill the claim form and pay",
    "action": "link",
-   "note": "Six parts: you, the other side, the claim, a summary of at most 500 characters, documents (PDF only, 5MB each, with page numbers), money order. Singpass login.",
-   "source_label": "Guide s.12",
+   "note": "Log in with Singpass. Fill in your details, the other side, the claim, and a short summary. Upload your files as PDF.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/file-small-claim"
   },
   {
    "n": 5,
-   "title": "Serve the other side within 7 working days",
+   "title": "Give the other side a copy within 7 working days",
    "action": "link",
-   "note": "Save the Respondent Copy from CJTS, hand it over or send by registered post, then file the Declaration of Service.",
-   "source_label": "Guide p.11",
+   "note": "Download the copy for the other side. Hand it over or send it by registered post. Then tell the court you have done so.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/civil/how-to-file-serve-small-claim"
   },
   {
    "n": 6,
-   "title": "Before the Consultation",
+   "title": "Before the first court meeting",
    "action": "link",
-   "note": "The other side may open e-Negotiation (5 rounds). Fill the Submission for Hearing form: events in date order, witnesses.",
-   "source_label": "Guide s.21, s.36",
+   "note": "The other side may offer to settle online. Fill in the court form: what happened in date order, and any witnesses.",
+   "source_label": "Court guide",
    "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
   }
  ]
