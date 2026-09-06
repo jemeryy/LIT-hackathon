@@ -116,3 +116,5 @@ demo["intake"] = {**json.loads(json.dumps(app.EMPTY_INTAKE)), "chat": [{"who": "
 demo["claim_type"] = "unknown"
 app.recompute(demo)   # leaves case.json demo-ready: files read, chat empty, gate waiting
 print("selfcheck ok:", keys, "| E1 boxes", loc["boxes"], "| files in", out)
+assert llm.question_list('What is your address?", "What is his address?') == ["What is your address?", "What is his address?"]
+assert llm.question_list(["Ok?", 3]) == ["Ok?"] and llm.question_list(None) == []

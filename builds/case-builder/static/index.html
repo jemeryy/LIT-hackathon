@@ -57,12 +57,13 @@
   .side > .panel { width: 360px; flex-shrink: 0; }
   .nav-footer { border-top: 2px solid var(--ink); padding-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   textarea, input[type=text] { width: 100%; font: inherit; padding: 12px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; }
-  #shell { min-height: 100vh; display: flex; flex-direction: column; }
+  #shell { height: 100vh; display: flex; flex-direction: column; }
   header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 2px solid var(--ink); background: #fff; }
-  #layout { display: flex; flex-grow: 1; }
+  #layout { display: flex; flex-grow: 1; min-height: 0; }
   #rail { width: 260px; border-right: 2px solid var(--ink); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; background: #fff; flex-shrink: 0; }
-  main { flex-grow: 1; padding: 18px 28px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  #body { flex-grow: 1; }
+  main { flex-grow: 1; padding: 18px 28px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; overflow: hidden; }
+  #body { flex-grow: 1; display: flex; flex-direction: column; min-height: 0; overflow-y: auto; }
+  #body > .fill { flex: 1 1 0; min-height: 0; }
   .foot { padding: 12px 24px; border-top: 2px solid var(--ink); background: var(--grey); font-size: 18px; }
   #preview { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; max-width: 100vw; background: #fff; border-left: 2px solid var(--ink); display: flex; flex-direction: column; z-index: 20; }
   .preview-head { padding: 12px 14px; border-bottom: 2px solid var(--ink); background: var(--grey); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -75,7 +76,10 @@
   #modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 30; padding: 8px; }
   #modal .box { width: 760px; max-width: 100%; max-height: 95vh; display: flex; flex-direction: column; padding: 16px; gap: 10px; }
   #modal textarea { flex-grow: 1; min-height: 300px; }
-  .chat { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding: 16px; min-height: 300px; max-height: 55vh; }
+  .chat { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding: 16px; flex: 1 1 0; min-height: 200px; }
+  .spin { width: 18px; height: 18px; border: 3px solid #ccc; border-top-color: var(--ink); border-radius: 999px; display: inline-block; vertical-align: middle; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #say { resize: vertical; min-height: 60px; max-height: 40vh; overflow-y: auto; }
   .bubble { max-width: 85%; padding: 12px 16px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; white-space: pre-wrap; }
   .bubble.user { align-self: flex-end; background: var(--pale); }
   .bubble.bot { align-self: flex-start; }
@@ -105,7 +109,6 @@
     .side { flex-direction: column; }
     .side > .panel { width: 100%; }
     .two { grid-template-columns: 1fr; }
-    .chat { max-height: 45vh; }
     .bubble { max-width: 95%; }
     table, tr, td { display: block; width: 100%; }
     thead, th { display: none; }
@@ -157,9 +160,11 @@
 </div>
 
 <script>
-const STEPS = ["Tell us what happened", "Can the tribunal hear it?", "Your evidence, best first", "What else to gather", "What the other side may say", "Your timeline", "What to do next"];
-const TITLES = ["Tell us what happened", "Can the Small Claims Tribunals hear this?", "Your evidence, strongest first", "What else to gather", "What the other side may say", "Your timeline", "What to do next"];
-let C = null, step = 0, selEvent = null, waiting = false;
+const STEPS = ["Tell us what happened", "Can the tribunal hear it?", "Your evidence", "Your timeline", "What to do next"];
+const TITLES = ["Tell us what happened", "Can the Small Claims Tribunals hear this?", "Your evidence", "Your timeline", "What to do next"];
+const ACCEPT = ".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime";
+const addFile = (cls = "btn", spot = "", gap = "") => `<label class="${cls}" style="cursor: pointer;">Add a file<input type="file" accept="${ACCEPT}" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1), '${spot}', '${gap}')"></label>`;
+let C = null, step = 0, selEvent = null, waiting = false, ranked = false;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const show = id => { $(id).classList.remove("hidden"); if (id === "preview") document.body.classList.add("pv"); };
@@ -186,11 +191,11 @@ async function load() {
 }
 async function newCase() { if (!C) return; if (C.intake.chat.length > 1 || C.exhibits.length) { if (!confirm("Start a new case? The case on screen will be cleared.")) return; } C = await api("/api/case/new", {method: "POST"}); step = 0; render(); }
 
-/* the furthest step you may open: gate must pass to go past 2, all blind spots answered to go past 5 */
+/* the furthest step you may open: gate must pass to go past 2, all blind spots answered to go past 3 */
 function maxStep() {
   if (C.gate && !C.gate.pass) return 1;
-  if (C.blindspots.answered < C.blindspots.total) return 4;
-  return 6;
+  if (C.blindspots.answered < C.blindspots.total) return 2;
+  return 4;
 }
 function go(n) {
   if (n < 0 || n > maxStep()) return;
@@ -206,37 +211,29 @@ function render() {
     const word = i > max ? "Locked" : i < step ? "Done" : i === step ? "You are here" : "";
     return `<div class="step ${st}" onclick="go(${i})"><div class="num">${i + 1}</div><div>${s}</div><div class="step-state">${word}</div></div>`;
   }).join("");
-  $("eyebrow").textContent = `Step ${step + 1} of 7`;
+  $("eyebrow").textContent = `Step ${step + 1} of 5`;
   $("title").textContent = TITLES[step];
-  $("centre").textContent = `Step ${step + 1} of 7`;
+  $("centre").textContent = `Step ${step + 1} of 5`;
   $("back").disabled = step === 0;
-  if (step === 4 && C.blindspots.answered < C.blindspots.total) $("centre").textContent = `Answer all ${C.blindspots.total} questions to go on.`;
+  if (step === 2 && C.blindspots.answered < C.blindspots.total) $("centre").textContent = `Answer all ${C.blindspots.total} questions to go on.`;
   if (step === 1 && !C.gate.pass) $("centre").textContent = "Go back to step 1 and tell us what is missing.";
+  if (step === 0) $("centre").innerHTML = '<button class="btn" onclick="clearChat()">Start over</button>';
   $("next").disabled = step + 1 > max;
-  $("body").innerHTML = [intake, gate, evidence, gaps, blindspots, timeline, nextsteps][step]();
+  $("body").innerHTML = [intake, gate, evidence, timeline, nextsteps][step]();
   if (step === 0) scrollChat();
   document.querySelectorAll(".source-link, .step:not(.locked), .dot, .evidence-row").forEach(el => el.tabIndex = 0);
 }
 
-/* 1. intake: a chat, files on the side */
+/* 1. intake: a chat. Files come in step 3. */
 function intake() {
-  const exh = e => `<div><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span><br><span class="status-label ${e.status}">${statusText(e)}</span></div>`;
   const msgs = C.intake.chat.map(m => `<div class="bubble ${m.who}">${esc(m.text)}</div>`).join("") + (waiting ? '<div class="bubble bot wait">One moment...</div>' : "");
-  return `<div class="side">
-  <div class="main col">
+  return `<div class="col fill">
     <div class="box chat" id="chat">${msgs}</div>
     <div class="row" style="align-items: stretch;">
-      <textarea id="say" rows="2" style="flex: 1 1 240px;" placeholder="Type here" onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }"></textarea>
+      <textarea id="say" rows="2" style="flex: 1 1 240px;" placeholder="Type here. Enter sends. Shift and Enter starts a new line." oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'" onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }"></textarea>
       <button class="btn primary" onclick="send()" ${waiting ? "disabled" : ""}>Send</button>
     </div>
-    <div class="row" style="justify-content: space-between;"><div class="muted">Add your files on the right. They become your evidence.</div><button class="btn" onclick="clearChat()">Start over</button></div>
-  </div>
-  <div class="panel box col" style="padding: 16px;">
-    <div class="section-title">Your files</div>
-    ${C.exhibits.map(exh).join("") || '<div class="muted">No files yet.</div>'}
-    <label class="btn primary" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label>
-    <div class="muted">Agreement, chat screenshots, bank transfer, photos or video.</div>
-  </div></div>`;
+  </div>`;
 }
 function scrollChat() { const el = $("chat"); if (el) el.scrollTop = el.scrollHeight; }
 async function send() {
@@ -248,14 +245,21 @@ async function send() {
 async function clearChat() { if (!confirm("Clear the chat and start again? Your files stay.")) return; const c = await api("/api/chat/clear", {method: "POST"}); if (c) C = c; render(); }
 function statusText(e) {
   const n = e.assets.length, pages = e.assets[0].pages;
-  if (e.status === "ready") return "Read" + (pages ? `, ${pages} pages` : n > 1 ? `, ${n} files` : "");
+  if (e.status === "ready" && e.side !== "theirs" && e.facts && !e.facts.length) return "Read, nothing found for this claim";
+  if (e.status === "ready") return "Read" + (pages ? `, ${pages} page${pages > 1 ? "s" : ""}` : n > 1 ? `, ${n} files` : "");
   return {reading: "Reading", waiting: "Waiting", error: "Could not read"}[e.status] || e.status;
 }
-async function upload(input, exhibitId) {
+async function upload(input, exhibitId, spot = "", gap = "") {
   const f = input.files[0]; if (!f) return;
   const fd = new FormData(); fd.append("exhibit_id", exhibitId); fd.append("file", f);
-  const ex = C.exhibits.find(e => e.id === exhibitId); if (ex) ex.status = "reading"; render();
-  const c = await api("/api/upload", {method: "POST", body: fd}); if (c) C = c; render();
+  if (spot) { fd.append("side", "theirs"); fd.append("spot", spot); }
+  if (gap) fd.append("gap", gap);
+  const ex = C.exhibits.find(e => e.id === exhibitId);
+  if (ex) ex.status = "reading"; else C.exhibits.push({id: exhibitId, title: f.name, status: "reading", assets: [{}], ...(spot ? {side: "theirs", spot} : {}), ...(gap ? {gap} : {})});
+  render();
+  const c = await api("/api/upload", {method: "POST", body: fd});
+  if (c) C = c; else C.exhibits = C.exhibits.filter(e => e.id !== exhibitId || e.assets[0].path);
+  render();
 }
 
 /* 2. gate */
@@ -270,48 +274,73 @@ function gate() {
   <div class="box" style="max-width: 900px; padding: 16px; margin-top: 12px; background: ${g.pass ? "#bbf7d0" : "#fecaca"}; border-width: 3px;"><div style="font-size: 24px; font-weight: 600;">${esc(g.result)}</div>${g.stop ? `<div style="margin-top: 6px;">${esc(g.stop)}</div>` : ""}</div>`;
 }
 
-/* 3. evidence */
+/* 3. evidence: add files, see what to gather, answer what the other side may have, then rank both sides */
+const exh = e => e.status === "reading"
+    ? `<div class="box" style="padding: 8px 12px; color: #444;"><span class="spin"></span> ${e.id} ${esc(e.title)} <span class="status-label reading">Reading</span></div>`
+    : `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.status}">${statusText(e)}</span></div>`;
 function evidence() {
-  if (!C.evidence.length) return `<div class="box" style="padding: 18px; max-width: 700px;"><b>No files read yet.</b><br>Go back to step 1 and add your files.</div>`;
+  const b = C.blindspots, ready = C.exhibits.some(e => e.status === "ready"), allAnswered = b.answered >= b.total;
+  const canRank = ready && allAnswered;
+  const part = (n, title, note, body) => `<div class="col" style="gap: 8px;"><div><div class="section-title">${n}. ${title}</div><div class="muted">${note}</div></div>${body}</div>`;
+  return `<div class="col" style="gap: 24px;">
+  ${part("A", "Add your files", "Agreement, chat screenshots, bank transfer, photos or video. Only files count as evidence.",
+    `<div><b style="color: #15803d;">Your evidence</b><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side !== "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}${addFile("btn primary")}</div></div>
+    <div><b style="color: #b91c1c;">The other side's evidence</b> <span class="muted">(added under C below)</span><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side === "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}</div></div>`)}
+  ${part("B", "What else to gather", "Based on your kind of claim and the files you added. Add a file under each heading.", `<div class="two">${C.gaps.map(gapCard).join("")}</div>`)}
+  ${part("C", "What the other side may have", esc(b.intro), `<div class="two">${b.questions.map(spotCard).join("")}</div>
+    <div class="box" style="padding: 12px 14px; background: var(--pale);"><b>${b.answered} of ${b.total} answered.</b> ${allAnswered ? "" : `Answer all ${b.total} to rank your evidence and go on.`}</div>
+    <div class="dash" style="padding: 12px 14px;">${esc(b.note)}</div>`)}
+  ${ranked && canRank ? ranking() : `<div class="box" style="padding: 16px;" id="rankbox">
+    <div class="section-title">D. Rank the evidence</div>
+    <div class="muted" style="margin-bottom: 10px;">${ready ? "" : "Add at least one file first. "}${allAnswered ? "" : "Answer every question above first. "}When you have added every file, press the button.</div>
+    <button class="btn primary" ${canRank ? "" : "disabled"} onclick="ranked = true; render(); $('rankbox').scrollIntoView()">I have added everything. Rank my evidence</button></div>`}
+  </div>`;
+}
+function ranking() {
   const uniq = ss => [...new Map(ss.map(s => [s.label, s])).values()];
   const row = r => `<tr class="evidence-row ${r.rank <= 2 ? "top" : ""}" onclick="openViewer('${r.sources[0].viewer_url}')">
     <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What it shows">${esc(r.what)}</td>
-    <td data-h="Where">${uniq(r.sources).map(s => `<span class="source-link" onclick="event.stopPropagation(); openViewer('${s.viewer_url}')">${esc(s.label)}</span>`).join(", ")}</td>
+    <td data-h="Source">${uniq(r.sources).map(s => `<span class="source-link" onclick="event.stopPropagation(); openViewer('${s.viewer_url}')">${esc(s.label)}</span>`).join(", ")}</td>
     <td data-h="How strong"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.reason)}</td></tr>`;
-  return `<div class="col">
+  const theirs = C.blindspots.theirs || [];
+  const trow = r => `<tr class="${r.rank <= 2 ? "top" : ""}">
+    <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What they may show">${esc(r.what)}${r.sure ? "" : ' <span class="status-label optional">Not sure</span>'}</td>
+    <td data-h="Source">${(r.sources || []).length ? r.sources.map(s => `<span class="source-link" onclick="openViewer('${s.viewer_url}')">${esc(s.label)} ${esc(s.title)}</span>`).join(", ") : `<span class="muted">Your answer: ${r.sure ? "Yes" : "Not sure"}</span>`}</td>
+    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer)}</td></tr>`;
+  return `<div class="col" id="rankbox" style="gap: 12px;">
     <div class="box" style="padding: 12px 14px;"><div class="section-title">Your story</div><div>${esc(C.story)}</div></div>
     <div class="box" style="padding: 12px;">
-      <div class="row" style="justify-content: space-between; margin-bottom: 8px;"><div class="muted">Press a row to see the file.</div><a class="btn" href="/api/export/xlsx">Download the list</a></div>
-      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows</th><th>Where</th><th style="width: 130px;">How strong</th><th>Why</th></tr></thead><tbody>${C.evidence.map(row).join("")}</tbody></table>
+      <div class="row" style="justify-content: space-between; margin-bottom: 8px;"><div><div class="section-title">D. Your evidence, strongest first</div><div class="muted">Press a row to see the file.</div></div><a class="btn" href="/api/export/xlsx">Download the list</a></div>
+      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows</th><th>Source</th><th style="width: 130px;">How strong</th><th>Why</th></tr></thead><tbody>${C.evidence.map(row).join("")}</tbody></table>
+    </div>
+    <div class="box" style="padding: 12px;">
+      <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">From your answers above. Nothing here is proof. It is what they could bring, so you are ready for it.</div></div>
+      ${theirs.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What they may show</th><th>Source</th><th style="width: 160px;">How strong for them</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${theirs.map(trow).join("")}</tbody></table>`
+        : '<div class="muted">From your answers, nothing yet. If that changes, come back and change an answer.</div>'}
     </div></div>`;
 }
 
-/* 4. gaps */
-function gaps() {
+function gapCard(c) {
   const li = items => items.map(x => `<li>${esc(x)}</li>`).join("");
-  const g = c => `<div class="box col" style="padding: 12px 14px; gap: 6px;">
-      <div class="row" style="justify-content: space-between;"><div class="section-title">${esc(c.category)}</div><label class="btn" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label></div>
+  const files = C.exhibits.filter(e => e.gap === c.key);
+  return `<div class="box col" style="padding: 12px 14px; gap: 6px;">
+      <div class="row" style="justify-content: space-between;"><div class="section-title">${esc(c.category)}</div>${addFile("btn", "", c.key)}</div>
       <div class="muted">${esc(c.why)}</div>
+      ${files.length ? `<div class="row">${files.map(exh).join("")}</div>` : ""}
       <div class="two"><div><b style="color: #15803d;">You have</b><ul>${li(c.have)}</ul></div><div><b style="color: #b91c1c;">Still missing</b><ul>${li(c.missing)}</ul></div></div></div>`;
-  return `<div class="muted" style="margin-bottom: 10px;">Based on your kind of claim and the files you added.</div><div class="two">${C.gaps.map(g).join("")}</div>`;
 }
-
-/* 5. blind spots */
-function blindspots() {
-  const b = C.blindspots;
-  const p = x => `<div class="box col" style="padding: 12px 14px; gap: 8px; ${x.answer ? "" : "border-color: #b91c1c;"}">
+function spotCard(x) {
+  const files = C.exhibits.filter(e => e.spot === x.id);
+  return `<div class="box col" style="padding: 12px 14px; gap: 8px; ${x.answer ? "" : "border-color: #b91c1c;"}">
       <div style="font-weight: 600;">${esc(x.q)}</div>
       <div class="muted">${esc(x.hint)}</div>
       <div class="row" style="justify-content: space-between;"><div class="row">${[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]].map(([k, l]) => `<button class="btn ${x.answer === k ? "on" : ""}" onclick="answer('${x.id}', '${k}')">${l}</button>`).join("")}</div>
-      ${x.answer === "yes" ? `<label class="btn primary" style="cursor: pointer;">Add a file<input type="file" accept=".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1))"></label>` : ""}</div></div>`;
-  return `<div class="muted" style="margin-bottom: 10px;">${esc(b.intro)}</div>
-  <div class="two">${b.questions.map(p).join("")}</div>
-  <div class="box" style="margin-top: 12px; padding: 12px 14px; background: var(--pale);"><b>${b.answered} of ${b.total} answered.</b> ${b.answered < b.total ? `Answer all ${b.total} to go on.` : "You can go on."}</div>
-  <div class="dash" style="margin-top: 12px; padding: 12px 14px;">${esc(b.note)}</div>`;
+      ${x.answer === (x.when || "yes") ? addFile("btn primary", x.id) : ""}</div>
+      ${files.length ? `<div class="row">${files.map(exh).join("")}</div>` : ""}</div>`;
 }
 async function answer(id, a) { const r = await api("/api/blindspot", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id, answer: a})}); if (r) C.blindspots = r; render(); }
 
-/* 6. timeline */
+/* 4. timeline */
 function timeline() {
   const T = C.timeline;
   const sel = T.find(e => e.id === selEvent) || T.find(e => e.id.startsWith("d_") && e.sources.length) || T[0];
@@ -325,10 +354,10 @@ function timeline() {
   </div>`;
 }
 
-/* 7. next steps */
+/* 5. next steps */
 function nextsteps() {
   const act = s => s.action === "written_request" ? `<button class="btn" onclick="openRequest()">Open the letter</button>`
-    : s.action === "gaps" ? `<button class="btn" onclick="go(3)">See the list</button>`
+    : s.action === "gaps" ? `<button class="btn" onclick="go(2)">See the list</button>`
     : s.source_url ? `<a class="btn" href="${s.source_url}" target="_blank" rel="noopener">${esc(s.source_label)}</a>` : "";
   const li = (s, i) => `<div class="row" style="justify-content: space-between; padding: 10px; ${i === 0 ? "background: var(--pale);" : ""}"><div style="flex: 1 1 300px;"><b>${s.n}. ${esc(s.title)}</b><br><span class="muted">${esc(s.note)}${s.n === 4 ? ` The fee is $${C.fee.amount}.` : ""}</span></div>${act(s)}</div>`;
   return `<div class="side">
@@ -355,7 +384,7 @@ function copyText() { navigator.clipboard.writeText($("wr-text").value).then(() 
 /* viewer: one <img> + percentage boxes, every format */
 async function openViewer(url) {
   const v = await api(url); if (!v) return;
-  $("pv-eyebrow").textContent = "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
+  $("pv-eyebrow").textContent = v.eyebrow || "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
   const boxes = v.boxes.map(([l, t, r, b]) => `<div class="hlbox" style="left:${l * 100}%; top:${t * 100}%; width:${(r - l) * 100}%; height:${(b - t) * 100}%;"></div>`).join("");
   const pager = v.pages > 1 ? `<div class="row" style="justify-content: space-between; margin-bottom: 8px;"><button class="btn" ${v.page_index === 0 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index - 1}')">Previous page</button><span class="muted">Page ${v.page_index + 1} of ${v.pages}</span><button class="btn" ${v.page_index >= v.pages - 1 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index + 1}')">Next page</button></div>` : "";
   $("pv-body").innerHTML = `${pager}<div class="imgwrap"><img src="${v.image_url}" alt="${esc(v.title)}">${boxes}</div><div class="muted" style="margin-top: 8px;">${esc(v.caption)}</div>`;

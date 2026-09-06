@@ -1,110 +1,191 @@
 {
- "tenancy": {
-  "intro": "Things the landlord may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
-  "note": "The landlord can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
-  "questions": [
-   {
-    "id": "b1",
-    "q": "Could the landlord have their own photos of the flat or furniture, taken after you left?",
-    "hint": "Your own dated move-out photos or video are the answer. Keep them."
-   },
-   {
-    "id": "b2",
-    "q": "Has the landlord sent, or could he get, a repair or cleaning invoice?",
-    "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed."
-   },
-   {
-    "id": "b3",
-    "q": "Did you sign an inventory or handover form?",
-    "hint": "Check your agreement for an inventory clause. Get your copy. If it lists the item, it matters either way."
-   },
-   {
-    "id": "b4",
-    "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
-    "hint": "Check SMS, email and other apps you used with him. Anything agreed can change what he can hold back."
-   },
-   {
-    "id": "b5",
-    "q": "Did anyone else see the handover? A friend, mover or agent.",
-    "hint": "Write down their name. You can name them as a witness later."
-   },
-   {
-    "id": "b6",
-    "q": "Did you accept any deduction, even in passing?",
-    "hint": "If yes, say how much and when. It changes the amount you claim."
-   }
-  ]
- },
- "goods": {
-  "intro": "Things the seller may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
-  "note": "The seller can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
-  "questions": [
-   {
-    "id": "b1",
-    "q": "Could the seller have a signed delivery note or an inspection record?",
-    "hint": "Check what you signed on delivery."
-   },
-   {
-    "id": "b2",
-    "q": "Did the listing or terms say the goods were sold as seen, used, or without warranty?",
-    "hint": "Re-read the listing and any terms page."
-   },
-   {
-    "id": "b3",
-    "q": "Did you tell the seller about the fault within a reasonable time, in writing?",
-    "hint": "Find the first message where you raised it and its date."
-   },
-   {
-    "id": "b4",
-    "q": "Did anyone else use, repair or open the goods before you complained?",
-    "hint": "The seller may say the fault came later."
-   },
-   {
-    "id": "b5",
-    "q": "Did anyone else see the goods when they arrived or when the fault showed?",
-    "hint": "Write down their name. You can name them as a witness later."
-   },
-   {
-    "id": "b6",
-    "q": "Did you accept a partial refund, repair or replacement, even in passing?",
-    "hint": "If yes, say what and when. It changes the amount you claim."
-   }
-  ]
- },
- "general": {
-  "intro": "Things the other side may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
-  "note": "The other side can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
-  "questions": [
-   {
-    "id": "b1",
-    "q": "Could the other side have their own photos, records or receipts about this?",
-    "hint": "Think about what they would show a judge. Keep anything of yours that answers it."
-   },
-   {
-    "id": "b2",
-    "q": "Did anything you signed or agreed to limit what you can claim?",
-    "hint": "Re-read the contract, quote or terms for words like as is, no refund, or a cap."
-   },
-   {
-    "id": "b3",
-    "q": "Did you tell the other side about the problem in writing, soon after it happened?",
-    "hint": "Find the first message where you raised it and its date."
-   },
-   {
-    "id": "b4",
-    "q": "Were there other agreed conditions, spoken or in messages on any channel?",
-    "hint": "Check SMS, email and other apps you used with them. Anything agreed can change the claim."
-   },
-   {
-    "id": "b5",
-    "q": "Did anyone else see what happened?",
-    "hint": "Write down their name. You can name them as a witness later."
-   },
-   {
-    "id": "b6",
-    "q": "Did you accept any part payment, repair or discount, even in passing?",
-    "hint": "If yes, say what and when. It changes the amount you claim."
-   }
-  ]
- }
+  "tenancy": {
+    "intro": "Things the landlord may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+    "note": "The landlord can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
+    "questions": [
+      {
+        "id": "b1",
+        "q": "Could the landlord have their own photos of the flat or furniture, taken after you left?",
+        "hint": "Your own dated move-out photos or video are the answer. Keep them.",
+        "they": "Photos of the flat or furniture taken after you left",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "Your own dated move-out photos or video of the same rooms and items."
+      },
+      {
+        "id": "b2",
+        "q": "Has the landlord sent, or could they get, a repair or cleaning invoice?",
+        "hint": "Ask for it in your written request. The court has a form where each fault and its cost is listed.",
+        "they": "A repair or cleaning invoice",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "Your move-in and move-out photos of the same item, and any wear and tear clause in the agreement."
+      },
+      {
+        "id": "b3",
+        "q": "Did you sign an inventory or handover form?",
+        "hint": "Check your agreement for an inventory clause. Get your copy. If it lists the item, it matters either way.",
+        "they": "The inventory or handover form you signed",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "Your copy of the form, plus dated photos of the item at move-in and move-out."
+      },
+      {
+        "id": "b4",
+        "q": "Were there any other agreed conditions, spoken or in messages on any channel? Cleaning, repainting, bills, keys.",
+        "hint": "Check SMS, email and other apps you used with them. Anything agreed can change what they can hold back.",
+        "they": "Messages or words showing other conditions you agreed to",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "The messages where each condition was set and where you met it, in date order."
+      },
+      {
+        "id": "b5",
+        "q": "Did anyone else see the handover? A friend, mover or agent.",
+        "hint": "Write down their name. You can name them as a witness later.",
+        "they": "A witness to the handover",
+        "strength": "weak",
+        "when": "yes",
+        "reply": "Your own witness, if anyone was with you. Their name and what they saw."
+      },
+      {
+        "id": "b6",
+        "q": "Did you accept any deduction, even in passing?",
+        "hint": "If yes, say how much and when. It changes the amount you claim.",
+        "they": "Your own words accepting a deduction",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "The full message thread around that point, so the words are read in order."
+      }
+    ]
+  },
+  "goods": {
+    "intro": "Things the seller may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+    "note": "The seller can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
+    "questions": [
+      {
+        "id": "b1",
+        "q": "Could the seller have a signed delivery note, order form or inspection record?",
+        "hint": "Check what you signed when you ordered or when goods arrived.",
+        "they": "A delivery note, order form or inspection record you signed",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "Your copy of what you signed, and dated photos or messages showing what actually arrived."
+      },
+      {
+        "id": "b2",
+        "q": "Did the listing or terms say the goods were sold as seen, used, or without warranty?",
+        "hint": "Re-read the listing and any terms page.",
+        "they": "Terms saying sold as seen, used, or no warranty",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "The listing or messages that describe the goods, and the date you first saw those terms."
+      },
+      {
+        "id": "b3",
+        "q": "Did you tell the seller about the problem soon after it showed, in writing?",
+        "hint": "Find the first message where you raised it and its date.",
+        "they": "No written complaint from you soon after the problem showed",
+        "strength": "medium",
+        "when": "no",
+        "reply": "The first message where you raised the problem, with its date, and any photo sent with it."
+      },
+      {
+        "id": "b4",
+        "q": "Did anyone else use, repair or open the goods before you complained?",
+        "hint": "The seller may say the fault came later.",
+        "they": "Signs that someone else used, repaired or opened the goods",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "Dated photos of the fault when it first showed, and any repairer's report saying when it started."
+      },
+      {
+        "id": "b5",
+        "q": "Did anyone else see the goods, the fault, or the seller's refusal?",
+        "hint": "Write down their name. You can name them as a witness later.",
+        "they": "A witness to the delivery, the fault or the refusal",
+        "strength": "weak",
+        "when": "yes",
+        "reply": "Your own witness. Their name and what they saw."
+      },
+      {
+        "id": "b6",
+        "q": "Did you accept a partial refund, repair, replacement or a changed order, even in passing?",
+        "hint": "If yes, say what and when. It changes the amount you claim.",
+        "they": "Your own words accepting a refund, repair, replacement or a changed order",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "The full message thread around that point, so the words are read in order."
+      },
+      {
+        "id": "b7",
+        "q": "Did the seller offer a swap, a smaller delivery or a later date, and you said no?",
+        "hint": "The seller may say you were the one who cancelled. Keep the messages where you said no and why.",
+        "they": "Their offer of a swap, a smaller delivery or a later date, and your refusal",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "The messages where you said no and why, and the original order showing what was agreed."
+      }
+    ]
+  },
+  "general": {
+    "intro": "Things the other side may bring that are not in your files yet. We list them so you are not surprised at the first court meeting. Answer each one.",
+    "note": "The other side can make a claim back against you, up to 3 days before the first court meeting. Your evidence list is your answer to it.",
+    "questions": [
+      {
+        "id": "b1",
+        "q": "Could the other side have their own photos, records or receipts about this?",
+        "hint": "Think about what they would show a judge. Keep anything of yours that answers it.",
+        "they": "Their own photos, records or receipts",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "Your own dated photos, records or receipts on the same point."
+      },
+      {
+        "id": "b2",
+        "q": "Did anything you signed or agreed to limit what you can claim?",
+        "hint": "Re-read the contract, quote or terms for words like as is, no refund, or a cap.",
+        "they": "A signed term that limits what you can claim",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "The contract or terms, and the messages where the deal was set out."
+      },
+      {
+        "id": "b3",
+        "q": "Did you tell the other side about the problem in writing, soon after it happened?",
+        "hint": "Find the first message where you raised it and its date.",
+        "they": "No written complaint from you soon after it happened",
+        "strength": "medium",
+        "when": "no",
+        "reply": "The first message where you raised the problem, with its date."
+      },
+      {
+        "id": "b4",
+        "q": "Were there other agreed conditions, spoken or in messages on any channel?",
+        "hint": "Check SMS, email and other apps you used with them. Anything agreed can change the claim.",
+        "they": "Messages or words showing other conditions you agreed to",
+        "strength": "medium",
+        "when": "yes",
+        "reply": "The messages where each condition was set and where you met it, in date order."
+      },
+      {
+        "id": "b5",
+        "q": "Did anyone else see what happened?",
+        "hint": "Write down their name. You can name them as a witness later.",
+        "they": "A witness to what happened",
+        "strength": "weak",
+        "when": "yes",
+        "reply": "Your own witness. Their name and what they saw."
+      },
+      {
+        "id": "b6",
+        "q": "Did you accept any part payment, repair or discount, even in passing?",
+        "hint": "If yes, say what and when. It changes the amount you claim.",
+        "they": "Your own words accepting a part payment, repair or discount",
+        "strength": "strong",
+        "when": "yes",
+        "reply": "The full message thread around that point, so the words are read in order."
+      }
+    ]
+  }
 }

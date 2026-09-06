@@ -19,8 +19,11 @@ CATEGORY_TEXT = {"goods": "a contract for the sale of goods", "services": "a con
 def ctype(case):
     """Content set for this claim: tenancy and goods have their own, everything else shares the general one."""
     ct = case["claim_type"]
-    if ct == "tenancy" and (case.get("intake", {}).get("parties", {}).get("respondent", {}).get("role") or "").lower().startswith("tenant"):
+    role = (case.get("intake", {}).get("parties", {}).get("respondent", {}).get("role") or "").lower()
+    if ct == "tenancy" and role.startswith("tenant"):
         return "general"   # the tenancy set is written for a tenant claiming a deposit; a landlord gets the general set
+    if ct == "goods" and (role.startswith("buyer") or role.startswith("customer")):
+        return "general"   # the goods set is written for a buyer; a seller chasing a buyer gets the general set
     return ct if ct in ("tenancy", "goods") else "general"
 CAT_WEIGHT = {"agreement": 0, "payment": 1, "other_side_words": 2, "condition": 3, "dispute": 4}
 STRENGTH_ORDER = {"strong": 0, "medium": 1, "weak": 2}
@@ -28,7 +31,8 @@ AUTHOR = {"both": "Signed by both of you", "third_party": "Third-party record",
           "respondent": "The other side's own words", "claimant": "Made by you"}
 TIMELINE_LABEL = {"deposit_paid": "deposit paid", "handover_acceptance": 'Move out, "all good"',
                   "damage_allegation": "{role} refuses", "payment_made": "paid", "delivery": "delivered",
-                  "complaint_sent": "you complained", "seller_response": "{role} replies"}
+                  "complaint_sent": "you complained", "seller_response": "{role} replies", "sale_terms": "agreed",
+                  "agreement_terms": "agreed", "other_side_words": "{role} says", "dispute": "{role} refuses"}
 FUTURE_STEPS = [("written_request", "Send your letter", "next"), ("prefiling", "File your claim online", ""),
                 ("serve", "Give the other side a copy", ""), ("consultation", "First court meeting", ""), ("hearing", "Hearing", "")]
 
@@ -55,6 +59,8 @@ def plus_years(date, n):
 def _facts(case):
     """Yield (exhibit, asset, fact) for every fact kept after locating."""
     for ex in case["exhibits"]:
+        if ex.get("side") == "theirs":   # a file added under "what the other side may have" is their evidence, not yours
+            continue
         assets = {a["id"]: a for a in ex["assets"]}
         for f in ex.get("facts", []):
             yield ex, assets[f["asset_id"]], f
@@ -95,6 +101,9 @@ def evidence(case):
                                     "date": f.get("date"), "strength": "weak", "needs_check": False,
                                     "notes": [], "sources": [], "_authors": set(), "_dated": False, "_amount": False})
         s = strength(meta, f)
+        if f.get("fits") is False:   # the reader says the names, dates or amounts do not match this claim
+            s = "weak"
+            row["_misfit"] = True
         if STRENGTH_ORDER[s] < STRENGTH_ORDER[row["strength"]]:
             row["strength"] = s
         if f.get("quote") and meta.get("from_picture"):
@@ -116,6 +125,9 @@ def evidence(case):
             a = next(iter(row["_authors"]), "claimant")
             reason = AUTHOR.get(a, "Made by you") + (", has amount" if row["_amount"] else "") + \
                      (" and dates" if row["_amount"] and row["_dated"] else ", dated" if row["_dated"] else ", no date")
+        if row.pop("_misfit", False):
+            row["strength"], row["misfit"] = "weak", True
+            reason = "The names, dates or amounts do not match your account. " + (row["notes"][0] if row["notes"] else "Check it is the right file")
         if row["needs_check"]:
             reason += ". Read from a screenshot, check it"
         row["reason"] = reason
@@ -140,7 +152,7 @@ def gate(case, today):
     if ct == "tenancy":
         cat_known = prem.get("residential") is not None and prem.get("lease_months") is not None
         cat_ok = bool(prem.get("residential")) and (prem.get("lease_months") or 0) <= 24
-        cat_text = "The tribunal hears this kind of claim: a home lease of 2 years or less, and a deposit refund."
+        cat_text = "The tribunal hears this kind of claim: a dispute under a home lease of 2 years or less."
         if not cat_known:
             cat_ok, cat_text = False, "Tell us if the place was your home, and how long the lease was."
         elif not cat_ok:
@@ -148,10 +160,9 @@ def gate(case, today):
     elif ct in CATEGORY_TEXT:
         cat_known, cat_ok, cat_text = True, True, f"The tribunal hears this kind of claim: {CATEGORY_TEXT[ct]}."
     elif ct == "other":
-        cat_known, cat_ok = True, False
-        cat_text = ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
-                    "home leases up to 2 years, and damage to property not from a motor vehicle or a neighbour. "
-                    "It does not hear work disputes.")
+        cat_known, cat_ok, cat_text = True, False, ("The tribunal does not hear this kind of claim. It hears contracts for goods or services, "
+                                   "home leases up to 2 years, and damage to property. It does not hear work disputes, loans, "
+                                   "or a neighbour dispute about noise, smell or the like.")
     else:
         cat_known, cat_ok = False, False
         cat_text = "Tell us what happened so we can check if the tribunal hears this kind of claim."
@@ -164,10 +175,11 @@ def gate(case, today):
         {"id": "category", "pass": cat_ok, "section_id": "scta_schedule", "text": cat_text},
         {"id": "amount", "pass": amt_ok, "section_id": "scta_s2",
          "text": (f"You are claiming {money(amt)}. The limit is $20,000, or $30,000 if both sides agree."
-                  + (" You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
+                  + ((" If both sides sign the court's consent form for the $30,000 limit, tell us." if amt <= 30000 else "")
+                     + " You can give up the part above the limit and claim the limit instead." if amt is not None and not amt_ok else "") if amt is not None
                   else "Tell us how much you are claiming. The limit is $20,000, or $30,000 if both sides agree.")},
         {"id": "time", "pass": time_ok, "section_id": "scta_s5_time",
-         "text": (f"The {role} refused on {fmt(cause)}. You have 2 years from that day, so until {fmt(bar)}."
+         "text": (f"The problem started on {fmt(cause)}, the day the {role} refused or the loss happened. You have 2 years from that day, so until {fmt(bar)}."
                   if cause else "Tell us the date the other side refused, or the problem started.")},
         {"id": "service", "pass": served_ok, "section_id": "scta_s5_service",
          "text": f"The {role} is in Singapore, so the claim can be served." if served_ok
@@ -195,10 +207,14 @@ def gaps(case):
     to_key = g["category_to_key"]
     have = {}
     for ex in case["exhibits"]:
+        if ex.get("side") == "theirs":
+            continue
         for f in ex.get("facts", []):   # name the fact, not just the file: one chat export can hold messages and a receipt
             k = to_key.get(f["category"])
             if k and len(have.setdefault(k, [])) < 4:
                 have[k].append(f"{f['fact']} ({ex['id']})")
+        if ex.get("gap") and not have.get(ex["gap"]):   # the file was added under this heading: name it even with no fact found
+            have[ex["gap"]] = [f"{ex['title']} ({ex['id']})"]
     return [{"key": c["key"], "category": c["category"], "why": c["why"],
              "have": have.get(c["key"]) or ["Nothing yet"], "missing": c["missing"]}
             for c in g[ctype(case)]]
@@ -208,7 +224,34 @@ def blindspots(case, answers):
     b = content("blindspots")[ctype(case)]
     qs = [{**q, "answer": answers.get(q["id"])} for q in b["questions"]]
     return {"intro": b["intro"], "note": b["note"], "total": len(qs),
-            "answered": sum(1 for q in qs if q["answer"] in ("yes", "no", "unsure")), "questions": qs}
+            "answered": sum(1 for q in qs if q["answer"] in ("yes", "no", "unsure")), "questions": qs,
+            "theirs": their_evidence(qs, case.get("exhibits", []))}
+
+
+THEIR_WHY = {"strong": "A signed paper or your own words. Hard to argue with.",
+             "medium": "Real, but your own dated files can answer it.",
+             "weak": "One person's word. Easy to question."}
+
+
+def their_evidence(qs, exhibits=()):
+    """What the other side may bring, strongest first, from the blind-spot answers. A 'not sure' counts one step weaker.
+    A file added under a question is its source; otherwise the source is the person's own answer."""
+    weaker = {"strong": "medium", "medium": "weak", "weak": "weak"}
+    rows = []
+    for q in qs:
+        files = [{"label": e["id"], "title": e["title"], "viewer_url": e["assets"][0].get("viewer_url", "")}
+                 for e in exhibits if e.get("spot") == q["id"] and e.get("assets")]
+        if q["answer"] == q.get("when", "yes"):
+            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q.get("reply") or q["hint"],
+                         "sources": files, "why": THEIR_WHY[q["strength"]]})
+        elif q["answer"] == "unsure":
+            s = weaker[q["strength"]]
+            rows.append({"id": q["id"], "what": q["they"], "strength": s, "sure": False, "answer": q.get("reply") or q["hint"],
+                         "sources": files, "why": THEIR_WHY[s] + " You are not sure they have it, so one step weaker."})
+    rows.sort(key=lambda r: STRENGTH_ORDER[r["strength"]])
+    for i, r in enumerate(rows, 1):
+        r["rank"] = i
+    return rows
 
 
 def timeline(case, today):
@@ -223,7 +266,7 @@ def timeline(case, today):
                                        f"/api/viewer?asset_id={asset['id']}&page_index={(f.get('locator') or {}).get('page_index', 0)}")}
         if f.get("evidence_key") == "deposit_terms":
             deposit_src = src
-        if not f.get("date"):
+        if not f.get("date") or f.get("fits") is False:   # a file about other people or another deal is not an event in this case
             continue
         ev = by_date.setdefault(f["date"], {"labels": [], "exhibits": [], "details": [], "sources": []})
         lab = f.get("timeline_label") or TIMELINE_LABEL.get(f.get("evidence_key"))
@@ -250,9 +293,9 @@ def timeline(case, today):
                        "marker": False, "computed": True,
                        "detail": f"{days} days after move-out on {fmt(moveout)}, under {lab}.",
                        "sources": [deposit_src] if deposit_src else []})
-    events.sort(key=lambda e: e["date"])
     events.append({"id": "today", "label": "Today", "date": today.isoformat(), "future": False, "marker": True,
                    "computed": True, "detail": "Where you are now.", "sources": []})
+    events.sort(key=lambda e: e["date"])   # today sorts in by date, so an event dated after today shows after it
     for i, (eid, lab, when) in enumerate(FUTURE_STEPS):
         events.append({"id": eid, "label": lab, "date": None, "date_text": when, "future": True, "marker": False,
                        "computed": True, "detail": "A step still ahead. See Next steps.", "sources": []})
@@ -260,7 +303,7 @@ def timeline(case, today):
     if cause:
         bar = plus_years(cause, 2)
         events.append({"id": "time_bar", "label": "Time bar", "date": bar.isoformat(), "future": True, "marker": True,
-                       "computed": True, "detail": f"2 years after {fmt(cause)}, the date the {role} refused. You must file by then.",
+                       "computed": True, "detail": f"2 years after {fmt(cause)}, the day the {role} refused or the loss happened. You must file by then.",
                        "sources": []})
     return events
 
@@ -295,4 +338,9 @@ if __name__ == "__main__":   # rank self-check: the frozen table must sort to ra
     assert [r["strength"] for r in rows] == ["strong", "strong", "medium", "medium", "medium", "weak"]
     assert [r["needs_check"] for r in rows] == [False, True, True, False, True, False]
     assert fee(2600)["amount"] == 10 and fee(12000)["amount"] == 120
+    case["exhibits"].append({"id": "E9", "side": "theirs", "spot": "b2", "title": "their_invoice.pdf", "assets": [{"id": "A9", "viewer_url": "/v"}],
+                             "facts": [{"asset_id": "A9", "fact": "x", "category": "payment", "evidence_key": "deposit_paid"}]})
+    assert [r["evidence_key"] for r in evidence(case)] == got, "their file must not enter your evidence"
+    theirs = their_evidence([{"id": "b2", "they": "Invoice", "strength": "strong", "when": "yes", "hint": "h", "answer": "unsure"}], case["exhibits"])
+    assert theirs[0]["strength"] == "medium" and theirs[0]["sources"][0]["label"] == "E9" and "not sure" in theirs[0]["why"]
     print("rules ok:", got)

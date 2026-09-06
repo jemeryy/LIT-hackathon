@@ -24,7 +24,7 @@ SAMPLE = [("E1", "pdf", "Tenancy agreement", ["Tenancy_Agreement_2025.pdf"]),
           ("E5", "video", "Move-out video", ["moveout_walkthrough.mp4"]),
           ("E6", "image_set", "Move-in photos", [f"movein_{i:02d}.jpg" for i in range(1, 6)])]
 EMPTY_INTAKE = {
-    "chat": [], "account": "", "done": False,
+    "chat": [], "account": "", "done": False, "skipped": [],
     "parties": {"claimant": {"name": "", "address": "", "id_type": "NRIC"},
                 "respondent": {"name": "", "role": None, "address": "", "in_singapore": None, "is_company": None}},
     "amount": None, "consent_30k": False, "cause_of_action_date": None, "moveout_date": None, "what_agreed": "",
@@ -42,15 +42,20 @@ UNCLEAR_REPLY = ("I cannot safely tell what this concerns yet. "
                  "Was it about goods, services, a home lease, or property damage?")
 UNSAFE_OUTPUT_REPLY = ("I cannot safely restate that yet. "
                        "What did the other side agree to do? What happened instead?")
-ADDRESS_JUNK = re.compile(r"[?()\[\]]|\b(unclear|unknown|not given|missing|assumed|approx\w*)\b", re.IGNORECASE)
-INTAKE_COMPLETE = "I have everything I need. Look at the steps on the left. Tell me if anything is wrong."
+SKIPPABLE = ("claimant", "respondent", "agreed", "amount", "when")   # the story, the kind of claim and files cannot be given up
+NO_DETAIL = re.compile(r"(sorry,? )?(no|nope|none|i )?\s*(dont|don't|do not|not)?\s*(have|know|sure)?( it| that| any| one| idea)?( (his|her|their|the|my)( \w+){1,2})?\.?")
+NO_DETAIL_ITEM = [("when", r"date|when|day"), ("amount", r"amount|how much"), ("claimant", r"my (full )?address"),
+                  ("respondent", r"(his|her|their|the) (full )?(address|name)")]   # which item a "dont have his address" gives up
+INTAKE_COMPLETE = "I have everything I can get from you. Press Next to check if the tribunal can hear it."
 NEXT_QUESTION = {   # asked by us, not the model, whenever the model returns nothing we can use
     "story": "Tell me what happened, in your own words.",
+    "claimant": "What is your name, and your full address with unit number and postal code?",
+    "respondent": "Who are you claiming against? What is their full address, and are they in Singapore?",
     "category": "Was this about goods, services, a home lease, or damage to property?",
     "agreed": "What did the two sides agree?",
     "amount": "How much are you claiming in total?",
     "when": "On what date did they refuse, or the problem start?",
-    "files": "Add your files on the right.",
+    "files": "Press Next to check if the tribunal can hear it, then add your files in step 3.",
 }
 
 app = FastAPI(title=APP_NAME)
@@ -319,7 +324,7 @@ def describe_changes(before, case):
     a, b = before["intake"], case["intake"]
     out = []
     for k, w in CHANGE_WORDS.items():
-        if a.get(k) not in (None, "") and b.get(k) != a.get(k):
+        if a.get(k) not in (None, "", False) and b.get(k) != a.get(k):   # False is the default, not a fact the person gave
             v = b.get(k)
             out.append(f"{w} is now {rules.money(v) if k == 'amount' else rules.fmt(dt.date.fromisoformat(v)) if k.endswith('_date') else v}")
     for who in ("claimant", "respondent"):
@@ -365,10 +370,28 @@ def chat_turn(case, message):
         return recompute(case)
     turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
-    scope = turn.get("scope", "claim_intake")
-    trusted_turn = scope == "claim_intake" and turn.get("confidence", "high") != "low"
+    in_scope = turn.get("scope", "claim_intake") == "claim_intake"
+    trusted_turn = in_scope and turn.get("confidence", "high") != "low"
+    if stated_amount is not None and turn.get("scope", "claim_intake") not in ("off_topic", "prompt_attack"):
+        # A stated total is a fact we can read ourselves. Keep it even when the model found the message unclear.
+        if not trusted_turn:
+            turn.update(scope="claim_intake", confidence="high", questions=[], reflection=None, fields={})
+            trusted_turn = True
+        turn.setdefault("fields", {})["amount"] = stated_amount
     before = case["claim_type"]
     corrected = []
+    if NO_DETAIL.fullmatch(message.strip().lower()):
+        # "dont have": the person cannot give the next missing item. Give it up so we stop asking and move on.
+        open_items = [c["id"] for c in checklist_state(case) if not c["done"] and c["id"] in SKIPPABLE]
+        named = next((k for k, pat in NO_DETAIL_ITEM if re.search(pat, message.lower())), None)
+        skip = named if named in open_items else next(iter(open_items), None)
+        if skip:
+            it.setdefault("skipped", []).append(skip)
+            for side in ("claimant", "respondent"):
+                if skip == side and not it["parties"][side]["address"]:
+                    it["parties"][side]["address"] = "not known"
+            turn.update(scope="claim_intake", confidence="high", reflection=None, questions=[])
+            trusted_turn = True
     if trusted_turn:
         if stated_amount is not None:
             turn.setdefault("fields", {})["amount"] = stated_amount
@@ -385,26 +408,30 @@ def chat_turn(case, message):
             for a in ex["assets"]:
                 if ex["status"] == "ready":
                     process_asset(case, ex, a)
-    case = recompute(case)   # the gate must reflect this turn before we choose what to say
-    blocked = [c for c in case["gate"]["checks"] if c["blocked"]]
-    missing = [c["id"] for c in case["checklist"] if not c["done"]]
-    notes = [n for n in describe_changes(snap, case)
-             if not any(BLOCKED_COVERS[c["id"]] in n for c in blocked)]   # a failed check below already says it
-    changed = ("Noted: " + "; ".join(notes) + ".") if notes else ""
+    missing = [c["id"] for c in checklist_state(case) if not c["done"]]
+    it["done"] = not missing
+    blocked = [c for c in rules.gate(case, dt.date.fromisoformat(case["today"]))["checks"] if c["blocked"]]
+    changed = describe_changes(snap, case)
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
-    reply = safe_intake_reply(turn, case)
-    if reply in ("", UNSAFE_OUTPUT_REPLY) or (reply == UNCLEAR_REPLY and corrected):
+    if turn.get("reflection") and any(m["who"] == "bot" and turn["reflection"] in m["text"] for m in it["chat"][:-1]):
+        turn["reflection"] = None   # already said in an earlier turn; saying it again reads as not listening
+    reply = safe_intake_reply(turn)
+    if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
         # The model asked nothing usable. Having read the person correctly, saying we could not is both
         # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
-        reply = next_question(case, missing[0]) if missing else INTAKE_COMPLETE
-    other_side = it["parties"]["respondent"]
+        reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
+    elif reply == UNCLEAR_REPLY and case["claim_type"] != "unknown":
+        # A vague detail ("last Tuesday") in a case we already understand: ask for the exact detail, do not ask what the case is about
+        qs = [q for q in (_plain_sentence(q, max_words=22) for q in turn.get("questions") or []) if q and q.endswith("?")]
+        reply = "I am not sure I got that right. " + (" ".join(qs[:2]) if qs else NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
+    elif reply == SCOPE_REFUSAL and snap["intake"]["account"]:
+        # An off-topic question after the story is told: say what we cannot do, then carry on with the next gap
+        reply = "I can only collect facts. I cannot say who is right, or what you will get. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
     if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
-        reply = " ".join(c["text"] for c in blocked)
-    elif other_side["name"] and other_side["address"] and other_side["in_singapore"] is None:
-        # The model will not read this off an address, and it may not be inferred from one. Nothing else
-        # asks it, so step 2 would sit unanswered for ever while the chat moved on to files.
-        reply = f"Is {other_side['name']} in Singapore?"
+        reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
+    elif not missing:
+        reply = INTAKE_COMPLETE
     elif missing == ["files"]:
         other = it["parties"]["respondent"].get("name") or "the other side"
         needed = {
@@ -413,11 +440,12 @@ def chat_turn(case, message):
             "services": "the quote, payment records, messages, and photos",
             "property_damage": "messages, photos, videos, and repair quotes",
         }.get(case["claim_type"], "the agreement, payments, messages, and photos")
-        reply = f"I have enough details about your claim against {other}. Now add {needed} on the right."
-    elif not missing:
-        reply = INTAKE_COMPLETE
-    it["chat"].append({"who": "bot", "text": f"{changed} {reply}".strip()})
-    save(case)
+        reply = f"I have enough details about your claim against {other}. Press Next to check if the tribunal can hear it, then add {needed} in step 3."
+    reply = f"{changed} {reply}".strip() or "Noted. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
+    it["chat"].append({"who": "bot", "text": reply})
+    case = recompute(case)
+    if not blocked and not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
+        it["chat"][-1]["text"] += " " + case["gate"]["stop"]   # eligibility problem: say it here, not only in step 2
     return case
 
 
@@ -429,7 +457,8 @@ def checklist_state(case):
            "category": case["claim_type"] not in ("unknown", "other"), "agreed": bool(it.get("what_agreed")),
            "amount": it.get("amount") is not None, "when": bool(it.get("cause_of_action_date")),
            "files": any(e["status"] == "ready" for e in case["exhibits"])}
-    return [{**c, "done": got.get(c["id"], False)} for c in case["checklist"]]
+    skipped = it.get("skipped", [])
+    return [{**c, "done": got.get(c["id"], False) or c["id"] in skipped} for c in case["checklist"]]
 
 
 def recompute(case):
@@ -572,7 +601,8 @@ def chat_clear():
 
 
 @app.post("/api/upload")
-async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: UploadFile = File(...)):
+async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: UploadFile = File(...),
+                 side: str = Form(None), spot: str = Form(None), gap: str = Form(None)):
     case = current()
     data = await file.read()
     if len(data) > MAX_UPLOAD:
@@ -586,6 +616,10 @@ async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: 
         if not ex:
             ex = {"id": exhibit_id, "kind": "image_set" if kind == "image" else kind, "status": "waiting",
                   "title": file.filename, "facts": [], "assets": []}
+            if side == "theirs":   # added under "what the other side may have": their evidence, kept out of your ranking
+                ex.update(side="theirs", spot=spot or "")
+            if gap:   # added under a "what else to gather" heading: the card lists it even if the reader finds nothing
+                ex["gap"] = gap
             case["exhibits"].append(ex)
         asset_id = asset_id or (exhibit_id if not ex["assets"] else f"{exhibit_id}-{len(ex['assets']) + 1}")
         UPLOADS.mkdir(parents=True, exist_ok=True)
@@ -613,7 +647,7 @@ def blindspot(body: dict):
     for q in case["blindspots"]["questions"]:
         if q["id"] == body.get("id"):
             q["answer"] = body["answer"]
-    case["blindspots"]["answered"] = sum(1 for q in case["blindspots"]["questions"] if q.get("answer"))
+    case["blindspots"] = rules.blindspots(case, {q["id"]: q.get("answer") for q in case["blindspots"]["questions"]})
     save(case)
     return case["blindspots"]
 
@@ -633,7 +667,8 @@ def _viewer_payload(case, asset, page_index, boxes, quote=None, label=None):
         caption = f"{asset['filename']}. Nothing to highlight here: the file itself is the evidence."
     return {"image_url": f"/api/render?asset_id={asset['id']}&page_index={page_index}", "boxes": boxes or [],
             "coord_space": "normalized", "caption": caption, "title": asset["filename"], "subtitle": sub,
-            "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"]}
+            "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"],
+            "eyebrow": "The other side's file" if ex.get("side") == "theirs" else "Your file"}
 
 
 @app.get("/api/viewer")

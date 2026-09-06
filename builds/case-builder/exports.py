@@ -70,6 +70,8 @@ def claim_pack_zip(case):
         z.writestr("events.txt", events_text(case))
         z.writestr("written_request.txt", written_request(case))
         for ex in case["exhibits"]:
+            if ex.get("side") == "theirs":   # the pack is what you file; their file is not your exhibit
+                continue
             for a in ex["assets"]:
                 try:
                     data = _asset_pdf(a)

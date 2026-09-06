@@ -27,7 +27,7 @@
    "missing": [
     "Last month's rent transfer",
     "Final utility bill and receipt",
-    "Any repair invoice he sent you"
+    "Any repair invoice they sent you"
    ]
   },
   {
@@ -37,7 +37,7 @@
    "missing": [
     "Dated move-in photos or video of the rooms and furniture",
     "Handover form",
-    "Cleaner or mover receipt, 31 Jul"
+    "Cleaner or mover receipt"
    ]
   },
   {
@@ -66,26 +66,26 @@
    "why": "The order and listing set what was promised.",
    "missing": [
     "Receipt or invoice",
-    "Order page or listing with the description and photos",
+    "Order page, listing or quote with the description and price",
     "Warranty or terms of sale"
    ]
   },
   {
    "key": "payment",
    "category": "Payments",
-   "why": "Shows what you paid.",
+   "why": "Shows what you paid, and what you had to pay instead.",
    "missing": [
     "Bank or card record of the payment",
     "Delivery record",
-    "Repair quote or invoice"
+    "Repair quote, or the receipt for what you bought instead"
    ]
   },
   {
    "key": "condition",
    "category": "Photos and video",
-   "why": "Dated pictures of the fault are the answer to a dispute about the goods.",
+   "why": "Dated pictures of the goods, the fault, or the empty delivery answer a dispute about what happened.",
    "missing": [
-    "Dated photos or video of the fault",
+    "Dated photos or video of the goods or the fault",
     "A report from a repairer, if you have one"
    ]
   },
