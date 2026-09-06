@@ -16,6 +16,7 @@
   .btn:hover { background: var(--pale); }
   .btn.primary { background: var(--ink); color: #fff; font-size: 22px; padding: 10px 30px; }
   .btn.primary:hover { background: #333; }
+  .btn.small { min-height: 38px; padding: 5px 10px; font-size: 17px; box-shadow: 2px 2px 0 var(--ink); }
   .btn.on { background: var(--ink); color: #fff; }
   .btn:disabled, .btn.disabled { color: #777; border-color: #aaa; background: var(--grey); box-shadow: none; cursor: default; }
   .source-link { border-bottom: 2px solid var(--blue); padding: 8px 4px; display: inline-block; line-height: 1.3; color: var(--blue); cursor: pointer; text-decoration: none; }
@@ -279,6 +280,16 @@ async function upload(input, exhibitId, spot = "", gap = "") {
   if (c) C = c; else C.exhibits = C.exhibits.filter(e => e.id !== exhibitId || e.assets[0].path);
   render();
 }
+async function removeUpload(assetId) {
+  if (waiting) return;
+  const asset = C.exhibits.flatMap(e => e.assets).find(a => a.id === assetId);
+  if (!asset?.removable || !confirm(`Remove ${asset.filename}? It will be removed from the evidence list and ranking.`)) return;
+  waiting = true; render();
+  const c = await api("/api/upload/remove", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({asset_id: assetId})});
+  waiting = false;
+  if (c) { C = c; closePreview(); }
+  render();
+}
 
 /* 2. gate */
 function gate() {
@@ -293,15 +304,17 @@ function gate() {
 }
 
 /* 3. evidence: add files, see what to gather, answer what the other side may have, then rank both sides */
-const exh = e => e.status === "reading"
-    ? `<div class="box" style="padding: 8px 12px; color: #444;"><span class="spin"></span> ${e.id} ${esc(e.title)} <span class="status-label reading">Reading</span></div>`
-    : `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.assets.every(a => ["irrelevant", "context", "placeholder"].includes(a.assessment?.status) && a.assessment.status === e.assets[0].assessment?.status) ? e.assets[0].assessment.status : e.assets.some(a => a.assessment?.status === "needs_review") ? "needs_review" : e.status}">${statusText(e)}</span></div>`;
+const exh = e => {
+  if (e.status === "reading") return `<div class="box" style="padding: 8px 12px; color: #444;"><span class="spin"></span> ${e.id} ${esc(e.title)} <span class="status-label reading">Reading</span></div>`;
+  const removable = e.assets.find(a => a.removable);
+  return `<div class="box row" style="padding: 8px 12px; justify-content: space-between;"><span><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.assets.every(a => ["irrelevant", "context", "placeholder"].includes(a.assessment?.status) && a.assessment.status === e.assets[0].assessment?.status) ? e.assets[0].assessment.status : e.assets.some(a => a.assessment?.status === "needs_review") ? "needs_review" : e.status}">${statusText(e)}</span></span>${removable ? `<button class="btn small" onclick='event.stopPropagation(); removeUpload(${JSON.stringify(removable.id)})'>Remove</button>` : ""}</div>`;
+};
 function evidence() {
   const b = C.blindspots, ready = C.exhibits.some(e => e.status === "ready"), allAnswered = b.answered >= b.total;
   const canRank = ready && allAnswered;
   const part = (n, title, note, body) => `<div class="col" style="gap: 8px;"><div><div class="section-title">${n}. ${title}</div><div class="muted">${note}</div></div>${body}</div>`;
   return `<div class="col" style="gap: 24px;">
-  ${C.case_id === "example" ? '<div class="box" style="padding: 12px; background: #dbeafe;">Worked example: the bundled files are synthetic and use saved assessments. Placeholder photos and video do not establish the flat’s condition. Your additional uploads are assessed separately.</div>' : ""}
+  ${C.case_id === "example" ? '<div class="box" style="padding: 12px; background: #dbeafe;">Worked example: the bundled files are synthetic and use saved relevance results. Placeholder photos and video do not establish the flat’s condition. Your additional uploads are checked for relevance separately.</div>' : ""}
   ${part("A", "Add your files", "Agreement, chat screenshots, bank transfer, photos or video. Only files count as evidence.",
     `<div><b style="color: #15803d;">Your evidence</b><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side !== "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}${addFile("btn primary")}</div></div>
     <div><b style="color: #b91c1c;">The other side's evidence</b> <span class="muted">(added under C below)</span><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side === "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}</div></div>`)}
@@ -329,17 +342,17 @@ function ranking() {
   const trow = r => `<tr class="${isTop(r) ? "top" : ""}">
     <td data-h="Rank">${r.rank == null ? "Not ranked" : `<div class="rank ${isTop(r) ? "top" : ""}">${r.rank}</div>`}</td><td data-h="What they may show">${esc(r.what)}</td>
     <td data-h="Source">${(r.sources || []).length ? r.sources.map(s => `<span class="source-link" onclick="openViewer('${s.viewer_url}')">${esc(s.label)} ${esc(s.title)}</span>`).join(", ") : `<span class="muted">Your answer: ${r.sure ? "Yes" : "Not sure"}</span>`}</td>
-    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${strengthLabel(r.strength)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer || (r.strength === "context" ? "Read this alongside the other files. Related background alone does not establish the disputed point." : "Check the file and the assessment. This upload has no strength rank."))}</td></tr>`;
+    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${strengthLabel(r.strength)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer || (r.strength === "context" ? "Read this alongside the other files. Related background alone does not establish the disputed point." : "Check the file's relevance. This upload has no strength rank."))}</td></tr>`;
   return `<div class="col" id="rankbox" style="gap: 12px;">
     <div class="box" style="padding: 12px 14px;"><div class="section-title">Your story</div><div>${esc(C.story)}</div></div>
     <div class="box" style="padding: 12px;">
       <div class="row" style="justify-content: space-between; margin-bottom: 8px;"><div><div class="section-title">D. Your evidence, strongest first</div><div class="muted">Press a row to see the file.</div></div><a class="btn" href="/api/export/xlsx">Download the list</a></div>
-      <div class="muted" style="margin-bottom: 10px;">Related context stays in the list and claim pack without a strength rank. Irrelevant files, placeholders and files needing review are kept below but excluded from the claim pack. Open each file to check the assessment.</div>
-      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 130px;">Assessment</th><th>Why</th></tr></thead><tbody>${[...C.evidence, ...(C.unranked_evidence || [])].map(row).join("")}</tbody></table>
+      <div class="muted" style="margin-bottom: 10px;">Related context stays in the list and claim pack without a strength rank. Irrelevant files, placeholders and files needing review are kept below but excluded from the claim pack. Open each file to check its relevance.</div>
+      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 130px;">Relevance</th><th>Why</th></tr></thead><tbody>${[...C.evidence, ...(C.unranked_evidence || [])].map(row).join("")}</tbody></table>
     </div>
     <div class="box" style="padding: 12px;">
-      <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">Assessed from the uploaded files. Irrelevant files have no strength rank. Open each source to check what the reader found.</div></div>
-      ${actual.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 160px;">Assessment</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${actual.map(trow).join("")}</tbody></table>`
+      <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">Relevance comes from the uploaded files. Irrelevant files have no strength rank. Open each source to check what the reader found.</div></div>
+      ${actual.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 160px;">Relevance</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${actual.map(trow).join("")}</tbody></table>`
         : '<div class="muted">No files uploaded for the other side yet.</div>'}
       ${possible.length ? `<div style="margin-top: 16px;"><div class="section-title">Other possibilities from your answers</div><div class="muted">These are things they might bring. Your answers do not verify any uploaded file.</div><ul>${possible.map(r => `<li>${esc(r.what)} (${r.sure ? "you answered Yes" : "you answered Not sure"}). ${esc(r.answer)}</li>`).join("")}</ul></div>` : ""}
     </div></div>`;
@@ -412,7 +425,8 @@ async function openViewer(url) {
   $("pv-eyebrow").textContent = v.eyebrow || "Your file"; $("pv-name").textContent = v.title; $("pv-sub").textContent = v.subtitle;
   const boxes = v.boxes.map(([l, t, r, b]) => `<div class="hlbox" style="left:${l * 100}%; top:${t * 100}%; width:${(r - l) * 100}%; height:${(b - t) * 100}%;"></div>`).join("");
   const pager = v.pages > 1 ? `<div class="row" style="justify-content: space-between; margin-bottom: 8px;"><button class="btn" ${v.page_index === 0 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index - 1}')">Previous page</button><span class="muted">Page ${v.page_index + 1} of ${v.pages}</span><button class="btn" ${v.page_index >= v.pages - 1 ? "disabled" : ""} onclick="openViewer('/api/viewer?asset_id=${v.asset_id}&page_index=${v.page_index + 1}')">Next page</button></div>` : "";
-  $("pv-body").innerHTML = `${pager}<div class="imgwrap"><img src="${v.image_url}" alt="${esc(v.title)}">${boxes}</div><div class="muted" style="margin-top: 8px;">${esc(v.caption)}</div>`;
+  const remove = v.removable ? `<div style="margin-top: 12px;"><button class="btn small" onclick='removeUpload(${JSON.stringify(v.asset_id)})'>Remove this file</button></div>` : "";
+  $("pv-body").innerHTML = `${pager}<div class="imgwrap"><img src="${v.image_url}" alt="${esc(v.title)}">${boxes}</div><div class="muted" style="margin-top: 8px;">${esc(v.caption)}</div>${remove}`;
   show("preview");
 }
 async function openStatute(id) {

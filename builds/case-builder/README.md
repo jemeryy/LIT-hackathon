@@ -37,7 +37,7 @@ are retained as context, even when they do not establish a ranked point. An empt
 needs review, not irrelevant. Clearly unrelated files, placeholders and needs-review files remain visible
 without a strength rank and are excluded from the claim pack, with the exclusion recorded in its manifest.
 Related context is included in the pack. The other side's hypothetical evidence from Yes/Not sure answers
-is displayed separately from actual uploaded files. The worked example uses saved assessments and visibly
+is displayed separately from actual uploaded files. The worked example uses saved relevance results and visibly
 labels its placeholder photos/video; they do not establish the flat's actual condition.
 
 ## AI boundaries

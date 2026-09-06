@@ -92,7 +92,7 @@ def asset_assessment(ex, asset):
     if not mismatch and asset.get("relevance") != "irrelevant":
         return {"status": "needs_review", "reason": "No usable fact was extracted. That does not establish that the file is irrelevant. Open it to check its connection to the claim."}
     reason = asset.get("relevance_reason") or (mismatch["fact"] if mismatch else "The reader found no facts connecting this file to this claim.")
-    return {"status": "irrelevant", "reason": reason + " Not counted as evidence. Open the file to check the assessment."}
+    return {"status": "irrelevant", "reason": reason + " Not counted as evidence. Open the file to check its relevance."}
 
 
 def unranked_files(case, side="yours"):

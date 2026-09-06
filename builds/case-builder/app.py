@@ -169,7 +169,7 @@ def process_asset(case, ex, asset, use_saved=False):
     if result.get("relevance") in ("relevant", "context") and not any(rules.related_fact(f) for f in kept):
         asset.setdefault("review_reason", "The reader indicated a possible connection but found no usable supporting facts. Check the file.")
     if len(parsed["text"]) > 12000 and not any(rules.related_fact(f) for f in kept):
-        asset.setdefault("review_reason", "Only part of this long file was assessed. No relevant facts were found in that part; check the remaining pages.")
+        asset.setdefault("review_reason", "Only part of this long file was checked for relevance. No relevant facts were found in that part; check the remaining pages.")
     if re.search(r"\bplaceholder\s+(?:photo|image|video)\b", parsed["text"], re.IGNORECASE):
         asset["relevance"] = "placeholder"
         asset["relevance_reason"] = "The file is labelled as a placeholder. It does not show the actual property or event."
@@ -545,6 +545,7 @@ def recompute(case):
     for ex in case["exhibits"]:
         for asset in ex["assets"]:
             asset["assessment"] = rules.asset_assessment(ex, asset)
+            asset["removable"] = uploaded_asset_path(case, asset) is not None
     case["gate"] = rules.gate(case, today)
     case["gaps"] = rules.gaps(case)
     case["blindspots"] = rules.blindspots(case, answers)
@@ -630,6 +631,16 @@ def find_asset(case, asset_id):
             if a["id"] == asset_id:
                 return ex, a
     return None, None
+
+
+def uploaded_asset_path(case, asset):
+    """Return the path only when it belongs to this visitor's upload directory."""
+    try:
+        root = (UPLOADS / case["visitor"]).resolve()
+        path = pathlib.Path(asset.get("path", "")).resolve()
+    except (OSError, TypeError, ValueError):
+        return None
+    return path if path != root and path.is_relative_to(root) else None
 
 
 @app.post("/api/case/reset")
@@ -727,6 +738,45 @@ async def upload(exhibit_id: str = Form(...), asset_id: str = Form(None), file: 
         return err("parse_failed", f"Could not read {file.filename} ({type(exc).__name__}).")
 
 
+@app.post("/api/upload/remove")
+def remove_upload(body: dict):
+    """Remove one file and every derived fact, scoped to the current visitor."""
+    case = current()
+    asset_id = str(body.get("asset_id", ""))
+    ex, asset = find_asset(case, asset_id)
+    if not ex or not asset:
+        return err("not_found", "No such uploaded file.", 404)
+    path = uploaded_asset_path(case, asset)
+    if path is None:
+        return err("not_removable", "Only files you uploaded can be removed.")
+    snapshot = json.loads(json.dumps(case))
+    try:
+        ex["facts"] = [f for f in ex.get("facts", []) if f.get("asset_id") != asset_id]
+        ex["assets"] = [a for a in ex["assets"] if a["id"] != asset_id]
+        if not ex["assets"]:
+            case["exhibits"] = [item for item in case["exhibits"] if item is not ex]
+        else:
+            ex["status"] = "ready"
+            if ex.get("title") == asset.get("filename"):
+                ex["title"] = ex["assets"][0]["filename"]
+        updated = recompute(case)
+    except Exception as exc:
+        case.clear(); case.update(snapshot)
+        CASES[case["visitor"]] = case
+        log.exception("Could not remove uploaded file")
+        return err("remove_failed", f"Could not remove that file ({type(exc).__name__}).")
+    try:
+        cache_prefix = extract.cache_key(asset_id, path)
+        path.unlink(missing_ok=True)
+        for cached in extract.CACHE.glob(f"{cache_prefix}_*"):
+            cached.unlink(missing_ok=True)
+        if path.parent != (UPLOADS / case["visitor"]).resolve():
+            path.parent.rmdir()
+    except OSError:
+        log.warning("Removed file from case but could not delete all stored bytes for %s", asset_id, exc_info=True)
+    return updated
+
+
 @app.post("/api/blindspot")
 def blindspot(body: dict):
     case = current()
@@ -752,16 +802,17 @@ def _viewer_payload(case, asset, page_index, boxes, quote=None, label=None):
         where = f"p.{page_index + 1}" if asset["kind"] == "pdf" else "this image"
         caption = f'Text found: "{quote}", {where}. Check it against the {"page" if asset["kind"] == "pdf" else "image"}.'
     else:
-        caption = f"{asset['filename']}. No text highlight is available. Check the file against its assessment."
+        caption = f"{asset['filename']}. No text highlight is available. Check the file's relevance result."
     assessment = rules.asset_assessment(ex, asset)
     if assessment["status"] in ("placeholder", "irrelevant", "needs_review", "context"):
         caption = assessment["reason"]
     if asset.get("assessment_source") == "saved_example":
-        caption = "Worked example, saved assessment. " + caption
+        caption = "Worked example, saved relevance result. " + caption
     return {"image_url": f"/api/render?asset_id={asset['id']}&page_index={page_index}", "boxes": boxes or [],
             "coord_space": "normalized", "caption": caption, "title": asset["filename"], "subtitle": sub,
             "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"],
-            "eyebrow": "The other side's file" if ex.get("side") == "theirs" else "Your file"}
+            "eyebrow": "The other side's file" if ex.get("side") == "theirs" else "Your file",
+            "removable": uploaded_asset_path(case, asset) is not None}
 
 
 @app.get("/api/viewer")

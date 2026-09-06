@@ -101,7 +101,7 @@ def extract_facts(asset, text, case, image_path=None, use_saved=False, exhibit=N
     if use_saved or use_fixtures():
         return FIX["files"].get(asset["filename"], {"meta": {"author": "claimant", "signed": False, "dated": False,
                                                               "has_amount": False, "from_picture": True}, "facts": [],
-                                                         "relevance": "needs_review", "relevance_reason": "The demo reader has no saved assessment for this file."})
+                                                         "relevance": "needs_review", "relevance_reason": "The demo reader has no saved relevance result for this file."})
     import rules
     keys = EVIDENCE_KEYS.get(rules.ctype(case), EVIDENCE_KEYS["general"])   # same set the rankings use: a landlord or a seller gets general
     if (exhibit or {}).get("side") == "theirs":
