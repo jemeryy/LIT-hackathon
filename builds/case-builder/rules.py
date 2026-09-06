@@ -213,6 +213,8 @@ def gaps(case):
             k = to_key.get(f["category"])
             if k and len(have.setdefault(k, [])) < 4:
                 have[k].append(f"{f['fact']} ({ex['id']})")
+        if ex.get("gap") and not have.get(ex["gap"]):   # the file was added under this heading: name it even with no fact found
+            have[ex["gap"]] = [f"{ex['title']} ({ex['id']})"]
     return [{"key": c["key"], "category": c["category"], "why": c["why"],
              "have": have.get(c["key"]) or ["Nothing yet"], "missing": c["missing"]}
             for c in g[ctype(case)]]
@@ -240,11 +242,11 @@ def their_evidence(qs, exhibits=()):
         files = [{"label": e["id"], "title": e["title"], "viewer_url": e["assets"][0].get("viewer_url", "")}
                  for e in exhibits if e.get("spot") == q["id"] and e.get("assets")]
         if q["answer"] == q.get("when", "yes"):
-            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q["hint"],
+            rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q.get("reply") or q["hint"],
                          "sources": files, "why": THEIR_WHY[q["strength"]]})
         elif q["answer"] == "unsure":
             s = weaker[q["strength"]]
-            rows.append({"id": q["id"], "what": q["they"], "strength": s, "sure": False, "answer": q["hint"],
+            rows.append({"id": q["id"], "what": q["they"], "strength": s, "sure": False, "answer": q.get("reply") or q["hint"],
                          "sources": files, "why": THEIR_WHY[s] + " You are not sure they have it, so one step weaker."})
     rows.sort(key=lambda r: STRENGTH_ORDER[r["strength"]])
     for i, r in enumerate(rows, 1):

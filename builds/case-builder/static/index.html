@@ -163,7 +163,7 @@
 const STEPS = ["Tell us what happened", "Can the tribunal hear it?", "Your evidence", "Your timeline", "What to do next"];
 const TITLES = ["Tell us what happened", "Can the Small Claims Tribunals hear this?", "Your evidence", "Your timeline", "What to do next"];
 const ACCEPT = ".pdf,application/pdf,image/*,.heic,.heif,.avif,.mp4,.mov,video/mp4,video/quicktime";
-const addFile = (cls = "btn", spot = "") => `<label class="${cls}" style="cursor: pointer;">Add a file<input type="file" accept="${ACCEPT}" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1), '${spot}')"></label>`;
+const addFile = (cls = "btn", spot = "", gap = "") => `<label class="${cls}" style="cursor: pointer;">Add a file<input type="file" accept="${ACCEPT}" class="hidden" onchange="upload(this, 'E' + (C.exhibits.length + 1), '${spot}', '${gap}')"></label>`;
 let C = null, step = 0, selEvent = null, waiting = false, ranked = false;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
@@ -249,12 +249,13 @@ function statusText(e) {
   if (e.status === "ready") return "Read" + (pages ? `, ${pages} page${pages > 1 ? "s" : ""}` : n > 1 ? `, ${n} files` : "");
   return {reading: "Reading", waiting: "Waiting", error: "Could not read"}[e.status] || e.status;
 }
-async function upload(input, exhibitId, spot = "") {
+async function upload(input, exhibitId, spot = "", gap = "") {
   const f = input.files[0]; if (!f) return;
   const fd = new FormData(); fd.append("exhibit_id", exhibitId); fd.append("file", f);
   if (spot) { fd.append("side", "theirs"); fd.append("spot", spot); }
+  if (gap) fd.append("gap", gap);
   const ex = C.exhibits.find(e => e.id === exhibitId);
-  if (ex) ex.status = "reading"; else C.exhibits.push({id: exhibitId, title: f.name, status: "reading", assets: [{}], ...(spot ? {side: "theirs", spot} : {})});
+  if (ex) ex.status = "reading"; else C.exhibits.push({id: exhibitId, title: f.name, status: "reading", assets: [{}], ...(spot ? {side: "theirs", spot} : {}), ...(gap ? {gap} : {})});
   render();
   const c = await api("/api/upload", {method: "POST", body: fd});
   if (c) C = c; else C.exhibits = C.exhibits.filter(e => e.id !== exhibitId || e.assets[0].path);
@@ -305,7 +306,7 @@ function ranking() {
   const trow = r => `<tr class="${r.rank <= 2 ? "top" : ""}">
     <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What they may show">${esc(r.what)}${r.sure ? "" : ' <span class="status-label optional">Not sure</span>'}</td>
     <td data-h="Source">${(r.sources || []).length ? r.sources.map(s => `<span class="source-link" onclick="openViewer('${s.viewer_url}')">${esc(s.label)} ${esc(s.title)}</span>`).join(", ") : `<span class="muted">Your answer: ${r.sure ? "Yes" : "Not sure"}</span>`}</td>
-    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.why)}</td></tr>`;
+    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer)}</td></tr>`;
   return `<div class="col" id="rankbox" style="gap: 12px;">
     <div class="box" style="padding: 12px 14px;"><div class="section-title">Your story</div><div>${esc(C.story)}</div></div>
     <div class="box" style="padding: 12px;">
@@ -314,16 +315,18 @@ function ranking() {
     </div>
     <div class="box" style="padding: 12px;">
       <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">From your answers above. Nothing here is proof. It is what they could bring, so you are ready for it.</div></div>
-      ${theirs.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What they may show</th><th>Source</th><th style="width: 160px;">How strong for them</th><th>Why</th></tr></thead><tbody>${theirs.map(trow).join("")}</tbody></table>`
+      ${theirs.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What they may show</th><th>Source</th><th style="width: 160px;">How strong for them</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${theirs.map(trow).join("")}</tbody></table>`
         : '<div class="muted">From your answers, nothing yet. If that changes, come back and change an answer.</div>'}
     </div></div>`;
 }
 
 function gapCard(c) {
   const li = items => items.map(x => `<li>${esc(x)}</li>`).join("");
+  const files = C.exhibits.filter(e => e.gap === c.key);
   return `<div class="box col" style="padding: 12px 14px; gap: 6px;">
-      <div class="row" style="justify-content: space-between;"><div class="section-title">${esc(c.category)}</div>${addFile()}</div>
+      <div class="row" style="justify-content: space-between;"><div class="section-title">${esc(c.category)}</div>${addFile("btn", "", c.key)}</div>
       <div class="muted">${esc(c.why)}</div>
+      ${files.length ? `<div class="row">${files.map(exh).join("")}</div>` : ""}
       <div class="two"><div><b style="color: #15803d;">You have</b><ul>${li(c.have)}</ul></div><div><b style="color: #b91c1c;">Still missing</b><ul>${li(c.missing)}</ul></div></div></div>`;
 }
 function spotCard(x) {
