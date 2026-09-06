@@ -210,6 +210,10 @@ def apply_fields(case, fields):
             except (ValueError, TypeError):
                 pass
         elif k in FIELD_PATH:
+            if k.endswith("_address"):
+                v = re.sub(r",\s*#\s*(?=,|$)", "", str(v)).strip().strip(",")   # empty unit slot the model leaves behind
+                if re.search(r"\?|\b(?:unknown|not (?:known|provided|specified)|please (?:provide|confirm)|to be confirmed)\b", v, re.I):
+                    continue   # the model hedged or invented part of it; an address goes on a court form, so drop it
             *path, leaf = FIELD_PATH[k]
             node = it
             for step in path:
@@ -306,7 +310,19 @@ def _plain_sentence(value, prefix=None, max_words=None):
     return value
 
 
-def safe_intake_reply(turn):
+ADDRESS_WORDS = ("address", "postal code", "postcode", "unit number", "block number")
+
+
+def asks_for_recorded_address(question, case):
+    """The model sometimes chases an address it already holds, postal code included. Drop that question."""
+    q = question.lower()
+    if not any(w in q for w in ADDRESS_WORDS):
+        return False
+    p = case["intake"]["parties"]
+    return bool(p["claimant"]["address"] if "your" in q else p["respondent"]["address"])
+
+
+def safe_intake_reply(turn, case=None):
     """Only fact reflections and fact questions may cross the model boundary."""
     scope = turn.get("scope", "claim_intake")  # saved example fixtures predate scope metadata
     confidence = turn.get("confidence", "high")
@@ -318,7 +334,7 @@ def safe_intake_reply(turn):
     questions = []
     for q in llm.question_list(turn.get("questions")):
         q = _plain_sentence(q, max_words=22)
-        if q and q.endswith("?"):
+        if q and q.endswith("?") and not (case and asks_for_recorded_address(q, case)):
             questions.append(q)
     if not questions[:2]:
         # Compatibility for the deterministic worked example only.
@@ -333,6 +349,8 @@ def safe_intake_reply(turn):
 CHANGE_WORDS = {"amount": "the amount you claim", "cause_of_action_date": "the date the other side refused",
                 "moveout_date": "the move-out date", "what_agreed": "what was agreed", "consent_30k": "the $30,000 agreement"}
 PARTY_WORDS = {"name": "name", "address": "address", "in_singapore": "in Singapore", "is_company": "a company", "role": "role"}
+BLOCKED_COVERS = {"service": "in Singapore", "amount": "the amount you claim",   # a failed check already states these
+                  "time": "the date the other side refused", "category": "the kind of claim"}
 
 
 def describe_changes(before, case):
@@ -359,6 +377,20 @@ def describe_changes(before, case):
     if before["claim_type"] not in ("unknown", "other") and case["claim_type"] != before["claim_type"]:
         out.append("the kind of claim has changed")
     return ("Noted: " + "; ".join(out) + ".") if out else ""
+
+
+def next_question(case, item):
+    """Ask in our own words for the one thing still missing, naming only the part we do not already hold."""
+    p = case["intake"]["parties"]
+    if item == "claimant":
+        return ("What is your full address, with unit number and postal code?" if p["claimant"]["name"]
+                else "What is your name, and your full address with unit number and postal code?")
+    if item == "respondent":
+        r = p["respondent"]
+        if not r.get("name") or not r.get("address"):
+            return "Who are you claiming against? What is their full address, with postal code?"
+        return f"Is {r['name']} in Singapore?"
+    return NEXT_QUESTION[item]
 
 
 def intake_followup(case):
@@ -449,6 +481,8 @@ def chat_turn(case, message):
         if unknown_field not in it.setdefault("unavailable", []):
             it["unavailable"].append(unknown_field)
     if trusted_turn:
+        if stated_amount is not None:
+            turn.setdefault("fields", {})["amount"] = stated_amount
         apply_fields(case, turn.get("fields", {}))
     elif in_scope:
         corrected = apply_corrections(case, turn)

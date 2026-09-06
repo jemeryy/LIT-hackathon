@@ -15,27 +15,19 @@
    },
    {
     "who": "bot",
-    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. What is your full name and address? What is the supplier's address in Singapore?"
+    "text": "You say the seafood supplier refused to refund your deposit or deliver as agreed. What is your full name and address, with postal code? What is the supplier's full address, with postal code?"
    },
    {
     "who": "user",
-    "text": "I am mark from tampines st 99\nUncle seng is from pasir ris st 99"
+    "text": "mark tan from tampines st 99 657389\n\nsupplier is uncle seng from pasir ris st 99 282747"
    },
    {
     "who": "bot",
-    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. What is your full street address, with unit and postal code? What is the supplier's full address, with postal code?"
+    "text": "Who are you claiming against? What is their full address, and are they in Singapore?"
    },
    {
     "who": "user",
-    "text": "He is from tampines st 99 72684\nuncle seng is from pasir st 99 827462"
-   },
-   {
-    "who": "bot",
-    "text": "You say the seafood supplier refused a refund after failing to deliver agreed fish. Is the supplier's address Pasir Ris St 99, postal code 827462?"
-   },
-   {
-    "who": "user",
-    "text": "yes"
+    "text": "supplier is uncle seng from pasir ris st 99 282747 they are in singapore"
    },
    {
     "who": "bot",
@@ -43,42 +35,42 @@
    },
    {
     "who": "user",
-    "text": "uncle seng is actually from malaysia and claim amount is $31000"
+    "text": "apologies, uncle seng is from malaysia"
    },
    {
     "who": "bot",
-    "text": "I have updated that. You are claiming $31,000. The limit is $20,000, or $30,000 if both sides agree. The seller is outside Singapore. The tribunal cannot serve a claim outside Singapore. A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court. Tell me if I have that wrong."
+    "text": "The seller is outside Singapore. The tribunal cannot serve a claim outside Singapore. The Magistrate's Court can serve outside Singapore. Ask the court registry. Tell me if I have that wrong."
    },
    {
     "who": "user",
-    "text": "claim is $4000 and he is from singapore"
+    "text": "claim amount is actually $40000"
    },
    {
     "who": "bot",
-    "text": "I cannot safely restate that yet. What did the other side agree to do? What happened instead?"
+    "text": "You are claiming $40,000. The limit is $20,000, or $30,000 if both sides agree. The seller is outside Singapore. The tribunal cannot serve a claim outside Singapore. A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court. Tell me if I have that wrong."
    }
   ],
-  "account": "Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier. I am mark from tampines st 99\nUncle seng is from pasir ris st 99 He is from tampines st 99 72684\nuncle seng is from pasir st 99 827462 yes uncle seng is actually from malaysia and claim amount is $31000 claim is $4000 and he is from singapore",
-  "done": true,
+  "account": "Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier. mark tan from tampines st 99 657389\n\nsupplier is uncle seng from pasir ris st 99 282747 supplier is uncle seng from pasir ris st 99 282747 they are in singapore apologies, uncle seng is from malaysia claim amount is actually $40000",
+  "done": false,
   "parties": {
    "claimant": {
-    "name": "Mark",
-    "address": "Tampines St 99, 72684",
+    "name": "Mark Tan",
+    "address": "Tampines St 99, Singapore 657389",
     "id_type": "NRIC"
    },
    "respondent": {
     "name": "Uncle Seng Seafood",
     "role": "seller",
-    "address": "Pasir Ris St 99, 827462",
-    "in_singapore": true,
+    "address": "Pasir Ris St 99, Singapore 282747",
+    "in_singapore": false,
     "is_company": null
    }
   },
-  "amount": 4000.0,
+  "amount": 40000.0,
   "consent_30k": false,
-  "cause_of_action_date": "2026-09-28",
+  "cause_of_action_date": "2026-10-01",
   "moveout_date": null,
-  "what_agreed": "Supplier agreed to supply 1,000 kg premium yellowtail fish for S$5,000, S$5 per kg.",
+  "what_agreed": "Supply 1,000 kg yellowtail fish for S$5,000, S$2,000 deposit paid, balance on delivery 8 Oct 2026.",
   "premises": {
    "residential": null,
    "lease_months": null,
@@ -94,14 +86,14 @@
   },
   {
    "id": "claimant",
-   "label": "Your name and address",
-   "why": "Goes on the claim form as the person claiming.",
+   "label": "Your name and full address",
+   "why": "Goes on the claim form, so it needs the block, unit number and postal code.",
    "done": true
   },
   {
    "id": "respondent",
-   "label": "Who you are claiming against, and where they are",
-   "why": "The tribunal needs a Singapore address so the claim can be served.",
+   "label": "Who you are claiming against, and their full address",
+   "why": "The tribunal needs their full Singapore address, with postal code, so the claim can be served.",
    "done": true
   },
   {
@@ -132,235 +124,15 @@
    "id": "files",
    "label": "Your files",
    "why": "Only files count as evidence. Add them on the right.",
-   "done": true
+   "done": false
   }
  ],
- "story": "2026-09-10: Event (E1). 2026-09-12: Paid (E1). 2026-10-01: Seller replies (E1). 2026-09-05: Today.",
- "summary": "On 10 September 2026, I ordered 1,000 kg of premium yellowtail fish from Uncle Seng Seafood at $5/kg, total $5,000, for delivery on 8 October 2026. On 12 September 2026, I paid a $2,000 deposit via UEN transfer. Uncle Seng later said he could not supply the agreed 1,000 kg of yellowtail and offered a smaller quantity or a substitute at a higher price. I did not accept this and asked for the contract to be honoured or the deposit returned.",
- "exhibits": [
-  {
-   "id": "E1",
-   "kind": "pdf",
-   "status": "ready",
-   "title": "SCT_Fishball_Dispute_Messy.pdf",
-   "facts": [
-    {
-     "evidence_key": "sale_terms",
-     "category": "agreement",
-     "fact": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
-     "date": "2026-09-10",
-     "party": "respondent",
-     "amount": 5000,
-     "where": null,
-     "note": null,
-     "quote": "Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.",
-     "timeline_label": null,
-     "asset_id": "E1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0865,
-        0.2456,
-        0.6211,
-        0.2575
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 14,
-      "quote_tokens": 14
-     }
-    },
-    {
-     "evidence_key": "payment_made",
-     "category": "payment",
-     "fact": "Mark paid $2,000 deposit via correct UEN transfer",
-     "date": "2026-09-12",
-     "party": "claimant",
-     "amount": 2000,
-     "where": null,
-     "note": null,
-     "quote": "S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER",
-     "timeline_label": null,
-     "asset_id": "E1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.5959,
-        0.8382,
-        0.9022,
-        0.8477
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 5,
-      "quote_tokens": 5
-     }
-    },
-    {
-     "evidence_key": "seller_response",
-     "category": "other_side_words",
-     "fact": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
-     "date": "2026-10-01",
-     "party": "respondent",
-     "amount": null,
-     "where": null,
-     "note": null,
-     "quote": "You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.",
-     "timeline_label": null,
-     "asset_id": "E1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 1,
-      "boxes": [
-       [
-        0.0865,
-        0.8531,
-        0.6523,
-        0.8649
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 14,
-      "quote_tokens": 18
-     }
-    }
-   ],
-   "assets": [
-    {
-     "id": "E1",
-     "filename": "SCT_Fishball_Dispute_Messy.pdf",
-     "kind": "pdf",
-     "path": "/Users/tingkang/Documents/LIT Hackathon/LIT-hackathon/builds/case-builder/data/uploads/E1/SCT_Fishball_Dispute_Messy.pdf",
-     "size_bytes": 39999,
-     "viewer_url": "/api/viewer?asset_id=E1&page_index=0",
-     "meta": {
-      "author": "both",
-      "signed": false,
-      "dated": true,
-      "has_amount": true,
-      "from_picture": false
-     },
-     "pages": 3
-    }
-   ]
-  }
- ],
- "evidence": [
-  {
-   "id": "sale_terms",
-   "evidence_key": "sale_terms",
-   "what": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
-   "category": "agreement",
-   "date": "2026-09-10",
-   "strength": "strong",
-   "needs_check": false,
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.0865,
-        0.2456,
-        0.6211,
-        0.2575
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 14,
-      "quote_tokens": 14
-     },
-     "quote": "Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.",
-     "fact": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct",
-     "viewer_url": "/api/viewer?evidence_id=sale_terms&source_index=0"
-    }
-   ],
-   "reason": "Signed by both of you, has amount and dates",
-   "rank": 1
-  },
-  {
-   "id": "payment_made",
-   "evidence_key": "payment_made",
-   "what": "Mark paid $2,000 deposit via correct UEN transfer",
-   "category": "payment",
-   "date": "2026-09-12",
-   "strength": "strong",
-   "needs_check": false,
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.1",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 0,
-      "boxes": [
-       [
-        0.5959,
-        0.8382,
-        0.9022,
-        0.8477
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 5,
-      "quote_tokens": 5
-     },
-     "quote": "S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER",
-     "fact": "Mark paid $2,000 deposit via correct UEN transfer",
-     "viewer_url": "/api/viewer?evidence_id=payment_made&source_index=0"
-    }
-   ],
-   "reason": "Signed by both of you, has amount and dates",
-   "rank": 2
-  },
-  {
-   "id": "seller_response",
-   "evidence_key": "seller_response",
-   "what": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
-   "category": "other_side_words",
-   "date": "2026-10-01",
-   "strength": "strong",
-   "needs_check": false,
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.2",
-     "locator": {
-      "asset_id": "E1",
-      "page_index": 1,
-      "boxes": [
-       [
-        0.0865,
-        0.8531,
-        0.6523,
-        0.8649
-       ]
-      ],
-      "coord_space": "normalized",
-      "matched_tokens": 14,
-      "quote_tokens": 18
-     },
-     "quote": "You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.",
-     "fact": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels",
-     "viewer_url": "/api/viewer?evidence_id=seller_response&source_index=0"
-    }
-   ],
-   "reason": "Signed by both of you, has amount and dates",
-   "rank": 3
-  }
- ],
+ "story": "",
+ "summary": "",
+ "exhibits": [],
+ "evidence": [],
  "gate": {
-  "pass": true,
+  "pass": false,
   "checks": [
    {
     "id": "category",
@@ -372,31 +144,31 @@
    },
    {
     "id": "amount",
-    "pass": true,
+    "pass": false,
     "section_id": "scta_s2",
-    "text": "You are claiming $4,000. The limit is $20,000, or $30,000 if both sides agree.",
+    "text": "You are claiming $40,000. The limit is $20,000, or $30,000 if both sides agree.",
     "where": "A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court.",
-    "blocked": false
+    "blocked": true
    },
    {
     "id": "time",
     "pass": true,
     "section_id": "scta_s5_time",
-    "text": "The seller refused on 28 Sep 2026. You have 2 years from that day, so until 28 Sep 2028.",
+    "text": "The seller refused on 1 Oct 2026. You have 2 years from that day, so until 1 Oct 2028.",
     "where": "More than 2 years have passed. The civil courts, for example the Magistrate's Court, may still hear it.",
     "blocked": false
    },
    {
     "id": "service",
-    "pass": true,
+    "pass": false,
     "section_id": "scta_s5_service",
-    "text": "The seller is in Singapore, so the claim can be served.",
+    "text": "The seller is outside Singapore. The tribunal cannot serve a claim outside Singapore.",
     "where": "The Magistrate's Court can serve outside Singapore. Ask the court registry.",
-    "blocked": false
+    "blocked": true
    }
   ],
-  "stop": null,
-  "result": "The details entered match all four checks below."
+  "stop": "This check did not pass: You are claiming $40,000. The limit is $20,000, or $30,000 if both sides agree. A claim over the limit goes to the Magistrate's Court (up to $60,000) or the District Court.",
+  "result": "One or more details do not match the checks below."
  },
  "statutes": {
   "scta_schedule": {
@@ -440,7 +212,7 @@
    "category": "Messages and calls",
    "why": "The seller's own words, dated, are the strongest thing you can bring.",
    "have": [
-    "SCT_Fishball_Dispute_Messy.pdf (E1)"
+    "Nothing yet"
    ],
    "missing": [
     "Your messages to the seller, in order",
@@ -453,7 +225,7 @@
    "category": "The order and receipt",
    "why": "The order and listing set what was promised.",
    "have": [
-    "SCT_Fishball_Dispute_Messy.pdf (E1)"
+    "Nothing yet"
    ],
    "missing": [
     "Receipt or invoice",
@@ -466,7 +238,7 @@
    "category": "Payments",
    "why": "Shows what you paid.",
    "have": [
-    "SCT_Fishball_Dispute_Messy.pdf (E1)"
+    "Nothing yet"
    ],
    "missing": [
     "Bank or card record of the payment",
@@ -544,57 +316,6 @@
  },
  "timeline": [
   {
-   "id": "d_2026-09-10",
-   "label": "Event (E1)",
-   "date": "2026-09-10",
-   "future": false,
-   "marker": false,
-   "computed": false,
-   "detail": "Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct (\"Can. Usually $5.50/kg but for u I do $5/kg. Total 5k. Deliver 8th morning.\").",
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.1",
-     "viewer_url": "/api/viewer?evidence_id=sale_terms&source_index=0"
-    }
-   ]
-  },
-  {
-   "id": "d_2026-09-12",
-   "label": "Paid (E1)",
-   "date": "2026-09-12",
-   "future": false,
-   "marker": false,
-   "computed": false,
-   "detail": "Mark paid $2,000 deposit via correct UEN transfer (\"S$2,000.00 | UEN: 53289012A | Ref: OCT-DINNER\").",
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.1",
-     "viewer_url": "/api/viewer?evidence_id=payment_made&source_index=0"
-    }
-   ]
-  },
-  {
-   "id": "d_2026-10-01",
-   "label": "Seller replies (E1)",
-   "date": "2026-10-01",
-   "future": false,
-   "marker": false,
-   "computed": false,
-   "detail": "Uncle Seng refused refund, said deposit non-refundable if buyer cancels (\"You are the one cancelling because u don't want to accept 769kg. Deposit is non-refundable if buyer cancels.\").",
-   "sources": [
-    {
-     "exhibit_id": "E1",
-     "asset_id": "E1",
-     "label": "E1 p.2",
-     "viewer_url": "/api/viewer?evidence_id=seller_response&source_index=0"
-    }
-   ]
-  },
-  {
    "id": "today",
    "label": "Today",
    "date": "2026-09-05",
@@ -662,11 +383,11 @@
   {
    "id": "time_bar",
    "label": "Time bar",
-   "date": "2028-09-28",
+   "date": "2028-10-01",
    "future": true,
    "marker": true,
    "computed": true,
-   "detail": "2 years after 28 Sep 2026, the date the seller refused. You must file by then.",
+   "detail": "2 years after 1 Oct 2026, the date the seller refused. You must file by then.",
    "sources": []
   }
  ],
@@ -721,10 +442,9 @@
   }
  ],
  "fee": {
-  "amount": 10,
-  "basis": "up to $5,000",
+  "amount": 400.0,
+  "basis": "1% of the amount claimed, above $10,000",
   "source_label": "Guide p.5",
   "source_url": "https://www.judiciary.gov.sg/docs/default-source/civil-docs/sct_guide_to_small_claims.pdf"
- },
- "_text_key": "[{\"account\": \"Mark contracted seafood supplier Uncle Seng Seafood to supply 1,000 kg of premium yellowtail fish for an upcoming Grassroots dinner. The parties agreed on a locked budget of S$5,000 at a rate of S$5 per kg. Mark paid an upfront deposit of S$2,000 via UEN transfer on 12 September 2026, with the remaining balance of S$3,000 set to be paid upon delivery on 8 October 2026.  The agreement broke down on 28 September 2026 when Uncle Seng informed Mark that yellowtail was out of stock and offered to substitute it with parang fish. Mark rejected the swap because event menus specifying yellowtail had already been printed. Uncle Seng then stated that sourcing yellowtail from Malaysia would increase the price to S$6.50 per kg, raising the total cost to S$6,500, or that he would only deliver a reduced quantity of 769 kg for the original S$5,000 budget. On 1 October 2026, Mark insisted on the original contract terms or a full refund, but Uncle Seng refused to return the deposit, claiming Mark was the party cancelling. As a result, Mark had to source the required 1,000 kg of yellowtail from an emergency replacement supplier, Ah Huat, at a higher cost of S$7,000.  Mark is seeking a total claim of S$4,000. This consists of a full S$2,000 refund of the original deposit paid to Uncle Seng, plus S$2,000 in damages to cover the extra expense incurred by purchasing emergency stock from the replacement supplier. I am mark from tampines st 99\\nUncle seng is from pasir ris st 99 He is from tampines st 99 72684\\nuncle seng is from pasir st 99 827462 yes uncle seng is actually from malaysia and claim amount is $31000 claim is $4000 and he is from singapore\", \"amount\": 4000.0, \"cause_of_action_date\": \"2026-09-28\", \"consent_30k\": false, \"done\": true, \"moveout_date\": null, \"parties\": {\"claimant\": {\"address\": \"Tampines St 99, 72684\", \"id_type\": \"NRIC\", \"name\": \"Mark\"}, \"respondent\": {\"address\": \"Pasir Ris St 99, 827462\", \"in_singapore\": true, \"is_company\": null, \"name\": \"Uncle Seng Seafood\", \"role\": \"seller\"}}, \"premises\": {\"lease_months\": null, \"refund_days\": null, \"residential\": null}, \"what_agreed\": \"Supplier agreed to supply 1,000 kg premium yellowtail fish for S$5,000, S$5 per kg.\"}, [[\"Order was 1000kg premium yellowtail at $5/kg, total $5,000, delivery 8 Oct\", 1], [\"Mark paid $2,000 deposit via correct UEN transfer\", 2], [\"Uncle Seng refused refund, said deposit non-refundable if buyer cancels\", 3]], \"goods\"]"
+ }
 }
