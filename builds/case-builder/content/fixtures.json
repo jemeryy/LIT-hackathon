@@ -23,6 +23,7 @@
      "evidence_key": null,
      "category": "agreement",
      "fact": "Lease of 12 months from 3 Aug 2025, signed by both",
+     "context": true,
      "timeline_label": "Lease starts",
      "date": "2025-08-03",
      "party": "both",
@@ -34,6 +35,7 @@
      "evidence_key": null,
      "category": "agreement",
      "fact": "Clause 6 says an inventory list is signed at handover",
+     "context": true,
      "timeline_label": null,
      "date": null,
      "party": "both",
@@ -44,6 +46,8 @@
    ]
   },
   "WhatsApp_01.png": {
+   "relevance": "context",
+   "relevance_reason": "Related agreement and planned-deposit correspondence. A promise to transfer does not prove payment happened.",
    "meta": {
     "author": "both",
     "signed": false,
@@ -51,9 +55,11 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": []
+   "facts": [{"evidence_key": null, "context": true, "category": "agreement", "fact": "Tenant acknowledged the signed copy and planned to transfer the deposit", "date": "2025-08-02", "party": "claimant", "quote": "signed copy received. I will transfer the deposit tomorrow morning", "fits": true}]
   },
   "WhatsApp_02.png": {
+   "relevance": "context",
+   "relevance_reason": "Related move-out notice and key-return arrangements. It does not establish the condition of the flat.",
    "meta": {
     "author": "both",
     "signed": false,
@@ -61,9 +67,11 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": []
+   "facts": [{"evidence_key": null, "context": true, "category": "other_side_words", "fact": "Tenant gave notice of a planned 31 July move-out", "date": "2026-07-15", "party": "claimant", "quote": "as agreed I will move out on 31 Jul", "fits": true}]
   },
   "WhatsApp_03.png": {
+   "relevance": "context",
+   "relevance_reason": "Related handover correspondence. The tenant reports returning the keys and cleaning; this alone does not verify the flat's condition.",
    "meta": {
     "author": "both",
     "signed": false,
@@ -71,7 +79,7 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": []
+   "facts": [{"evidence_key": null, "context": true, "category": "other_side_words", "fact": "Tenant reported putting keys in the mailbox and cleaning the flat", "date": "2026-07-31", "party": "claimant", "quote": "keys in the mailbox. Flat cleaned", "fits": true}]
   },
   "WhatsApp_04.png": {
    "meta": {
@@ -118,6 +126,8 @@
    ]
   },
   "WhatsApp_06.png": {
+   "relevance": "context",
+   "relevance_reason": "Related request for a damage photo and return of the deposit. The request does not itself prove damage or the absence of damage.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -125,7 +135,7 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": []
+   "facts": [{"evidence_key": null, "context": true, "category": "dispute", "fact": "Tenant requested return of the deposit if there was no damage", "date": "2026-08-20", "party": "claimant", "quote": "If there is no damage please return the $2,600 deposit", "fits": true}]
   },
   "email_landlord.png": {
    "meta": {
@@ -171,6 +181,8 @@
    ]
   },
   "moveout_walkthrough.mp4": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic scene-title cards, not footage of a flat or sofa. This file cannot show move-out condition.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -178,21 +190,11 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": [
-    {
-     "evidence_key": "moveout_condition",
-     "category": "condition",
-     "fact": "Flat condition when you left",
-     "date": "2026-07-31",
-     "party": "claimant",
-     "amount": null,
-     "where": "1:12",
-     "note": "Filmed by you on 31 Jul, sofa shown at 1:12",
-     "quote": null
-    }
-   ]
+   "facts": []
   },
   "movein_01.jpg": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic placeholder image, not a photo of the flat. It cannot show move-in condition.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -200,21 +202,11 @@
     "has_amount": false,
     "from_picture": true
    },
-   "facts": [
-    {
-     "evidence_key": "movein_condition",
-     "category": "condition",
-     "fact": "Flat condition when you moved in",
-     "date": null,
-     "party": "claimant",
-     "amount": null,
-     "where": null,
-     "note": "No date stamp, sofa not in any photo",
-     "quote": null
-    }
-   ]
+   "facts": []
   },
   "movein_02.jpg": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic placeholder image, not a photo of the flat. It cannot show move-in condition.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -225,6 +217,8 @@
    "facts": []
   },
   "movein_03.jpg": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic placeholder image, not a photo of the flat. It cannot show move-in condition.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -235,6 +229,8 @@
    "facts": []
   },
   "movein_04.jpg": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic placeholder image, not a photo of the flat. It cannot show move-in condition.",
    "meta": {
     "author": "claimant",
     "signed": false,
@@ -245,6 +241,8 @@
    "facts": []
   },
   "movein_05.jpg": {
+   "relevance": "placeholder",
+   "relevance_reason": "Synthetic placeholder image, not a photo of the flat. It cannot show move-in condition.",
    "meta": {
     "author": "claimant",
     "signed": false,

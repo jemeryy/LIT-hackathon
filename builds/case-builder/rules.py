@@ -26,7 +26,7 @@ def ctype(case):
         return "general"   # the goods set is written for a buyer; a seller chasing a buyer gets the general set
     return ct if ct in ("tenancy", "goods") else "general"
 CAT_WEIGHT = {"agreement": 0, "payment": 1, "other_side_words": 2, "condition": 3, "dispute": 4}
-STRENGTH_ORDER = {"strong": 0, "medium": 1, "weak": 2}
+STRENGTH_ORDER = {"strong": 0, "medium": 1, "weak": 2, "context": 3, "needs_review": 4, "irrelevant": 5, "placeholder": 6}
 AUTHOR = {"both": "Signed by both of you", "third_party": "Third-party record",
           "respondent": "The other side's own words", "claimant": "Made by you"}
 TIMELINE_LABEL = {"deposit_paid": "deposit paid", "handover_acceptance": 'Move out, "all good"',
@@ -63,7 +63,57 @@ def _facts(case):
             continue
         assets = {a["id"]: a for a in ex["assets"]}
         for f in ex.get("facts", []):
-            yield ex, assets[f["asset_id"]], f
+            asset = assets[f["asset_id"]]
+            if related_fact(f) and asset_assessment(ex, asset)["status"] in ("relevant", "context"):
+                yield ex, asset, f
+
+
+def relevant_fact(f):
+    return bool(f.get("evidence_key")) and f.get("fits") is not False
+
+
+def related_fact(f):
+    return f.get("fits") is not False and (bool(f.get("evidence_key")) or bool(f.get("context")))
+
+
+def asset_assessment(ex, asset):
+    """Use the read result, never the heading a user chose, to assess a file."""
+    facts = [f for f in ex.get("facts", []) if f.get("asset_id") == asset["id"]]
+    if asset.get("relevance") == "placeholder":
+        return {"status": "placeholder", "reason": asset.get("relevance_reason") or "This is a placeholder, not a photo or recording of the event. It cannot establish the condition shown."}
+    if ex.get("status", "ready") != "ready" or asset.get("review_reason"):
+        return {"status": "needs_review", "reason": asset.get("review_reason") or "This file has not finished being read."}
+    if asset.get("relevance") != "irrelevant":
+        if any(relevant_fact(f) for f in facts):
+            return {"status": "relevant", "reason": "Claim-related facts found in this file."}
+        if any(related_fact(f) for f in facts) or asset.get("relevance") == "context":
+            return {"status": "context", "reason": asset.get("relevance_reason") or "Related background or correspondence. Retained as context; it does not independently establish a ranked point."}
+    mismatch = next((f for f in facts if f.get("fits") is False), None)
+    if not mismatch and asset.get("relevance") != "irrelevant":
+        return {"status": "needs_review", "reason": "No usable fact was extracted. That does not establish that the file is irrelevant. Open it to check its connection to the claim."}
+    reason = asset.get("relevance_reason") or (mismatch["fact"] if mismatch else "The reader found no facts connecting this file to this claim.")
+    return {"status": "irrelevant", "reason": reason + " Not counted as evidence. Open the file to check the assessment."}
+
+
+def unranked_files(case, side="yours"):
+    rows = []
+    for ex in case["exhibits"]:
+        if (ex.get("side") == "theirs") != (side == "theirs"):
+            continue
+        for asset in ex.get("assets", []):
+            assessment = asset_assessment(ex, asset)
+            if assessment["status"] == "relevant":
+                continue
+            description = asset.get("filename") or ex["title"]
+            if assessment["status"] == "context":
+                description = next((f["fact"] for f in ex.get("facts", []) if f.get("asset_id") == asset["id"] and related_fact(f)), description)
+            rows.append({"id": "unranked_" + asset["id"], "rank": None,
+                         "what": description, "strength": assessment["status"],
+                         "reason": assessment["reason"], "why": assessment["reason"], "needs_check": True,
+                         "sources": [{"exhibit_id": ex["id"], "asset_id": asset["id"], "label": ex["id"],
+                                      "title": asset.get("filename") or ex["title"],
+                                      "viewer_url": asset.get("viewer_url") or f"/api/viewer?asset_id={asset['id']}&page_index=0"}]})
+    return sorted(rows, key=lambda r: STRENGTH_ORDER[r["strength"]])
 
 
 def source_label(ex, asset, fact, locator):
@@ -101,9 +151,6 @@ def evidence(case):
                                     "date": f.get("date"), "strength": "weak", "needs_check": False,
                                     "notes": [], "sources": [], "_authors": set(), "_dated": False, "_amount": False})
         s = strength(meta, f)
-        if f.get("fits") is False:   # the reader says the names, dates or amounts do not match this claim
-            s = "weak"
-            row["_misfit"] = True
         if STRENGTH_ORDER[s] < STRENGTH_ORDER[row["strength"]]:
             row["strength"] = s
         if f.get("quote") and meta.get("from_picture"):
@@ -125,9 +172,6 @@ def evidence(case):
             a = next(iter(row["_authors"]), "claimant")
             reason = AUTHOR.get(a, "Made by you") + (", has amount" if row["_amount"] else "") + \
                      (" and dates" if row["_amount"] and row["_dated"] else ", dated" if row["_dated"] else ", no date")
-        if row.pop("_misfit", False):
-            row["strength"], row["misfit"] = "weak", True
-            reason = "The names, dates or amounts do not match your account. " + (row["notes"][0] if row["notes"] else "Check it is the right file")
         if row["needs_check"]:
             reason += ". Read from a screenshot, check it"
         row["reason"] = reason
@@ -210,11 +254,12 @@ def gaps(case):
         if ex.get("side") == "theirs":
             continue
         for f in ex.get("facts", []):   # name the fact, not just the file: one chat export can hold messages and a receipt
+            asset = next((a for a in ex["assets"] if a["id"] == f.get("asset_id")), None)
+            if not related_fact(f) or not asset or asset_assessment(ex, asset)["status"] not in ("relevant", "context"):
+                continue
             k = to_key.get(f["category"])
             if k and len(have.setdefault(k, [])) < 4:
                 have[k].append(f"{f['fact']} ({ex['id']})")
-        if ex.get("gap") and not have.get(ex["gap"]):   # the file was added under this heading: name it even with no fact found
-            have[ex["gap"]] = [f"{ex['title']} ({ex['id']})"]
     return [{"key": c["key"], "category": c["category"], "why": c["why"],
              "have": have.get(c["key"]) or ["Nothing yet"], "missing": c["missing"]}
             for c in g[ctype(case)]]
@@ -228,30 +273,46 @@ def blindspots(case, answers):
             "theirs": their_evidence(qs, case.get("exhibits", []))}
 
 
-THEIR_WHY = {"strong": "A signed paper or your own words. Hard to argue with.",
-             "medium": "Real, but your own dated files can answer it.",
-             "weak": "One person's word. Easy to question."}
-
-
 def their_evidence(qs, exhibits=()):
-    """What the other side may bring, strongest first, from the blind-spot answers. A 'not sure' counts one step weaker.
-    A file added under a question is its source; otherwise the source is the person's own answer."""
+    """Rank the actual facts in their uploads. Keep answer-only possibilities explicit."""
     weaker = {"strong": "medium", "medium": "weak", "weak": "weak"}
     rows = []
+    questions = {q["id"]: q for q in qs}
+    for ex in exhibits:
+        if ex.get("side") != "theirs":
+            continue
+        assets = {a["id"]: a for a in ex.get("assets", [])}
+        q = questions.get(ex.get("spot"), {})
+        for i, f in enumerate(ex.get("facts", [])):
+            if not relevant_fact(f):
+                continue
+            a = assets[f["asset_id"]]
+            if asset_assessment(ex, a)["status"] != "relevant":
+                continue
+            meta = a.get("meta", {})
+            rows.append({"id": f"their_{ex['id']}_{i}", "what": f["fact"],
+                         "strength": strength(meta, f), "sure": True, "basis": "file",
+                         "answer": "Check whether this file supports the point raised. " + (q.get("reply") or q.get("hint", "")),
+                         "why": AUTHOR.get(meta.get("author"), "File uploaded") + ". Rated from the facts read in this file; check the source.",
+                         "sources": [{"label": ex["id"], "title": a.get("filename") or ex["title"],
+                                      "viewer_url": f"/api/viewer?asset_id={a['id']}&page_index={(f.get('locator') or {}).get('page_index', 0)}"}]})
     for q in qs:
-        files = [{"label": e["id"], "title": e["title"], "viewer_url": e["assets"][0].get("viewer_url", "")}
-                 for e in exhibits if e.get("spot") == q["id"] and e.get("assets")]
         if q["answer"] == q.get("when", "yes"):
             rows.append({"id": q["id"], "what": q["they"], "strength": q["strength"], "sure": True, "answer": q.get("reply") or q["hint"],
-                         "sources": files, "why": THEIR_WHY[q["strength"]]})
+                         "basis": "answer", "sources": [], "why": "Possible evidence, based only on your answer. This rating does not assess an uploaded file."})
         elif q["answer"] == "unsure":
             s = weaker[q["strength"]]
             rows.append({"id": q["id"], "what": q["they"], "strength": s, "sure": False, "answer": q.get("reply") or q["hint"],
-                         "sources": files, "why": THEIR_WHY[s] + " You are not sure they have it, so one step weaker."})
+                         "basis": "answer", "sources": [], "why": "Possible evidence, based only on your answer. You are not sure they have it, so one step weaker."})
     rows.sort(key=lambda r: STRENGTH_ORDER[r["strength"]])
-    for i, r in enumerate(rows, 1):
-        r["rank"] = i
-    return rows
+    rank = 0
+    for r in rows:
+        if r["basis"] == "file":
+            rank += 1
+            r["rank"] = rank
+        else:
+            r["rank"] = None
+    return rows + unranked_files({"exhibits": exhibits}, "theirs")
 
 
 def timeline(case, today):
@@ -334,13 +395,16 @@ if __name__ == "__main__":   # rank self-check: the frozen table must sort to ra
                                  "facts": [{**f, "asset_id": a["id"]} for f in fx[name]["facts"]]})
     rows = evidence(case)
     got = [r["evidence_key"] for r in rows]
-    assert got == KEY_ORDER["tenancy"], got
-    assert [r["strength"] for r in rows] == ["strong", "strong", "medium", "medium", "medium", "weak"]
-    assert [r["needs_check"] for r in rows] == [False, True, True, False, True, False]
+    assert got == ["deposit_terms", "deposit_paid", "handover_acceptance", "damage_allegation"], got
+    assert [r["strength"] for r in rows] == ["strong", "strong", "medium", "medium"]
+    assert [r["needs_check"] for r in rows] == [False, True, True, True]
     assert fee(2600)["amount"] == 10 and fee(12000)["amount"] == 120
     case["exhibits"].append({"id": "E9", "side": "theirs", "spot": "b2", "title": "their_invoice.pdf", "assets": [{"id": "A9", "viewer_url": "/v"}],
                              "facts": [{"asset_id": "A9", "fact": "x", "category": "payment", "evidence_key": "deposit_paid"}]})
     assert [r["evidence_key"] for r in evidence(case)] == got, "their file must not enter your evidence"
     theirs = their_evidence([{"id": "b2", "they": "Invoice", "strength": "strong", "when": "yes", "hint": "h", "answer": "unsure"}], case["exhibits"])
-    assert theirs[0]["strength"] == "medium" and theirs[0]["sources"][0]["label"] == "E9" and "not sure" in theirs[0]["why"]
+    uploaded = next(r for r in theirs if r.get("basis") == "file")
+    possible = next(r for r in theirs if r.get("basis") == "answer")
+    assert uploaded["strength"] == "weak" and uploaded["sources"][0]["label"] == "E9"
+    assert possible["sources"] == [] and possible["rank"] is None and "not sure" in possible["why"]
     print("rules ok:", got)

@@ -96,19 +96,24 @@ SYSTEM_FACTS = ("You read one piece of evidence for a person filing at the Singa
                 "right, or predict an outcome.")
 
 
-def extract_facts(asset, text, case, image_path=None, use_saved=False):
+def extract_facts(asset, text, case, image_path=None, use_saved=False, exhibit=None):
     """-> {meta: {author, signed, dated, has_amount, from_picture}, facts: [...]}"""
     if use_saved or use_fixtures():
         return FIX["files"].get(asset["filename"], {"meta": {"author": "claimant", "signed": False, "dated": False,
-                                                              "has_amount": False, "from_picture": True}, "facts": []})
+                                                              "has_amount": False, "from_picture": True}, "facts": [],
+                                                         "relevance": "needs_review", "relevance_reason": "The demo reader has no saved assessment for this file."})
     import rules
     keys = EVIDENCE_KEYS.get(rules.ctype(case), EVIDENCE_KEYS["general"])   # same set the rankings use: a landlord or a seller gets general
+    if (exhibit or {}).get("side") == "theirs":
+        keys = {**keys, "other_side_evidence": "a fact relevant to this dispute that the other side's file shows, including repair costs, inventory, agreed conditions or witness evidence"}
     tool = {"name": "record_facts", "description": "Record the facts this file shows.",
             "input_schema": {"type": "object", "properties": {
                 "author": {"type": "string", "enum": PARTIES, "description": "who made the file: both = a document signed by both sides; third_party = bank, courier, agent, government; respondent = the other side wrote it; claimant = the person claiming wrote or took it"},
                 "signed": {"type": "boolean", "description": "the file carries signatures"},
                 "dated": {"type": "boolean", "description": "the file itself shows a date"},
-                "has_amount": {"type": "boolean", "description": "the file shows a money amount"},
+                 "has_amount": {"type": "boolean", "description": "the file shows a money amount"},
+                 "relevance": {"type": "string", "enum": ["relevant", "context", "irrelevant", "needs_review", "placeholder"], "description": "relevant = supports a substantive point; context = related correspondence/background; irrelevant = clearly unrelated; needs_review = unclear/unreadable; placeholder = a dummy image/title card, not actual scene evidence"},
+                 "relevance_reason": {"type": "string", "description": "short plain explanation based on the actual content"},
                 "facts": {"type": "array", "maxItems": 3, "items": {"type": "object", "properties": {
                     "evidence_key": {"type": ["string", "null"], "enum": [*keys, None]},
                     "category": {"type": "string", "enum": CATEGORIES},
@@ -120,9 +125,9 @@ def extract_facts(asset, text, case, image_path=None, use_saved=False):
                     "note": {"type": ["string", "null"], "description": "why it matters, under 80 characters"},
                     "quote": {"type": ["string", "null"], "description": "exact words copied from the text, 4 to 15 words"},
                     "timeline_label": {"type": ["string", "null"]},
-                    "fits": {"type": "boolean", "description": "true if the names, dates and amounts in the file match the claimant's account; false if the file points to different people or a different deal"}},
+                    "fits": {"type": "boolean", "description": "true when connected to this dispute, even if it contradicts the claimant or records a different amount; false only for unrelated people or a different transaction"}},
                     "required": ["evidence_key", "category", "fact", "date", "party", "amount", "quote", "fits"]}}},
-                "required": ["author", "signed", "dated", "has_amount", "facts"]}}
+                "required": ["author", "signed", "dated", "has_amount", "relevance", "relevance_reason", "facts"]}}
     parties = case["intake"]["parties"]
     prompt = (f"Claim type: {case['claim_type']}. Claimant: {parties['claimant']['name']}. "
               f"Respondent: {parties['respondent']['name']}.\n"
@@ -130,7 +135,12 @@ def extract_facts(asset, text, case, image_path=None, use_saved=False):
               f"Evidence keys you may assign (or null if none fits):\n" +
               "\n".join(f"- {k}: {v}" for k, v in keys.items()) +
               "\n\nRules: at most 3 facts, at most one per evidence key, only facts that matter to the claim. "
-              "Skip greetings, plans and requests for photos. In a chat screenshot quote the other side's words first. "
+               "Keep related plans, handover arrangements, acknowledgements, requests for proof and refund requests as context facts with a null evidence key. "
+               "A plan to pay is not proof of payment; a request for a damage photo is not proof of damage. "
+               "Do not label related correspondence irrelevant merely because no ranking key fits. "
+               "A placeholder graphic, blank colour card or scene title is not evidence of the physical scene it names: classify placeholder and do not invent condition facts. "
+               "Read evidence from either side fairly, including facts adverse to the claimant. Upload location does not establish relevance. "
+               "If relevance is uncertain or the file cannot be read, use needs_review, not irrelevant. "
               "party = who wrote the quoted words. author = who made the whole file." +
               f"\n\nFile: {asset['filename']} ({asset['kind']}"
               + (f", the picture is the frame at {asset.get('frame_label', '')}" if asset["kind"] == "video" else "")
@@ -156,6 +166,7 @@ def _clean(raw, asset):
         if not isinstance(f, dict) or not f.get("fact"):
             continue
         facts.append({"evidence_key": f.get("evidence_key") or None,
+                      "context": not f.get("evidence_key") and f.get("fits") is True,
                       "category": f.get("category") if f.get("category") in CATEGORIES else "other_side_words",
                       "fact": str(f["fact"])[:120], "date": f.get("date") or None,
                       "party": f.get("party") if f.get("party") in PARTIES else "claimant",
@@ -174,7 +185,8 @@ def _clean(raw, asset):
             "dated": bool(m.get("dated")) or any(f["date"] for f in facts),
             "has_amount": bool(m.get("has_amount")) or any(f["amount"] for f in facts),
             "from_picture": asset["kind"] != "pdf"}
-    return {"meta": meta, "facts": facts}
+    return {"meta": meta, "facts": facts, "relevance": raw.get("relevance"),
+            "relevance_reason": str(raw.get("relevance_reason") or "")[:300]}
 
 
 SYSTEM_TEXT = ("You write for a person filing at the Singapore Small Claims Tribunals without a lawyer. Plain words a "
@@ -255,7 +267,11 @@ SYSTEM_INTAKE = ("You are a narrow fact-intake component for the Singapore Small
                  "predictions. Ask only the next one or two unanswered fact questions. Never repeat an answered question. "
                  "If the person says they do not have or do not know a detail, record that field as 'not known' "
                  "and never ask for it again; move to the next missing item. "
-                 "Files are added on the side panel. Set done only when every checklist item is known. A short follow-up message continues the same claim: read it with the whole conversation. A message that corrects or adds one fact (an amount, a place, a date, a name) is claim_intake with high confidence; set that field to the new value and do not mark it unclear.")
+                 "Files are added in step 3 after the tribunal check. The server supplies navigation instructions. "
+                 "Return only fact questions in questions; each must end with a question mark. "
+                 "Record respondent_in_singapore when the user explicitly confirms or denies it; an address alone need not establish this. "
+                 "When a short yes or no answers the previous question, apply it only to that question. "
+                 "Set done only when every checklist item is known. A short follow-up message continues the same claim: read it with the whole conversation. A message that corrects or adds one fact (an amount, a place, a date, a name) is claim_intake with high confidence; set that field to the new value and do not mark it unclear.")
 
 CLAIM_TYPES = ["tenancy", "goods", "services", "property_damage", "other", "unknown"]
 INTAKE_FIELDS = {

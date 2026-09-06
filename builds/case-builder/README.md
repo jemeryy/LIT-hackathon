@@ -12,6 +12,8 @@ It works for a real case, not only the example. Open it, press New case, type wh
 cd builds/case-builder
 python sample/make_pack.py        # makes the synthetic sample files (needs ffmpeg on PATH; add --no-video to skip the mp4)
 python selfcheck.py               # replays the worked example on fixtures and checks the whole path (no credits)
+python -m unittest test_chat_flow.py test_relevance.py  # chat and evidence regression checks (no credits)
+node test_chat_ui.cjs             # refresh, retry and pending-request UI checks
 uvicorn app:app --port 8000       # then open http://127.0.0.1:8000 and press New case, or Load the example
 ```
 
@@ -21,8 +23,22 @@ Model calls: `.env` in the repo root holds `OPENROUTER_API_KEY`, `ANTHROPIC_BASE
 the model is live by default. `USE_FIXTURES=1` (forced when there is no key) replays the saved run of the worked
 example from `content/fixtures.json` instead, so the example is repeatable on stage without credits.
 
-One case at a time, kept in `data/case.json`. New case clears it. Load the example reads the six sample files
-in `sample/pack/` (Mei Ling's tenancy deposit) and takes about a minute live.
+Each visitor's case is stored in `data/cases/`, with uploads in a separate visitor folder.
+Refreshing resumes the saved case; New case starts a new one. Load the example reads the six sample exhibits
+in `sample/pack/` (Mei Ling's tenancy deposit). Open the app through the server URL, not the HTML file on disk.
+
+The server chooses the next intake question from recorded facts and unresolved tribunal checks.
+Short Yes/No answers to its location and residential-property questions are recorded directly. Unknown
+details are tracked individually and can be supplied later. Model questions are used to clarify uncertain
+messages; file-upload instructions and navigation come from the server.
+
+Both evidence lists assess relevance separately from strength. Related notices, plans and follow-up messages
+are retained as context, even when they do not establish a ranked point. An empty extraction alone means
+needs review, not irrelevant. Clearly unrelated files, placeholders and needs-review files remain visible
+without a strength rank and are excluded from the claim pack, with the exclusion recorded in its manifest.
+Related context is included in the pack. The other side's hypothetical evidence from Yes/Not sure answers
+is displayed separately from actual uploaded files. The worked example uses saved assessments and visibly
+labels its placeholder photos/video; they do not establish the flat's actual condition.
 
 ## AI boundaries
 

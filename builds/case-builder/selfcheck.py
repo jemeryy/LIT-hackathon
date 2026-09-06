@@ -56,15 +56,19 @@ assert case["gate"]["pass"], case["gate"]
 assert len(case["exhibits"]) == 6, [e["id"] for e in case["exhibits"]]
 assert all(e["status"] == "ready" for e in case["exhibits"])
 keys = [r["evidence_key"] for r in case["evidence"]]
-assert keys == rules.KEY_ORDER["tenancy"], keys
-assert [r["rank"] for r in case["evidence"]] == [1, 2, 3, 4, 5, 6]
+assert keys == ["deposit_terms", "deposit_paid", "handover_acceptance", "damage_allegation"], keys
+assert [r["rank"] for r in case["evidence"]] == [1, 2, 3, 4]
+context_files = {r["sources"][0]["asset_id"] for r in case["unranked_evidence"] if r["strength"] == "context"}
+assert {"E2-1", "E2-2", "E2-3", "E2-6"} <= context_files, case["unranked_evidence"]
+placeholder_files = {r["sources"][0]["asset_id"] for r in case["unranked_evidence"] if r["strength"] == "placeholder"}
+assert placeholder_files == {"E5", "E6-1", "E6-2", "E6-3", "E6-4", "E6-5"}, placeholder_files
 top = case["evidence"][0]
 loc = top["sources"][0]["locator"]
 assert loc["asset_id"] == "E1" and loc["page_index"] == 1 and loc["boxes"], loc
 assert all(0 <= v <= 1 for b in loc["boxes"] for v in b)
 assert top["sources"][0]["label"] == "E1 cl. 4, p.2", top["sources"][0]["label"]
 assert case["evidence"][1]["needs_check"] and not top["needs_check"]
-assert case["evidence"][4]["sources"][0]["exhibit_id"] == "E2" and case["evidence"][4]["sources"][1]["exhibit_id"] == "E3"
+assert case["evidence"][3]["sources"][0]["exhibit_id"] == "E2" and case["evidence"][3]["sources"][1]["exhibit_id"] == "E3"
 refund = next(e for e in case["timeline"] if e["id"] == "refund_due")
 assert refund["date"] == "2026-08-14", refund
 assert next(e for e in case["timeline"] if e["id"] == "time_bar")["date"] == "2028-08-15"
@@ -77,7 +81,8 @@ assert xlsx[:2] == b"PK" and len(xlsx) > 4000
 pack = exports.claim_pack_zip(case)
 names = zipfile.ZipFile(io.BytesIO(pack)).namelist()
 assert {"claim_form.txt", "events.txt", "written_request.txt", "manifest.txt"} <= set(names), names
-assert sum(n.startswith("exhibits/") for n in names) == 15, names
+expected_assets = [a for ex in case["exhibits"] for a in ex["assets"] if rules.asset_assessment(ex, a)["status"] in ("relevant", "context")]
+assert sum(n.startswith("exhibits/") for n in names) == len(expected_assets), names
 assert len(exports.written_request(case)) > 200
 
 out = app.DATA

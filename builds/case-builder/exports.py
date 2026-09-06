@@ -12,10 +12,10 @@ def evidence_xlsx(case):
     ws = wb.active
     ws.title = "Evidence"
     ws.append(["No.", "Exhibit", "Date", "What it shows", "Where", "Strength", "Rank", "Check it", "Notes"])
-    for r in case["evidence"]:
+    for r in case["evidence"] + rules.unranked_files(case):
         ws.append([r["rank"], ", ".join(sorted({s["exhibit_id"] for s in r["sources"]})),
                    rules.fmt(rules.d(r.get("date"))), r["what"], "; ".join(s["label"] for s in r["sources"]),
-                   r["strength"].capitalize(), r["rank"], "yes" if r["needs_check"] else "", r["reason"]])
+                   r["strength"].replace("_", " ").capitalize(), r["rank"], "yes" if r["needs_check"] else "", r["reason"]])
     ws.append([len(case["evidence"]) + 1, "", "", "(add your next item here)", "", "", "", "", ""])
     for col, w in zip("ABCDEFGHI", (5, 10, 12, 60, 24, 10, 6, 9, 50)):
         ws.column_dimensions[col].width = w
@@ -73,6 +73,10 @@ def claim_pack_zip(case):
             if ex.get("side") == "theirs":   # the pack is what you file; their file is not your exhibit
                 continue
             for a in ex["assets"]:
+                assessment = rules.asset_assessment(ex, a)
+                if assessment["status"] not in ("relevant", "context"):
+                    manifest.append(f"{a['id']} ({a['filename']}): excluded, {assessment['status'].replace('_', ' ')}. {assessment['reason']}")
+                    continue
                 try:
                     data = _asset_pdf(a)
                 except Exception as exc:  # a broken file must not break the pack

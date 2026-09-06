@@ -46,6 +46,15 @@
   .strength.strong .strength-dot { background: #22c55e; }
   .strength.medium .strength-dot { background: var(--yellow); }
   .strength.weak .strength-dot { background: #fca5a5; }
+  .strength.irrelevant .strength-dot { background: #9ca3af; }
+  .strength.needs_review .strength-dot { background: #fde68a; }
+  .strength.context .strength-dot { background: #bfdbfe; }
+  .strength.placeholder .strength-dot { background: #d1d5db; }
+  .evidence-row.unranked { background: #f3f4f6; }
+  .status-label.irrelevant { background: #e5e7eb; color: #374151; }
+  .status-label.needs_review { background: #fde68a; color: #713f12; }
+  .status-label.context { background: #dbeafe; color: #1e3a8a; }
+  .status-label.placeholder { background: #e5e7eb; color: #374151; }
   table { border-collapse: collapse; width: 100%; font-size: 19px; }
   th, td { border: 2px solid var(--ink); padding: 8px 10px; text-align: left; vertical-align: middle; }
   th { background: var(--grey); font-weight: normal; }
@@ -185,11 +194,12 @@ function banner(msg) { $("banner").textContent = msg; show("banner"); }
 
 async function load() {
   const example = new URLSearchParams(location.search).get("example") === "1";
-  let c = await api(example ? "/api/case/reset" : "/api/case/new", {method: "POST"});
+  let c = await api("/api/case");
+  if (c && example && c.case_id !== "example") c = await api("/api/case/reset", {method: "POST"});
   if (!c) return;
   C = c; render();
 }
-async function newCase() { if (!C) return; if (C.intake.chat.length > 1 || C.exhibits.length) { if (!confirm("Start a new case? The case on screen will be cleared.")) return; } C = await api("/api/case/new", {method: "POST"}); step = 0; render(); }
+async function newCase() { if (!C || waiting) return; if (C.intake.chat.length > 1 || C.exhibits.length) { if (!confirm("Start a new case? The case on screen will be cleared.")) return; } const c = await api("/api/case/new", {method: "POST"}); if (c) { C = c; step = 0; ranked = false; render(); } }
 
 /* the furthest step you may open: gate must pass to go past 2, all blind spots answered to go past 3 */
 function maxStep() {
@@ -198,7 +208,7 @@ function maxStep() {
   return 4;
 }
 function go(n) {
-  if (n < 0 || n > maxStep()) return;
+  if (waiting || n < 0 || n > maxStep()) return;
   step = n; selEvent = null; render();
 }
 
@@ -214,11 +224,11 @@ function render() {
   $("eyebrow").textContent = `Step ${step + 1} of 5`;
   $("title").textContent = TITLES[step];
   $("centre").textContent = `Step ${step + 1} of 5`;
-  $("back").disabled = step === 0;
+  $("back").disabled = waiting || step === 0;
   if (step === 2 && C.blindspots.answered < C.blindspots.total) $("centre").textContent = `Answer all ${C.blindspots.total} questions to go on.`;
   if (step === 1 && !C.gate.pass) $("centre").textContent = "Go back to step 1 and tell us what is missing.";
   if (step === 0) $("centre").innerHTML = '<button class="btn" onclick="clearChat()">Start over</button>';
-  $("next").disabled = step + 1 > max;
+  $("next").disabled = waiting || step + 1 > max;
   $("body").innerHTML = [intake, gate, evidence, timeline, nextsteps][step]();
   if (step === 0) scrollChat();
   document.querySelectorAll(".source-link, .step:not(.locked), .dot, .evidence-row").forEach(el => el.tabIndex = 0);
@@ -238,14 +248,22 @@ function intake() {
 function scrollChat() { const el = $("chat"); if (el) el.scrollTop = el.scrollHeight; }
 async function send() {
   const box = $("say"), text = box.value.trim(); if (!text || waiting) return;
+  const before = JSON.parse(JSON.stringify(C));
   C.intake.chat.push({who: "user", text}); waiting = true; render(); scrollChat();
   const c = await api("/api/chat", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({message: text})});
-  waiting = false; if (c) C = c; else C.intake.chat.pop(); render(); scrollChat(); $("say").focus();
+  waiting = false; C = c || before; render(); scrollChat();
+  if (!c) $("say").value = text;
+  $("say").focus();
 }
-async function clearChat() { if (!confirm("Clear the chat and start again? Your files stay.")) return; const c = await api("/api/chat/clear", {method: "POST"}); if (c) C = c; render(); }
+async function clearChat() { if (waiting || !confirm("Clear the chat and start again? Your files stay.")) return; const c = await api("/api/chat/clear", {method: "POST"}); if (c) { C = c; ranked = false; render(); } }
 function statusText(e) {
   const n = e.assets.length, pages = e.assets[0].pages;
-  if (e.status === "ready" && e.side !== "theirs" && e.facts && !e.facts.length) return "Read, nothing found for this claim";
+  const statuses = e.assets.map(a => a.assessment?.status);
+  if (e.status === "ready" && statuses.every(s => s === "placeholder")) return "Placeholder, not scene evidence";
+  if (e.status === "ready" && statuses.every(s => s === "context")) return "Related context";
+  if (e.status === "ready" && statuses.every(s => s === "irrelevant")) return "Irrelevant to this claim";
+  if (e.status === "ready" && statuses.some(s => s === "needs_review")) return "Read, needs review";
+  if (e.status === "ready" && statuses.some(s => s === "irrelevant")) return "Read, includes irrelevant files";
   if (e.status === "ready") return "Read" + (pages ? `, ${pages} page${pages > 1 ? "s" : ""}` : n > 1 ? `, ${n} files` : "");
   return {reading: "Reading", waiting: "Waiting", error: "Could not read"}[e.status] || e.status;
 }
@@ -277,12 +295,13 @@ function gate() {
 /* 3. evidence: add files, see what to gather, answer what the other side may have, then rank both sides */
 const exh = e => e.status === "reading"
     ? `<div class="box" style="padding: 8px 12px; color: #444;"><span class="spin"></span> ${e.id} ${esc(e.title)} <span class="status-label reading">Reading</span></div>`
-    : `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.status}">${statusText(e)}</span></div>`;
+    : `<div class="box" style="padding: 8px 12px;"><span class="source-link" onclick="openViewer('${e.assets[0].viewer_url}')">${e.id} ${esc(e.title)}</span> <span class="status-label ${e.assets.every(a => ["irrelevant", "context", "placeholder"].includes(a.assessment?.status) && a.assessment.status === e.assets[0].assessment?.status) ? e.assets[0].assessment.status : e.assets.some(a => a.assessment?.status === "needs_review") ? "needs_review" : e.status}">${statusText(e)}</span></div>`;
 function evidence() {
   const b = C.blindspots, ready = C.exhibits.some(e => e.status === "ready"), allAnswered = b.answered >= b.total;
   const canRank = ready && allAnswered;
   const part = (n, title, note, body) => `<div class="col" style="gap: 8px;"><div><div class="section-title">${n}. ${title}</div><div class="muted">${note}</div></div>${body}</div>`;
   return `<div class="col" style="gap: 24px;">
+  ${C.case_id === "example" ? '<div class="box" style="padding: 12px; background: #dbeafe;">Worked example: the bundled files are synthetic and use saved assessments. Placeholder photos and video do not establish the flat’s condition. Your additional uploads are assessed separately.</div>' : ""}
   ${part("A", "Add your files", "Agreement, chat screenshots, bank transfer, photos or video. Only files count as evidence.",
     `<div><b style="color: #15803d;">Your evidence</b><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side !== "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}${addFile("btn primary")}</div></div>
     <div><b style="color: #b91c1c;">The other side's evidence</b> <span class="muted">(added under C below)</span><div class="row" style="margin-top: 6px;">${C.exhibits.filter(e => e.side === "theirs").map(exh).join("") || '<div class="muted">No files yet.</div>'}</div></div>`)}
@@ -298,25 +317,31 @@ function evidence() {
 }
 function ranking() {
   const uniq = ss => [...new Map(ss.map(s => [s.label, s])).values()];
-  const row = r => `<tr class="evidence-row ${r.rank <= 2 ? "top" : ""}" onclick="openViewer('${r.sources[0].viewer_url}')">
-    <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What it shows">${esc(r.what)}</td>
-    <td data-h="Source">${uniq(r.sources).map(s => `<span class="source-link" onclick="event.stopPropagation(); openViewer('${s.viewer_url}')">${esc(s.label)}</span>`).join(", ")}</td>
-    <td data-h="How strong"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.reason)}</td></tr>`;
+  const isTop = r => r.rank != null && r.rank <= 2;
+  const strengthLabel = s => s === "needs_review" ? "Needs review" : s[0].toUpperCase() + s.slice(1);
+  const row = r => `<tr class="evidence-row ${isTop(r) ? "top" : r.rank == null ? "unranked" : ""}" onclick="openViewer('${r.sources[0].viewer_url}')">
+    <td data-h="Rank">${r.rank == null ? "Not ranked" : `<div class="rank ${isTop(r) ? "top" : ""}">${r.rank}</div>`}</td><td data-h="What it shows">${esc(r.what)}</td>
+    <td data-h="Source">${uniq(r.sources).map(s => `<span class="source-link" onclick="event.stopPropagation(); openViewer('${s.viewer_url}')">${esc(s.label)}${r.rank == null && s.title ? " " + esc(s.title) : ""}</span>`).join(", ")}</td>
+    <td data-h="How strong"><div class="strength ${r.strength}"><span class="strength-dot"></span>${strengthLabel(r.strength)}</div></td><td data-h="Why">${esc(r.reason)}</td></tr>`;
   const theirs = C.blindspots.theirs || [];
-  const trow = r => `<tr class="${r.rank <= 2 ? "top" : ""}">
-    <td data-h="Rank"><div class="rank ${r.rank <= 2 ? "top" : ""}">${r.rank}</div></td><td data-h="What they may show">${esc(r.what)}${r.sure ? "" : ' <span class="status-label optional">Not sure</span>'}</td>
+  const actual = theirs.filter(r => r.basis !== "answer");
+  const possible = theirs.filter(r => r.basis === "answer");
+  const trow = r => `<tr class="${isTop(r) ? "top" : ""}">
+    <td data-h="Rank">${r.rank == null ? "Not ranked" : `<div class="rank ${isTop(r) ? "top" : ""}">${r.rank}</div>`}</td><td data-h="What they may show">${esc(r.what)}</td>
     <td data-h="Source">${(r.sources || []).length ? r.sources.map(s => `<span class="source-link" onclick="openViewer('${s.viewer_url}')">${esc(s.label)} ${esc(s.title)}</span>`).join(", ") : `<span class="muted">Your answer: ${r.sure ? "Yes" : "Not sure"}</span>`}</td>
-    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${r.strength[0].toUpperCase() + r.strength.slice(1)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer)}</td></tr>`;
+    <td data-h="How strong for them"><div class="strength ${r.strength}"><span class="strength-dot"></span>${strengthLabel(r.strength)}</div></td><td data-h="Why">${esc(r.why)}</td><td data-h="How to answer">${esc(r.answer || (r.strength === "context" ? "Read this alongside the other files. Related background alone does not establish the disputed point." : "Check the file and the assessment. This upload has no strength rank."))}</td></tr>`;
   return `<div class="col" id="rankbox" style="gap: 12px;">
     <div class="box" style="padding: 12px 14px;"><div class="section-title">Your story</div><div>${esc(C.story)}</div></div>
     <div class="box" style="padding: 12px;">
       <div class="row" style="justify-content: space-between; margin-bottom: 8px;"><div><div class="section-title">D. Your evidence, strongest first</div><div class="muted">Press a row to see the file.</div></div><a class="btn" href="/api/export/xlsx">Download the list</a></div>
-      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows</th><th>Source</th><th style="width: 130px;">How strong</th><th>Why</th></tr></thead><tbody>${C.evidence.map(row).join("")}</tbody></table>
+      <div class="muted" style="margin-bottom: 10px;">Related context stays in the list and claim pack without a strength rank. Irrelevant files, placeholders and files needing review are kept below but excluded from the claim pack. Open each file to check the assessment.</div>
+      <table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 130px;">Assessment</th><th>Why</th></tr></thead><tbody>${[...C.evidence, ...(C.unranked_evidence || [])].map(row).join("")}</tbody></table>
     </div>
     <div class="box" style="padding: 12px;">
-      <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">From your answers above. Nothing here is proof. It is what they could bring, so you are ready for it.</div></div>
-      ${theirs.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What they may show</th><th>Source</th><th style="width: 160px;">How strong for them</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${theirs.map(trow).join("")}</tbody></table>`
-        : '<div class="muted">From your answers, nothing yet. If that changes, come back and change an answer.</div>'}
+      <div style="margin-bottom: 8px;"><div class="section-title">E. The other side's evidence, strongest first</div><div class="muted">Assessed from the uploaded files. Irrelevant files have no strength rank. Open each source to check what the reader found.</div></div>
+      ${actual.length ? `<table><thead><tr><th style="width: 70px;">Rank</th><th>What it shows / file</th><th>Source</th><th style="width: 160px;">Assessment</th><th>Why</th><th>How to answer</th></tr></thead><tbody>${actual.map(trow).join("")}</tbody></table>`
+        : '<div class="muted">No files uploaded for the other side yet.</div>'}
+      ${possible.length ? `<div style="margin-top: 16px;"><div class="section-title">Other possibilities from your answers</div><div class="muted">These are things they might bring. Your answers do not verify any uploaded file.</div><ul>${possible.map(r => `<li>${esc(r.what)} (${r.sure ? "you answered Yes" : "you answered Not sure"}). ${esc(r.answer)}</li>`).join("")}</ul></div>` : ""}
     </div></div>`;
 }
 

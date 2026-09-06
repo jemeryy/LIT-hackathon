@@ -1,5 +1,5 @@
 """Case Helper: FastAPI backend. Run: uvicorn app:app --reload --port 8000 (from builds/case-builder)."""
-import contextvars, datetime as dt, io, json, logging, pathlib, re, shutil, threading, uuid
+import contextvars, datetime as dt, io, json, logging, math, pathlib, re, shutil, threading, uuid
 from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -143,8 +143,16 @@ def process_asset(case, ex, asset, use_saved=False):
         asset["frame_label"] = extract.frame_label(asset["id"], asset["path"])
     elif asset["kind"] == "image":
         image = asset["path"]
-    result = llm.extract_facts(asset, parsed["text"], case, image, use_saved=use_saved)
+    result = llm.extract_facts(asset, parsed["text"], case, image, use_saved=use_saved, exhibit=ex)
+    asset["assessment_source"] = "saved_example" if use_saved else "demo_reader" if llm.use_fixtures() else "live_reader"
     asset["meta"] = result.get("meta", {})
+    asset["relevance"] = result.get("relevance")
+    asset["relevance_reason"] = result.get("relevance_reason") or ""
+    asset.pop("review_reason", None)
+    if result.get("relevance") == "needs_review":
+        asset["review_reason"] = result.get("relevance_reason") or "The reader could not determine whether this file relates to the claim."
+    if asset["kind"] == "pdf" and not parsed["text"].strip():
+        asset["review_reason"] = "No readable text was extracted from this PDF. Upload a searchable PDF or clear images of its pages."
     kept = []
     for f in result.get("facts", []):
         f = {**f, "asset_id": asset["id"]}
@@ -156,17 +164,39 @@ def process_asset(case, ex, asset, use_saved=False):
         else:
             f["locator"] = {"asset_id": asset["id"], "page_index": 0, "boxes": [], "coord_space": "normalized"}
         kept.append(f)
+    if any(rules.related_fact(f) for f in result.get("facts", [])) and not any(rules.related_fact(f) for f in kept):
+        asset["review_reason"] = "The reader suggested relevant facts, but their quotes could not be verified in the file. Check the file or upload a clearer copy."
+    if result.get("relevance") in ("relevant", "context") and not any(rules.related_fact(f) for f in kept):
+        asset.setdefault("review_reason", "The reader indicated a possible connection but found no usable supporting facts. Check the file.")
+    if len(parsed["text"]) > 12000 and not any(rules.related_fact(f) for f in kept):
+        asset.setdefault("review_reason", "Only part of this long file was assessed. No relevant facts were found in that part; check the remaining pages.")
+    if re.search(r"\bplaceholder\s+(?:photo|image|video)\b", parsed["text"], re.IGNORECASE):
+        asset["relevance"] = "placeholder"
+        asset["relevance_reason"] = "The file is labelled as a placeholder. It does not show the actual property or event."
     ex["facts"] = [f for f in ex["facts"] if f["asset_id"] != asset["id"]] + kept
 
 
 def apply_fields(case, fields):
     """Merge one chat turn's fields into the intake. Bad dates and amounts are dropped, never guessed."""
     it = case["intake"]
-    for k, v in fields.items():
+    for k, v in (fields.items() if isinstance(fields, dict) else []):
+        if k not in llm.INTAKE_FIELDS:
+            continue
         if v is None or v == "":
             continue
+        if k in ("respondent_in_singapore", "respondent_is_company", "residential", "consent_30k") and not isinstance(v, bool):
+            continue
+        if k in ("lease_months", "refund_days") and (isinstance(v, bool) or not isinstance(v, int) or v <= 0):
+            continue
+        if k in ("claimant_name", "claimant_address", "respondent_name", "respondent_address", "respondent_role", "what_agreed"):
+            if not isinstance(v, str):
+                continue
+            v = v.strip()
+            if not v:
+                continue
         if k == "claim_type":
-            case["claim_type"] = v
+            if v in llm.CLAIM_TYPES:
+                case["claim_type"] = v
         elif k in ("cause_of_action_date", "moveout_date"):
             try:
                 it[k] = dt.date.fromisoformat(str(v)[:10]).isoformat()
@@ -174,8 +204,10 @@ def apply_fields(case, fields):
                 pass
         elif k == "amount":
             try:
-                it[k] = float(str(v).replace("$", "").replace(",", ""))
-            except ValueError:
+                amount = float(str(v).replace("$", "").replace(",", ""))
+                if math.isfinite(amount) and amount > 0:
+                    it[k] = amount
+            except (ValueError, TypeError):
                 pass
         elif k in FIELD_PATH:
             *path, leaf = FIELD_PATH[k]
@@ -186,6 +218,7 @@ def apply_fields(case, fields):
         elif k in it:
             it[k] = v
     it["account"] = " ".join(m["text"] for m in it["chat"] if m["who"] == "user")
+    it["unavailable"] = [k for k in it.get("unavailable", []) if known_value(case, k) is None]
 
 
 def known_value(case, key):
@@ -213,9 +246,10 @@ def apply_corrections(case, turn):
         old = known_value(case, k)
         if k in fields and old is not None and fields[k] != old:
             changed[k] = fields[k]
+    before = {k: known_value(case, k) for k in changed}
     if changed:
         apply_fields(case, changed)
-    return list(changed)
+    return [k for k in changed if known_value(case, k) != before[k]]
 
 
 def explicit_claim_amount(message):
@@ -282,7 +316,7 @@ def safe_intake_reply(turn):
         return UNCLEAR_REPLY
     reflection = _plain_sentence(turn.get("reflection"), "You say", 22)
     questions = []
-    for q in turn.get("questions") or []:
+    for q in llm.question_list(turn.get("questions")):
         q = _plain_sentence(q, max_words=22)
         if q and q.endswith("?"):
             questions.append(q)
@@ -327,6 +361,51 @@ def describe_changes(before, case):
     return ("Noted: " + "; ".join(out) + ".") if out else ""
 
 
+def intake_followup(case):
+    pending = intake_pending(case)
+    return pending[0][1] if pending else None
+
+
+def intake_pending(case):
+    """A single source of truth for unanswered facts; uploads belong to step 3."""
+    it = case["intake"]
+    questions = [
+        ("account", NEXT_QUESTION["story"]),
+        ("claim_type", NEXT_QUESTION["category"]),
+        ("claimant_name", "What is your full name?"),
+        ("claimant_address", "What is your full address, including the postal code?"),
+        ("respondent_name", "What is the other side's full name or business name?"),
+        ("respondent_address", "What is the other side's full address, including the postal code?"),
+        ("respondent_in_singapore", "Is the other side based in Singapore?"),
+        ("what_agreed", NEXT_QUESTION["agreed"]),
+        ("amount", NEXT_QUESTION["amount"]),
+        ("cause_of_action_date", NEXT_QUESTION["when"]),
+    ]
+    if case["claim_type"] == "tenancy":
+        questions += [("residential", "Was the rented property a home, rather than a shop or office?"),
+                      ("lease_months", "How many months was the lease for?")]
+    unavailable = set(it.get("unavailable", []))
+    # Honour older cases whose unknown details were stored by checklist section.
+    legacy = {"claimant": ("claimant_name", "claimant_address"), "respondent": ("respondent_name", "respondent_address"),
+              "agreed": ("what_agreed",), "amount": ("amount",), "when": ("cause_of_action_date",)}
+    for key in it.get("skipped", []):
+        unavailable.update(legacy.get(key, ()))
+    return [(key, question) for key, question in questions if key not in unavailable and known_value(case, key) is None]
+
+
+def intake_next_step(case):
+    gate = rules.gate(case, dt.date.fromisoformat(case["today"]))
+    if not gate["pass"]:
+        return "I have recorded what you know. Press Next to see which tribunal checks still need information. You can return here when you have it."
+    if any(e["status"] == "ready" for e in case["exhibits"]):
+        return INTAKE_COMPLETE
+    needed = {"tenancy": "the agreement, payment records, messages, and photos",
+              "goods": "the order, payment records, messages, and photos",
+              "services": "the quote, payment records, messages, and photos",
+              "property_damage": "messages, photos, videos, and repair quotes"}.get(case["claim_type"], "your evidence files")
+    return f"I have recorded your claim details. Press Next to check if the tribunal can hear it, then add {needed} in step 3."
+
+
 def chat_turn(case, message):
     snap = json.loads(json.dumps(case))
     it = case["intake"]
@@ -336,7 +415,25 @@ def chat_turn(case, message):
     if is_prompt_attack(message):
         it["chat"].append({"who": "bot", "text": SCOPE_REFUSAL})
         return recompute(case)
-    turn = llm.intake_turn(case, case["checklist"])
+    previous_reply = next((m["text"] for m in reversed(snap["intake"]["chat"]) if m["who"] == "bot"), "")
+    pending_before = intake_pending(snap)
+    asked = snap.get("_pending_intake_field")
+    if asked is None:
+        asked = next((key for key, question in pending_before if previous_reply.endswith(question)), None)
+    short_answer = message.strip().lower().rstrip(".! ")
+    answering_boolean = asked in ("respondent_in_singapore", "residential") and short_answer in ("yes", "no", "yes they are", "no they are not")
+    unknown_field = None
+    if not answering_boolean and NO_DETAIL.fullmatch(short_answer):
+        named = next((k for k, pat in NO_DETAIL_ITEM if re.search(pat, short_answer)), None)
+        named = {"claimant": "claimant_address", "respondent": "respondent_address", "agreed": "what_agreed", "when": "cause_of_action_date"}.get(named, named)
+        unknown_field = named or asked
+        if unknown_field in ("account", "claim_type"):
+            unknown_field = None
+    if answering_boolean or unknown_field:
+        turn = {"scope": "claim_intake", "confidence": "high", "reflection": None, "questions": [],
+                "fields": {asked: short_answer.startswith("yes")} if answering_boolean else {}}
+    else:
+        turn = llm.intake_turn(case, case["checklist"])
     stated_amount = explicit_claim_amount(message)
     in_scope = turn.get("scope", "claim_intake") == "claim_intake"
     trusted_turn = in_scope and turn.get("confidence", "high") != "low"
@@ -345,26 +442,17 @@ def chat_turn(case, message):
         if not trusted_turn:
             turn.update(scope="claim_intake", confidence="high", questions=[], reflection=None, fields={})
             trusted_turn = True
+            in_scope = True
         turn.setdefault("fields", {})["amount"] = stated_amount
-    before = case["claim_type"]
     corrected = []
-    if NO_DETAIL.fullmatch(message.strip().lower()):
-        # "dont have": the person cannot give the next missing item. Give it up so we stop asking and move on.
-        open_items = [c["id"] for c in checklist_state(case) if not c["done"] and c["id"] in SKIPPABLE]
-        named = next((k for k, pat in NO_DETAIL_ITEM if re.search(pat, message.lower())), None)
-        skip = named if named in open_items else next(iter(open_items), None)
-        if skip:
-            it.setdefault("skipped", []).append(skip)
-            for side in ("claimant", "respondent"):
-                if skip == side and not it["parties"][side]["address"]:
-                    it["parties"][side]["address"] = "not known"
-            turn.update(scope="claim_intake", confidence="high", reflection=None, questions=[])
-            trusted_turn = True
+    if unknown_field:
+        if unknown_field not in it.setdefault("unavailable", []):
+            it["unavailable"].append(unknown_field)
     if trusted_turn:
         apply_fields(case, turn.get("fields", {}))
     elif in_scope:
         corrected = apply_corrections(case, turn)
-    if case["claim_type"] != before and rules.ctype(case) != rules.ctype({"claim_type": before}):
+    if rules.ctype(case) != rules.ctype(snap):
         for ex in case["exhibits"]:   # files read before the kind of claim was known: read them again under its keys
             for a in ex["assets"]:
                 if ex["status"] == "ready":
@@ -375,39 +463,30 @@ def chat_turn(case, message):
     changed = describe_changes(snap, case)
     if changed:
         turn["reflection"] = None   # the change note already says it; do not say it twice
+    if not isinstance(turn.get("reflection"), str):
+        turn["reflection"] = None
     if turn.get("reflection") and any(m["who"] == "bot" and turn["reflection"] in m["text"] for m in it["chat"][:-1]):
         turn["reflection"] = None   # already said in an earlier turn; saying it again reads as not listening
-    reply = safe_intake_reply(turn)
-    if reply == UNSAFE_OUTPUT_REPLY or (reply == UNCLEAR_REPLY and corrected):
-        # The model asked nothing usable. Having read the person correctly, saying we could not is both
-        # wrong and alarming, so ask for the next thing we are genuinely still missing instead.
-        reply = NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE
-    elif reply == UNCLEAR_REPLY and case["claim_type"] != "unknown":
-        # A vague detail ("last Tuesday") in a case we already understand: ask for the exact detail, do not ask what the case is about
-        qs = [q for q in (_plain_sentence(q, max_words=22) for q in turn.get("questions") or []) if q and q.endswith("?")]
-        reply = "I am not sure I got that right. " + (" ".join(qs[:2]) if qs else NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
-    elif reply == SCOPE_REFUSAL and snap["intake"]["account"]:
-        # An off-topic question after the story is told: say what we cannot do, then carry on with the next gap
-        reply = "I can only collect facts. I cannot say who is right, or what you will get. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
-    if blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
+    followup = intake_followup(case)
+    next_step = followup or intake_next_step(case)
+    if not in_scope:
+        reply = (SCOPE_REFUSAL if turn.get("scope") in ("off_topic", "prompt_attack") else "I am not sure I understood that.") + " " + next_step
+    elif not trusted_turn and not corrected:
+        questions = [q for q in (_plain_sentence(q, max_words=22) for q in llm.question_list(turn.get("questions"))) if q and q.endswith("?")]
+        reply = "I am not sure I understood that. " + (" ".join(questions[:2]) if questions else next_step)
+    elif blocked:   # facts we already hold rule the claim out, so say that rather than ask for more
         reply = " ".join(c["text"] for c in blocked) + f" {blocked[0]['where']} Tell me if I have that wrong."
-    elif not missing:
-        reply = INTAKE_COMPLETE
-    elif missing == ["files"]:
-        other = it["parties"]["respondent"].get("name") or "the other side"
-        needed = {
-            "tenancy": "the agreement, payment records, messages, and photos",
-            "goods": "the order, payment records, messages, and photos",
-            "services": "the quote, payment records, messages, and photos",
-            "property_damage": "messages, photos, videos, and repair quotes",
-        }.get(case["claim_type"], "the agreement, payments, messages, and photos")
-        reply = f"I have enough details about your claim against {other}. Press Next to check if the tribunal can hear it, then add {needed} in step 3."
-    reply = f"{changed} {reply}".strip() or "Noted. " + (NEXT_QUESTION[missing[0]] if missing else INTAKE_COMPLETE)
+    else:
+        # The server owns progression. A model instruction, repeated question or
+        # empty reply must never leave only an acknowledgement on the screen.
+        reflection = _plain_sentence(turn.get("reflection"), "You say", 22)
+        reply = " ".join(x for x in (reflection, next_step) if x)
+    if unknown_field:
+        reply = "That detail is marked as not known. You can add it later. " + reply
+    reply = f"{changed} {reply}".strip()
+    case["_pending_intake_field"] = next((key for key, question in intake_pending(case) if reply.endswith(question)), None)
     it["chat"].append({"who": "bot", "text": reply})
-    case = recompute(case)
-    if not blocked and not case["gate"]["pass"] and (snap.get("gate", {}).get("pass") or missing in ([], ["files"])):
-        it["chat"][-1]["text"] += " " + case["gate"]["stop"]   # eligibility problem: say it here, not only in step 2
-    return case
+    return recompute(case)
 
 
 def checklist_state(case):
@@ -428,12 +507,17 @@ def recompute(case):
     today = dt.date.fromisoformat(case["today"])
     answers = {q["id"]: q.get("answer") for q in case.get("blindspots", {}).get("questions", [])}
     case["evidence"] = rules.evidence(case)
+    case["unranked_evidence"] = rules.unranked_files(case)
+    for ex in case["exhibits"]:
+        for asset in ex["assets"]:
+            asset["assessment"] = rules.asset_assessment(ex, asset)
     case["gate"] = rules.gate(case, today)
     case["gaps"] = rules.gaps(case)
     case["blindspots"] = rules.blindspots(case, answers)
     case["timeline"] = rules.timeline(case, today)
     case["next_steps"] = rules.next_steps(case)
     case["fee"] = rules.fee(case["intake"]["amount"])
+    case["_assessment_version"] = 2
     it = {k: v for k, v in case["intake"].items() if k != "chat"}
     key = json.dumps([it, [(r["what"], r["rank"]) for r in case["evidence"]], case["claim_type"]], sort_keys=True, default=str)
     if not case["evidence"]:
@@ -485,6 +569,14 @@ def current():
     if case is None:
         case = recompute(new_case(dt.date.today()))
     CASES[vid] = case
+    if case.get("_assessment_version") != 2:
+        if case.get("case_id") == "example":
+            for ex in case["exhibits"]:
+                for asset in ex.get("assets", []):
+                    # Update only bundled example files, never a user's upload with the same name.
+                    if pathlib.Path(asset.get("path", "")).resolve().parent == PACK.resolve():
+                        process_asset(case, ex, asset, use_saved=True)
+        recompute(case)
     today = dt.date.today().isoformat()
     if case.get("today") != today:   # a saved case keeps its facts; only the date-driven parts move
         case["today"] = today
@@ -558,6 +650,7 @@ def chat_clear():
     case["intake"] = json.loads(json.dumps(EMPTY_INTAKE))
     case["intake"]["chat"].append({"who": "bot", "text": FIRST_MESSAGE})
     case["claim_type"] = "unknown"
+    case.pop("_pending_intake_field", None)
     return recompute(case)
 
 
@@ -625,7 +718,12 @@ def _viewer_payload(case, asset, page_index, boxes, quote=None, label=None):
         where = f"p.{page_index + 1}" if asset["kind"] == "pdf" else "this image"
         caption = f'Text found: "{quote}", {where}. Check it against the {"page" if asset["kind"] == "pdf" else "image"}.'
     else:
-        caption = f"{asset['filename']}. Nothing to highlight here: the file itself is the evidence."
+        caption = f"{asset['filename']}. No text highlight is available. Check the file against its assessment."
+    assessment = rules.asset_assessment(ex, asset)
+    if assessment["status"] in ("placeholder", "irrelevant", "needs_review", "context"):
+        caption = assessment["reason"]
+    if asset.get("assessment_source") == "saved_example":
+        caption = "Worked example, saved assessment. " + caption
     return {"image_url": f"/api/render?asset_id={asset['id']}&page_index={page_index}", "boxes": boxes or [],
             "coord_space": "normalized", "caption": caption, "title": asset["filename"], "subtitle": sub,
             "label": label or ex["id"], "page_index": page_index, "pages": asset.get("pages", 1), "asset_id": asset["id"],
